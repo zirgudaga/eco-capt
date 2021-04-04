@@ -1,0 +1,36 @@
+@keyframes animatedBackground {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -100vw 0;
+    }
+  }
+  #animate-area {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    background-size: 100%;
+    animation: animatedBackground 60s linear infinite;
+    opacity: .1;
+  }
+
+main .wrap {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+main {
+  height: 100vh;
+  position: relative;
+}
+
+.home main p {
+  margin-bottom: 30px;
+}

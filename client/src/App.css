@@ -1,3 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+}
+
 .App {
   text-align: center;
 }
@@ -19,4 +29,72 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.cta {
+  padding: 20px 40px;
+  background-color: #2563eb;
+  color: #fff;
+  border: 2px solid #2563eb;
+  border-radius: 50px;
+  display: inline-block;
+  transition: 0.1s all ease-out;
+}
+
+.cta:hover {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.cta, nav li a {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.main-header {
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  top: 20px;
+  left: 0;
+  z-index: 9;
+  color: #fff;
+}
+
+.main-header nav li {
+  display: inline-block;
+  padding: 8px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.main-header nav li:last-of-type {
+  margin-right: 0;
+}
+
+.main-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wrap {
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, .cta {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+h1 {
+  font-size: 60px;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }

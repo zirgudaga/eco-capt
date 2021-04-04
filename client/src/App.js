@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //import Home from "./components/Home.js"
-import NavBar from "./components/NavBar.js"
+//import NavBar from "./components/NavBar.js"
 import Dapps from "./components/Dapps.js"
 
 import "./App.css";

@@ -16,8 +16,8 @@ contract ClientContract {
         address prevContract;
         address nextContract;
         bytes8 version;
-        uint48 datePrevContract;
-        uint48 nextPrevContract;
+        uint64 datePrevContract;
+        uint64 nextPrevContract;
     }
     
     // struct mesure en-tête (32) { 
@@ -39,8 +39,8 @@ contract ClientContract {
     struct Service {
         bytes8 version;
         string description;
-        bytes1 tempCode;
-        uint8 nbTemp;
+        bytes1 timeCode;
+        uint8 nbTime;
         bool isActive;
         Counters.Counter measureIdCounter;
     }
@@ -51,29 +51,31 @@ contract ClientContract {
     mapping(uint => bytes32[]) public _serviceBodyMeasures;
     
     constructor () {
-        
+        //TO CONFIG
     }
 
     function initTestSet() external{
-        this.addService(0x000102030405, "Service par default", 0x00, 1);
+        require(_serviceIdCounter.current() == 0, "Already initialized !");
+
+        this.addService(0x0001020304050607, "Service par default", 0x00, 1);
         this.addMeasure(_serviceIdCounter.current()-1, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F);
         this.addMeasure(_serviceIdCounter.current()-1, 0x010102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F);
         this.addMeasure(_serviceIdCounter.current()-1, 0x020102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F);
     }
 
     function addService(
-        bytes6 _version,  
+        bytes8 _version,  
         string memory _description,
-        bytes1 _tempCode,
-        uint8 _nbTemp) external{
+        bytes1 _timeCode,
+        uint8 _nbTime) external{
         
         Counters.Counter memory measureIdCounter;
         
         _services.push(Service(
         _version, 
         _description, 
-        _tempCode, 
-        _nbTemp,
+        _timeCode, 
+        _nbTime,
         true,
         measureIdCounter));
         
@@ -84,16 +86,16 @@ contract ClientContract {
         uint _service_id) external view returns(
             bytes8 version, 
             string memory description, 
-            bytes6 tempCode, 
-            uint8 nbTemp,
+            bytes1 timeCode, 
+            uint8 nbTime,
             bool isActive,
             uint256 measureIdCounter){
             
         return (
             _services[_service_id].version,
             _services[_service_id].description,
-            _services[_service_id].tempCode,
-            _services[_service_id].nbTemp,
+            _services[_service_id].timeCode,
+            _services[_service_id].nbTime,
             _services[_service_id].isActive,
             _services[_service_id].measureIdCounter.current()                 
         );
@@ -115,8 +117,8 @@ contract ClientContract {
   
     function getMeasures(
         uint _serviceId) external view returns(
-            bytes32[] memory _headerMeasures,
-            bytes32[] memory _bodyMeasures){
+            bytes32[] memory,
+            bytes32[] memory){
               
         return (_serviceHeaderMeasures[_serviceId], _serviceBodyMeasures[_serviceId]);
     }
@@ -124,8 +126,8 @@ contract ClientContract {
     function getMeasuresById(
         uint _serviceId,
         uint _measureId) external view returns(
-            bytes32 _headerMeasures,
-            bytes32 _bodyMeasures){
+            bytes32,
+            bytes32){
               
         return (_serviceHeaderMeasures[_serviceId][_measureId], _serviceBodyMeasures[_serviceId][_measureId]);
     }  

@@ -16,14 +16,14 @@
  * @return index of adding or remplacing
  */
 const addToList = (myList, myObject) => {
-  var index = myList.findIndex(x => x.key === myObject.key);
+    let index = myList.findIndex(x => x.key === myObject.key);
 
-  if(index === -1){
-    return myList.push(myObject)-1;
-  }
+    if(index === -1){
+        return myList.push(myObject)-1;
+    }
 
-  myList.splice(index, 1, myObject);
-  return index;
+    myList.splice(index, 1, myObject);
+    return index;
 };
 
 
@@ -34,11 +34,11 @@ const addToList = (myList, myObject) => {
  * @return true is element with this key is present in myList
  */
 const isInList = (myList, key) => {
-  var index = myList.findIndex(x => x.key === key);
-  if(index === -1){
-    return false;
-  }
-  return true;
+    let index = myList.findIndex(x => x.key === key);
+    if(index === -1){
+        return false;
+    }
+    return true;
 };
 
 
@@ -50,14 +50,14 @@ const isInList = (myList, key) => {
  * @return index of removing index, -1 if element is not found
  */
 const removeToList = (myList, key) => {
-  var index = myList.findIndex(x => x.key === key);
+    let index = myList.findIndex(x => x.key === key);
 
-  if(index === -1){
-    return -1;
-  }
+    if(index === -1){
+        return -1;
+    }
 
-  myList.splice(index, 1);
-  return index; 
+    myList.splice(index, 1);
+    return index; 
 };
 
 

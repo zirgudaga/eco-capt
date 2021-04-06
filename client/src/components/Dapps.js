@@ -4,7 +4,7 @@ import ClientContract from "../contracts/ClientContract.json";
 import getWeb3 from "../getWeb3.js";
 //import {addToList, removeToList} from "../utils.js"
 import LeftSide from "./LeftSide.js";
-import DashboardCustomer from "./DashboardCustomer.js";
+import DashboardTester from "./DashboardTester.js";
 
 export default class Dapps extends React.Component {
 
@@ -50,14 +50,16 @@ export default class Dapps extends React.Component {
         }
     };
 
-    
-
     render() {
         return (
-            <div className="flex w-full h-screen">
-                <LeftSide/> 
-                <DashboardCustomer state={this.state}/>
-            </div>
+            <main className="bg-gray-900">
+                <div className="wrap">
+                    <div className="flex w-full h-screen">
+                        <LeftSide/> 
+                        <DashboardTester state={this.state}/>
+                    </div>
+                </div>
+            </main>
         )
     }
 }

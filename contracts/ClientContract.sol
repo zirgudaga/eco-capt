@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-pragma experimental ABIEncoderV2;
 
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 
@@ -39,6 +38,7 @@ contract ClientContract {
     struct Service {
         bytes8 version;
         string description;
+        bytes8 measureType;
         bytes1 timeCode;
         uint8 nbTime;
         bool isActive;
@@ -54,18 +54,10 @@ contract ClientContract {
         //TO CONFIG
     }
 
-    function initTestSet() external{
-        require(_serviceIdCounter.current() == 0, "Already initialized !");
-
-        this.addService(0x0001020304050607, "Service par default", 0x00, 1);
-        this.addMeasure(_serviceIdCounter.current()-1, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F);
-        this.addMeasure(_serviceIdCounter.current()-1, 0x010102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F);
-        this.addMeasure(_serviceIdCounter.current()-1, 0x020102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F, 0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F);
-    }
-
     function addService(
         bytes8 _version,  
         string memory _description,
+        bytes8 _measureType,          
         bytes1 _timeCode,
         uint8 _nbTime) external{
         
@@ -74,6 +66,7 @@ contract ClientContract {
         _services.push(Service(
         _version, 
         _description, 
+        _measureType,
         _timeCode, 
         _nbTime,
         true,
@@ -86,6 +79,7 @@ contract ClientContract {
         uint _service_id) external view returns(
             bytes8 version, 
             string memory description, 
+            bytes8 measureType,            
             bytes1 timeCode, 
             uint8 nbTime,
             bool isActive,
@@ -94,11 +88,18 @@ contract ClientContract {
         return (
             _services[_service_id].version,
             _services[_service_id].description,
+            _services[_service_id].measureType,            
             _services[_service_id].timeCode,
             _services[_service_id].nbTime,
             _services[_service_id].isActive,
             _services[_service_id].measureIdCounter.current()                 
         );
+    }
+
+    function getServices() external view returns(
+            Service[] memory
+            ){     
+        return (_services);
     }
 
     function addMeasure(

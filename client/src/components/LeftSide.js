@@ -3,7 +3,7 @@ import React from 'react';
 export default class LeftSide extends React.Component {
     render() {
         return (
-            <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block">
+            <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block mt-20">
                 <div className="flex flex-col justify-between h-screen p-4 bg-gray-800">
                     <div className="text-sm">
                         <div className="bg-gray-900 text-white p-5 rounded cursor-pointer">Menu 1</div>
@@ -13,9 +13,6 @@ export default class LeftSide extends React.Component {
                             <span>Reports</span>
                             <span className="w-4 h-4 bg-blue-600 rounded-full text-white text-center font-normal text-xs">5</span>
                         </div>
-                    <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">Menu 4</div>
-                    <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">Menu 5</div>
-                    <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">Menu 6</div>
                     </div>
                     <div className="flex p-3 text-white bg-red-500 rounded cursor-pointer text-center text-sm">
                         <button className="rounded inline-flex items-center">

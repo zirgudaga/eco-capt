@@ -6,6 +6,7 @@
 body {
   font-family: 'Sora', sans-serif;
   font-size: 18px;
+  background-color: #415877;
 }
 
 .App {
@@ -14,17 +15,6 @@ body {
 
 .App-logo {
   height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -54,31 +44,15 @@ body {
   text-transform: uppercase;
 }
 
-.main-header {
-  position: fixed;
-  width: 100%;
-  height: 100px;
-  top: 20px;
-  left: 0;
-  z-index: 9;
-  color: #fff;
-}
-
-.main-header nav li {
-  display: inline-block;
-  padding: 8px;
-  cursor: pointer;
-  margin-right: 20px;
-}
-
-.main-header nav li:last-of-type {
-  margin-right: 0;
-}
-
-.main-header .wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .wrap {
@@ -97,4 +71,16 @@ h1 {
   max-width: 700px;
   margin: 0 auto;
   margin-bottom: 20px;
+}
+
+p {
+    color: white;
+}
+
+label {
+    color: white;
+}
+
+input  {
+    color: black;
 }

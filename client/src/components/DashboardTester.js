@@ -1,4 +1,6 @@
 import React from 'react';
+import {stringToHex, hexToString} from '../utilsEco.js';
+import MySelect from './MySelect.js';
 
 export default class DashboardTester extends React.Component {
 
@@ -7,7 +9,28 @@ export default class DashboardTester extends React.Component {
         this.state = {
             listServices: [],
             selectedService: -1,
-            listMeasures: [],  
+            listMeasures: [], 
+
+            addServiceTabVersions: [
+                {code:'00.01.00', aff:'Version 0.1'},
+                {code:'00.02.00', aff:'Version 0.2'}
+            ], 
+            addServiceVersion: '',
+
+            addServiceTabMeasureType: [
+                {code:'SON_0001', aff:'Accoustique version 1'},
+                {code:'SOUF0002', aff:'Souffre version 2'}                
+            ], 
+            addServiceMeasureType: '',
+
+            addServiceTabTimeType: [
+                {code:'Y', aff:'Année'},
+                {code:'m', aff:'Mois'},
+                {code:'d', aff:'Journée'},
+                {code:'H', aff:'Heure'},                                
+                {code:'i', aff:'Minutes'},                
+            ], 
+            addServiceTimeType: '',
         };
     }
 
@@ -16,31 +39,54 @@ export default class DashboardTester extends React.Component {
     contractSessionId = parseInt(await contract.methods.sessionId().call(), 10);
     */
 
-    addService = async () => {
-        console.log("Add Service ?")
+    handleMySelect = async (selectedName, selectedValue) => {
+        let { addServiceVersion, addServiceMeasureType, addServiceTimeType } = this.state;
 
-         if(this.newServiceDescription.value.trim() !== ''){
-            const { accounts, contract, web3 } = this.props.state;
-            await contract.methods.addService(
-                "0x0000000000000001",  
-                this.newServiceDescription.value.trim(),
-                "0x0000000000000001",
-                "0x01",
-                1            
-            ).send({ from: accounts[0] },
-                async (erreur, tx) => {
-                    if(tx){
-                        await web3.eth.getTransactionReceipt(tx, 
-                            async (erreur, receipt) => {
-                                if(receipt!=null && receipt.status){
-                                    console.log("New service added !");
-                                }
+        switch(selectedName){
+            case 'addServiceVersion': addServiceVersion = selectedValue; break;
+            case 'addServiceMeasureType': addServiceMeasureType = selectedValue; break;
+            case 'addServiceTimeType': addServiceTimeType = selectedValue; break;            
+            default: console.log('ERR - Select not found'); 
+        }      
+
+        this.setState({ addServiceVersion, addServiceMeasureType, addServiceTimeType });         
+    };  
+
+
+    addService = async () => {
+        let { addServiceVersion, addServiceMeasureType, addServiceTimeType } = this.state;
+
+        if(addServiceVersion === '' || 
+        addServiceMeasureType === '' || 
+        addServiceTimeType === '' || 
+        this.newServiceDescription.value.trim() === '' ||
+        this.newServiceNbTime.value <= '0'
+        ){
+            console.log("Merci de remplir correctement le formulaire !");
+            return ;
+        }
+
+        const { accounts, contract, web3 } = this.props.state;
+        await contract.methods.addService(
+            stringToHex(addServiceVersion), 
+            this.newServiceDescription.value.trim(),
+            stringToHex(addServiceMeasureType), 
+            stringToHex(addServiceTimeType),            
+            this.newServiceNbTime.value        
+        ).send({ from: accounts[0] },
+            async (erreur, tx) => {
+                if(tx){
+                    await web3.eth.getTransactionReceipt(tx, 
+                        async (erreur, receipt) => {
+                            if(receipt!=null && receipt.status){
+                                console.log("New service added !");
                             }
-                        )
-                    }
+                        }
+                    )
                 }
-            );  
-        }        
+            }
+        );  
+       
     };
 
     getServices = async () => {
@@ -119,14 +165,47 @@ export default class DashboardTester extends React.Component {
 
                         <p>
                             <label>
-                                Version
+                                Version du service
                             </label>
-                            <input type="text" id="newServiceVersion" 
-                                ref={(input) => { 
-                                    this.newServiceVersion = input
-                                }}
+                            <MySelect 
+                                myName="addServiceVersion" 
+                                myTabOptions={this.state.addServiceTabVersions}
+                                handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                             />
                         </p>
+
+
+                        <p>
+                            <label>
+                                Measure du service
+                            </label>
+                            <MySelect 
+                                myName="addServiceMeasureType" 
+                                myTabOptions={this.state.addServiceTabMeasureType}
+                                handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                            />
+                        </p>
+
+                        <p>
+                            <label>
+                                Fréquence
+                            </label>
+
+                            <input type="number" id="newServiceNbTime" 
+                                ref={(input) => { 
+                                    this.newServiceNbTime = input
+                                }}
+                            />
+                            <MySelect 
+                                myName="addServiceTimeType" 
+                                myTabOptions={this.state.addServiceTabTimeType}
+                                handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                            />
+                        </p>
+
+
+
+                        
                         
                         <p>
                             <input type="button" className="btn btn-success ml-2" value="NEW SERVICE" onClick= { () => this.addService() } />
@@ -156,7 +235,7 @@ export default class DashboardTester extends React.Component {
                         {this.state.listMeasures[0].length > 0 
                             &&
                             this.state.listMeasures[0].map((measure, index) => (
-                                <div className="m-2" key={"measreKey"+index}><p> {measure} </p> </div>       
+                                <div className="m-2" key={"measureKey"+index}><p> {measure} </p> </div>       
                             ))
                         }   
 

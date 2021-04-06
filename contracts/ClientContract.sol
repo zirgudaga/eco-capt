@@ -20,12 +20,12 @@ contract ClientContract {
     }
     
     // struct mesure en-tête (32) { 
-    //   //V0.1
+    //   //V0.1     XX.XX.XX    00.01.00
     //   Version : bytes8;
     //   Date : YYYYmmddHHii : byte12
     //   Type de mesureID : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
     //   Type temporel : bytes1 (Horaire, Journalier) Y m d H i
-    //   Nb temporel : bytes3
+    //   Nb temporel : bytes3 
     // }
     
     // struct mesure donnée (32) { 
@@ -41,6 +41,7 @@ contract ClientContract {
         bytes8 measureType;
         bytes1 timeCode;
         uint8 nbTime;
+        address bridgeAddress;
         bool isActive;
         Counters.Counter measureIdCounter;
     }
@@ -49,7 +50,8 @@ contract ClientContract {
     Counters.Counter private _serviceIdCounter;
     mapping(uint => bytes32[]) public _serviceHeaderMeasures;
     mapping(uint => bytes32[]) public _serviceBodyMeasures;
-    
+    mapping(uint => bytes6[]) public _serviceMacOT;
+        
     constructor () {
         //TO CONFIG
     }
@@ -69,21 +71,21 @@ contract ClientContract {
         _measureType,
         _timeCode, 
         _nbTime,
+        address(0),
         true,
         measureIdCounter));
         
         _serviceIdCounter.increment();
     }  
     
-    function getService(
+    function getService_ClientVue(
         uint _service_id) external view returns(
             bytes8 version, 
             string memory description, 
             bytes8 measureType,            
             bytes1 timeCode, 
             uint8 nbTime,
-            bool isActive,
-            uint256 measureIdCounter){
+            bool isActive){
             
         return (
             _services[_service_id].version,
@@ -91,8 +93,7 @@ contract ClientContract {
             _services[_service_id].measureType,            
             _services[_service_id].timeCode,
             _services[_service_id].nbTime,
-            _services[_service_id].isActive,
-            _services[_service_id].measureIdCounter.current()                 
+            _services[_service_id].isActive                
         );
     }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {stringToHex, hexToString} from '../utilsEco.js';
+import {stringToHex} from '../utilsEco.js';
 import MySelect from './MySelect.js';
 
 export default class DashboardTester extends React.Component {

@@ -89,22 +89,22 @@ export default class DashboardTester extends React.Component {
        
     };
 
-    getServices = async () => {
+    getAllServices = async () => {
         console.log("Get Services");
         const { contract } = this.props.state;
         let { listServices } = this.state;
-        listServices = await contract.methods.getServices().call();
+        listServices = await contract.methods.getAllServices().call();
 
         console.log(listServices);
 
         this.setState({ listServices });  
     };    
 
-    getMeasures = async (serviceId) => {
+    getAllMeasures = async (serviceId) => {
         console.log("Get Services");
         const { contract } = this.props.state;
         let { listMeasures } = this.state;
-        listMeasures = await contract.methods.getMeasures(serviceId).call();
+        listMeasures = await contract.methods.getAllMeasures(serviceId).call();
 
         console.log(listMeasures);
 
@@ -141,7 +141,7 @@ export default class DashboardTester extends React.Component {
         let { contract } = this.props.state;
         let { selectedService, listMeasures } = this.state;
         selectedService = serviceId;
-        listMeasures = await contract.methods.getMeasures(serviceId).call();
+        listMeasures = await contract.methods.getAllMeasures(serviceId).call();
         this.setState({ contract, selectedService, listMeasures });  
     };     
 
@@ -212,7 +212,7 @@ export default class DashboardTester extends React.Component {
                         </p>            
                     </form>
 
-                    <p><input type="button" className="btn btn-success ml-2" value="GET SERVICES" onClick= { () => this.getServices() }></input></p>
+                    <p><input type="button" className="btn btn-success ml-2" value="GET SERVICES" onClick= { () => this.getAllServices() }></input></p>
 
                     {this.state.listServices.length > 0 
                         &&
@@ -228,7 +228,7 @@ export default class DashboardTester extends React.Component {
                     <div className="w-full h-64 border-dashed border-4 p-4 text-md" >
                         <p>MEASURES de {this.state.listServices[this.state.selectedService].description}</p> 
 
-                        <p><input type="button" className="btn btn-success ml-2" value="REFRESH MEASURE" onClick= { () => this.getMeasures(this.state.selectedService) }></input></p>
+                        <p><input type="button" className="btn btn-success ml-2" value="REFRESH MEASURE" onClick= { () => this.getAllMeasures(this.state.selectedService) }></input></p>
 
                         <p><input type="button" className="btn btn-success ml-2" value="ADD MEASURE" onClick= { () => this.addMeasure(this.state.selectedService) }></input></p>
 

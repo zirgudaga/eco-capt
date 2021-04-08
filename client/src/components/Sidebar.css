@@ -1,0 +1,139 @@
+#sidebar-toggle {
+  display: none;
+}
+
+#sidebar-toggle:checked ~ .sidebar {
+  left: -100%;
+}
+
+#sidebar-toggle:checked ~ .main-content header {
+  left: 0;
+  width: 100%;
+  right: 0;
+}
+
+#sidebar-toggle:checked ~ .main-content {
+  margin-left: 0;
+}
+
+.sidebar {
+  width: 280px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  padding: 16px 24px;
+  background: var(--color-main);
+  color: #fff;
+  z-index: 20;
+  transition: left 300ms;
+}
+
+.sidebar-brand {
+  height: 70px;
+}
+
+.brand-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-icons span {
+  font-size: 24px;
+  margin-left: 8px;
+}
+
+.sidebar-user {
+  margin: 16px 0px 16px 0px;
+  text-align: center;
+}
+
+.sidebar-user img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border-left: 2px solid transparent;
+  border-top: 2px solid #2277ff;
+  border-right: 2px solid #2277ff;
+  border-bottom: 2px solid #2277ff;
+}
+
+.sidebar-user h3 {
+  font-size: 16px;
+}
+
+.sidebar-user span {
+  font-size: 12px;
+}
+
+.sidebar-menu {
+  margin-top: 48px;
+}
+
+.menu-head {
+  text-transform: uppercase;
+  color: #2277ff;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 13px;
+}
+
+.sidebar-menu ul {
+  margin-bottom: 24px;
+}
+
+.sidebar-menu li {
+  margin-bottom: 14px;
+}
+
+.sidebar-menu li a {
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-menu li a span {
+  font-size: 24px;
+  display: inline-block;
+  margin-right: 13px;
+}
+
+@media only screen and (max-width: 1124px) {
+  .sidebar {
+    left: -100%;
+    z-index: 30;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+  #sidebar-toggle:checked ~ .sidebar {
+    left: 0;
+  }
+  #sidebar-toggle:checked ~ .body-label {
+    right: 0;
+  }
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .cards {
+    grid-template-columns: 100%;
+  }
+  .alerts-grid {
+    grid-template-columns: 100%;
+  }
+  .page-header {
+    display: block;
+  }
+  .header-actions {
+    margin-top: 20px;
+    text-align: right;
+  }
+  .header-actions button:first-child {
+    margin-left: 0px;
+  }
+}

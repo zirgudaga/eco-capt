@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Home from "./components/Home.js"
-import DappsClient from "./components/DappsClient.js";
-import DappsTesteur from "./components/DappsTesteur.js";
-import NavBar from "./components/NavBar.js"
+import Home from "./components/home/Home.js"
+import NavBar from "./components/home/NavBar.js"
+import DashboardClient from "./components/dapps/DashboardClient.js";
+import DashboardTester from "./components/dapps/DashboardTester.js";
+
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import ClientContract from "./contracts/ClientContract.json";
@@ -59,17 +60,17 @@ class App extends Component {
                     <Router>
                         <Switch>
                             <Route path="/appClient" exact>
-                                <DappsClient
+                                <DashboardClient
                                     state={this.state}
                                 >
-                                </DappsClient>                                    
+                                </DashboardClient>                                    
                             </Route>
 
                             <Route path="/appTesteur" exact>
-                                <DappsTesteur
+                                <DashboardTester
                                     state={this.state}
                                 >
-                                </DappsTesteur>                                    
+                                </DashboardTester>                                    
                             </Route>
                         
                             <Route path="/" exact>

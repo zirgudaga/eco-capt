@@ -40,6 +40,7 @@ contract ClientContract is Ownable {
         address customerAddress;
         address prevContract;
         address nextContract;
+        bool isActive;
     }
     
     struct Service {
@@ -55,7 +56,6 @@ contract ClientContract is Ownable {
 
         Counters.Counter alertConfigIdCounter;
         Counters.Counter alertIdCounter; 
-
         Counters.Counter measureIdCounter;
     }
 
@@ -70,6 +70,11 @@ contract ClientContract is Ownable {
         bool isActive;
     }
 
+    modifier isContractActive() {
+        require(_myConfig.isActive, "Service off line");
+        _;
+    }
+
     modifier isServiceOn(uint _serviceId) {
         require(_serviceId < _serviceIdCounter.current(), "Service not exist"); 
         require(_services[_serviceId].isActive, "Service off line"); 
@@ -77,23 +82,23 @@ contract ClientContract is Ownable {
     }
 
     modifier onlyCustomer() {
-      require (_myConfig.customerAddress == msg.sender || owner() ==  msg.sender, "Access denied");
-      _;
+        require (_myConfig.customerAddress == msg.sender || owner() ==  msg.sender, "Access denied");
+        _;
     }
 
     modifier onlyBridge(uint _serviceId) {
-      require (_services[_serviceId].bridgeAddress == msg.sender || owner() ==  msg.sender, "Access denied");
-      _;
+        require (_services[_serviceId].bridgeAddress == msg.sender || owner() ==  msg.sender, "Access denied");
+        _;
     }
 
     modifier onlyTechMaster(uint _serviceId) {
-      require (_services[_serviceId].techMasterAddress == msg.sender || owner() ==  msg.sender, "Access denied");
-      _;
+        require (_services[_serviceId].techMasterAddress == msg.sender || owner() ==  msg.sender, "Access denied");
+        _;
     }
 
     modifier onlyLegislator(uint _serviceId) {
-      require (_services[_serviceId].legislatorAddress == msg.sender || owner() ==  msg.sender, "Access denied");
-      _;
+        require (_services[_serviceId].legislatorAddress == msg.sender || owner() ==  msg.sender, "Access denied");
+        _;
     }
 
     event MeasureReceive(uint _service_id, bytes32 _header, bytes32 _body, address _author); 
@@ -101,7 +106,6 @@ contract ClientContract is Ownable {
     event ServiceUpdate(uint _service_id, string message, address _author); 
     event ContractUpdate(string message, address _author);  
                
-
     Config private _myConfig;
     Service[] private _services;
 
@@ -120,7 +124,8 @@ contract ClientContract is Ownable {
             0,
             _customerAddress,
             _prevContract,
-            address(0)
+            address(0),
+            true
         );  
     }
 
@@ -130,7 +135,7 @@ contract ClientContract is Ownable {
         bytes8 _measureType,          
         bytes1 _timeCode,
         uint8 _nbTime) 
-        onlyCustomer() external{
+        onlyCustomer() isContractActive() external{
       
         Counters.Counter memory alertConfigIdCounter;
         Counters.Counter memory alertIdCounter;
@@ -155,10 +160,40 @@ contract ClientContract is Ownable {
         _serviceIdCounter.increment();
     }  
 
+    function toogleContract()
+        onlyOwner external {
+        if(_myConfig.isActive){
+            emit ContractUpdate("Contract off", msg.sender);
+        }else{
+            emit ContractUpdate("Contract on", msg.sender);
+        } 
+        _myConfig.isActive = !_myConfig.isActive;
+    }
+
+    function toogleService(uint _serviceId)
+        onlyCustomer() external {
+        if(_services[_serviceId].isActive){
+            emit ServiceUpdate(_serviceId, "Service off", msg.sender);
+        }else{
+            emit ServiceUpdate(_serviceId, "Service on", msg.sender);
+        } 
+        _services[_serviceId].isActive = !_services[_serviceId].isActive;
+    }
+
+    // function toogleAlertConfig(uint _serviceId, uint _alertConfigId)
+    //     onlyCustomer() external {
+    //     if(_serviceAlertConfig[_serviceId][_alertConfigId].isActive){
+    //         emit ServiceUpdate(_serviceId, "Alert off", msg.sender);
+    //     }else{
+    //         emit ServiceUpdate(_serviceId, "Alert on", msg.sender);
+    //     } 
+    //     _serviceAlertConfig[_serviceId][_alertConfigId].isActive = !_serviceAlertConfig[_serviceId][_alertConfigId].isActive;
+    // }        
+
     function setTechMasterAddress(
         uint _serviceId,
         address _techMasterAddress)
-        isServiceOn(_serviceId) onlyOwner external {  
+        isContractActive() isServiceOn(_serviceId) onlyOwner external {  
         
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
@@ -168,7 +203,7 @@ contract ClientContract is Ownable {
     function setBridgeAddress(
         uint _serviceId,
         address _bridgeAddress)
-        isServiceOn(_serviceId) onlyTechMaster(_serviceId) external {  
+        isContractActive() isServiceOn(_serviceId) onlyTechMaster(_serviceId) external {  
         
         _services[_serviceId].bridgeAddress = _bridgeAddress;
 
@@ -178,7 +213,7 @@ contract ClientContract is Ownable {
     function setLegislatorAddress(
         uint _serviceId,
         address _legislatorAddress)
-        isServiceOn(_serviceId) onlyCustomer() external {  
+        isContractActive() isServiceOn(_serviceId) onlyCustomer() external {  
         
         _services[_serviceId].legislatorAddress = _legislatorAddress;
 
@@ -205,7 +240,7 @@ contract ClientContract is Ownable {
         uint _serviceId,
         bytes32 _measureHeader,
         bytes32 _measurebody) 
-        isServiceOn(_serviceId) onlyBridge(_serviceId) external {    
+        isContractActive() isServiceOn(_serviceId) onlyBridge(_serviceId) external {    
         
         _serviceHeaderMeasures[_serviceId].push(_measureHeader);
         _serviceBodyMeasures[_serviceId].push(_measurebody);
@@ -242,7 +277,7 @@ contract ClientContract is Ownable {
         uint64 _dateOff,
         bytes8 _codeAlert,         
         bytes8 _valueAlert)         
-        isServiceOn(_serviceId) onlyCustomer() external{       
+        isContractActive() isServiceOn(_serviceId) onlyCustomer() external{       
             _addAlertConfig(_serviceId, _version, _description, address(0), _dateOn, _dateOff, _codeAlert, _valueAlert);
     }
 
@@ -254,7 +289,7 @@ contract ClientContract is Ownable {
         uint64 _dateOff,
         bytes8 _codeAlert,         
         bytes8 _valueAlert)         
-        isServiceOn(_serviceId) onlyLegislator(_serviceId) external{       
+        isContractActive() isServiceOn(_serviceId) onlyLegislator(_serviceId) external{       
             _addAlertConfig(_serviceId, _version, _description, msg.sender, _dateOn, _dateOff, _codeAlert, _valueAlert);
     }
 
@@ -295,7 +330,7 @@ contract ClientContract is Ownable {
     function addAlert(
         uint _serviceId,
         bytes32 _alertBody) 
-        isServiceOn(_serviceId) onlyBridge(_serviceId) external {         
+        isContractActive() isServiceOn(_serviceId) onlyBridge(_serviceId) external {         
                    
         _serviceAlerts[_serviceId].push(_alertBody);
         

@@ -1,7 +1,7 @@
 import React from 'react';
-import {stringToHex} from '../utilsEco.js';
-import MySelect from './MySelect.js';
-import NotifBar from './NotifBar.js';
+import {stringToHex} from '../../utilsEco.js';
+import MySelect from '../elements/MySelect.js';
+import NotifBar from '../elements/NotifBar.js';
 
 import "./DashboardTester.css";
 
@@ -153,102 +153,104 @@ export default class DashboardTester extends React.Component {
 
     render() {
         return (
-            <section className="">
-                <div className="tester-block" > 
+            <main className="test">          
+                <section className="">
+                    <div className="tester-block" > 
 
-                    <NotifBar 
-                        contract={this.props.state.contractTarget}
-                        errorMessage={this.state.errorMessage}    
-                    />
+                        <NotifBar 
+                            contract={this.props.state.contractTarget}
+                            errorMessage={this.state.errorMessage}    
+                        />
 
-                    <h1>Happy testing</h1>
+                        <h1>Happy testing</h1>
 
-                    <h2 className="tester">SERVICES</h2>
+                        <h2 className="tester">SERVICES</h2>
 
-                    <form>
-                        <p>
-                            <label>
-                                Description du service
-                            </label>
-                            <input type="text" id="newServiceDescription" 
-                                ref={(input) => { 
-                                    this.newServiceDescription = input
-                                }}
-                            />
-                        </p>
+                        <form>
+                            <p>
+                                <label>
+                                    Description du service
+                                </label>
+                                <input type="text" id="newServiceDescription" 
+                                    ref={(input) => { 
+                                        this.newServiceDescription = input
+                                    }}
+                                />
+                            </p>
 
-                        <p>
-                            <label>
-                                Version du service
-                            </label>
-                            <MySelect 
-                                myName="addServiceVersion" 
-                                myTabOptions={this.state.addServiceTabVersions}
-                                handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
-                            />
-                        </p>
+                            <p>
+                                <label>
+                                    Version du service
+                                </label>
+                                <MySelect 
+                                    myName="addServiceVersion" 
+                                    myTabOptions={this.state.addServiceTabVersions}
+                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                                />
+                            </p>
 
 
-                        <p>
-                            <label>
-                                Measure du service
-                            </label>
-                            <MySelect 
-                                myName="addServiceMeasureType" 
-                                myTabOptions={this.state.addServiceTabMeasureType}
-                                handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
-                            />
-                        </p>
+                            <p>
+                                <label>
+                                    Measure du service
+                                </label>
+                                <MySelect 
+                                    myName="addServiceMeasureType" 
+                                    myTabOptions={this.state.addServiceTabMeasureType}
+                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                                />
+                            </p>
 
-                        <p>
-                            <label>
-                                Fréquence
-                            </label>
+                            <p>
+                                <label>
+                                    Fréquence
+                                </label>
 
-                            <input type="number" size="4" className="tester-input-number" id="newServiceNbTime" 
-                                ref={(input) => { 
-                                    this.newServiceNbTime = input
-                                }}
-                            />
-                            <MySelect 
-                                myName="addServiceTimeType" 
-                                myTabOptions={this.state.addServiceTabTimeType}
-                                handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
-                            />
-                        </p>
-          
-                    </form>
-                    <div>
-                        <input type="button" className="tester-button" value="NEW SERVICE" onClick= { () => this.addService() } />
-                        <input type="button" className="tester-button" value="GET SERVICES" onClick= { () => this.getAllServices() }/>
-                    </div>
+                                <input type="number" size="4" className="tester-input-number" id="newServiceNbTime" 
+                                    ref={(input) => { 
+                                        this.newServiceNbTime = input
+                                    }}
+                                />
+                                <MySelect 
+                                    myName="addServiceTimeType" 
+                                    myTabOptions={this.state.addServiceTabTimeType}
+                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                                />
+                            </p>
+            
+                        </form>
+                        <div>
+                            <input type="button" className="tester-button" value="NEW SERVICE" onClick= { () => this.addService() } />
+                            <input type="button" className="tester-button" value="GET SERVICES" onClick= { () => this.getAllServices() }/>
+                        </div>
 
-                    {this.state.listServices.length > 0 
-                        &&
-                        this.state.listServices.map((service, index) => (
-                            <p key={"serviceKey"+index}><input type="button" className="tester-button" value={service.description} onClick={ () => this.setServiceFocus(index) }/></p>       
-                        ))
-                    }
-
-                </div>
-
-                {this.state.selectedService !== -1
-                    &&
-                    <div className="" >
-                        <br/>
-                        <h2 className="tester">SERVICES - {this.state.listServices[this.state.selectedService].description}</h2>
-
-                        <p><input type="button" className="tester-button" value="ADD MEASURE" onClick= { () => this.addMeasure(this.state.selectedService) }></input></p>
-
-                        {this.state.listMeasures[0].length > 0 
+                        {this.state.listServices.length > 0 
                             &&
-                            this.state.listMeasures[0].map((measure, index) => (
-                                <div className="" key={"measureKey"+index}><p> {measure} </p> </div>       
+                            this.state.listServices.map((service, index) => (
+                                <p key={"serviceKey"+index}><input type="button" className="tester-button" value={service.description} onClick={ () => this.setServiceFocus(index) }/></p>       
                             ))
-                        }   
+                        }
+
                     </div>
-                }
-            </section>
+
+                    {this.state.selectedService !== -1
+                        &&
+                        <div className="" >
+                            <br/>
+                            <h2 className="tester">SERVICES - {this.state.listServices[this.state.selectedService].description}</h2>
+
+                            <p><input type="button" className="tester-button" value="ADD MEASURE" onClick= { () => this.addMeasure(this.state.selectedService) }></input></p>
+
+                            {this.state.listMeasures[0].length > 0 
+                                &&
+                                this.state.listMeasures[0].map((measure, index) => (
+                                    <div className="" key={"measureKey"+index}><p> {measure} </p> </div>       
+                                ))
+                            }   
+                        </div>
+                    }
+                </section>
+            </main>  
         )
     }
 }

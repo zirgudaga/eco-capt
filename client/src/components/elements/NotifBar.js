@@ -4,10 +4,6 @@ import "./NotifBar.css";
 
 export default class NotifBar extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     myNotice = () => {
         if(this.props.errorMessage !== ''){
             return (<input type="button" className="tester-button-alerte" value={this.props.errorMessage}/>);

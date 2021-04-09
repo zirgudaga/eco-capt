@@ -5,18 +5,18 @@ function Sidebar() {
   return (
     <aside className="">
 
-      <input type="checkbox" name="" id="sidebar-toggle" />
+        <input type="checkbox" name="" id="sidebar-toggle" />
 
-      <div className="sidebar">
-        <div className="sidebar-brand">
-            <div className="brand-flex">
-              <img src="logo.png" width="40px" alt="" />
-              <div className="brand-icons">
-                <span className="las la-bell"></span>
-                <span className="las la-user-circle"></span>
-              </div>
-          </div>
-        </div>
+        <div className="sidebar">
+            <div className="sidebar-brand">
+                <div className="brand-flex">
+                    <img src="logo.png" width="40px" alt="" />
+                    <div className="brand-icons">
+                    <span className="las la-bell"></span>
+                    <span className="las la-user-circle"></span>
+                    </div>
+                </div>
+            </div>
       <div className="sidebar-main">
         <div className="sidebar-user">
           <img src="2.jpg" alt="" />

@@ -1,6 +1,9 @@
 import React from 'react';
 import {stringToHex} from '../utilsEco.js';
 import MySelect from './MySelect.js';
+import NotifBar from './NotifBar.js';
+
+import "./DashboardTester.css";
 
 export default class DashboardTester extends React.Component {
 
@@ -19,7 +22,8 @@ export default class DashboardTester extends React.Component {
 
             addServiceTabMeasureType: [
                 {code:'SON_0001', aff:'Accoustique version 1'},
-                {code:'SOUF0002', aff:'Souffre version 2'}                
+                {code:'SOUF0001', aff:'Emission de soufre version 1'},   
+                {code:'SOUF0002', aff:'Emission de soufre version 2'}                              
             ], 
             addServiceMeasureType: '',
 
@@ -31,13 +35,9 @@ export default class DashboardTester extends React.Component {
                 {code:'i', aff:'Minutes'},                
             ], 
             addServiceTimeType: '',
+            errorMessage: '',
         };
     }
-
-    /*
-    if(!this.props.state.isOwner) {
-    contractSessionId = parseInt(await contract.methods.sessionId().call(), 10);
-    */
 
     handleMySelect = async (selectedName, selectedValue) => {
         let { addServiceVersion, addServiceMeasureType, addServiceTimeType } = this.state;
@@ -52,9 +52,8 @@ export default class DashboardTester extends React.Component {
         this.setState({ addServiceVersion, addServiceMeasureType, addServiceTimeType });         
     };  
 
-
     addService = async () => {
-        let { addServiceVersion, addServiceMeasureType, addServiceTimeType } = this.state;
+        let { addServiceVersion, addServiceMeasureType, addServiceTimeType, errorMessage } = this.state;
 
         if(addServiceVersion === '' || 
         addServiceMeasureType === '' || 
@@ -62,6 +61,14 @@ export default class DashboardTester extends React.Component {
         this.newServiceDescription.value.trim() === '' ||
         this.newServiceNbTime.value <= '0'
         ){
+            errorMessage = "Merci de remplir correctement le formulaire !";
+            this.setState({ errorMessage });
+
+            setTimeout(()=>{
+                errorMessage = "";
+                this.setState({ errorMessage });
+            },2000);
+
             console.log("Merci de remplir correctement le formulaire !");
             return ;
         }
@@ -85,7 +92,9 @@ export default class DashboardTester extends React.Component {
                     )
                 }
             }
-        );  
+        ); 
+        
+        
        
     };
 
@@ -147,9 +156,17 @@ export default class DashboardTester extends React.Component {
 
     render() {
         return (
-            <section className="w-full p-4 mt-16">
-                <div className="w-full h-200 border-dashed border-4 p-4 text-md" > 
-                    <p>SERVICES</p>
+            <section className="">
+                <div className="tester-block" > 
+
+                    <NotifBar 
+                        contract={this.props.state.contractTarget}
+                        errorMessage={this.state.errorMessage}    
+                    />
+
+                    <h1>Happy testing</h1>
+
+                    <h2 className="tester">SERVICES</h2>
 
                     <form>
                         <p>
@@ -191,7 +208,7 @@ export default class DashboardTester extends React.Component {
                                 Fréquence
                             </label>
 
-                            <input type="number" id="newServiceNbTime" 
+                            <input type="number" size="4" className="tester-input-number" id="newServiceNbTime" 
                                 ref={(input) => { 
                                     this.newServiceNbTime = input
                                 }}
@@ -208,16 +225,18 @@ export default class DashboardTester extends React.Component {
                         
                         
                         <p>
-                            <input type="button" className="btn btn-success ml-2" value="NEW SERVICE" onClick= { () => this.addService() } />
+                            
                         </p>            
                     </form>
-
-                    <p><input type="button" className="btn btn-success ml-2" value="GET SERVICES" onClick= { () => this.getAllServices() }></input></p>
+                    <div>
+                        <input type="button" className="tester-button" value="NEW SERVICE" onClick= { () => this.addService() } />
+                        <input type="button" className="tester-button" value="GET SERVICES" onClick= { () => this.getAllServices() }/>
+                    </div>
 
                     {this.state.listServices.length > 0 
                         &&
                         this.state.listServices.map((service, index) => (
-                            <div className="m-2" key={"serviceKey"+index}><p onClick={ () => this.setServiceFocus(index) }> {service.description} </p> </div>       
+                            <p><input type="button" className="tester-button" key={"serviceKey"+index} value={service.description} onClick={ () => this.setServiceFocus(index) }/></p>       
                         ))
                     }
 
@@ -225,22 +244,18 @@ export default class DashboardTester extends React.Component {
 
                 {this.state.selectedService !== -1
                     &&
-                    <div className="w-full h-64 border-dashed border-4 p-4 text-md" >
-                        <p>MEASURES de {this.state.listServices[this.state.selectedService].description}</p> 
+                    <div className="" >
+                        <br/>
+                        <h2 className="tester">SERVICES - {this.state.listServices[this.state.selectedService].description}</h2>
 
-                        <p><input type="button" className="btn btn-success ml-2" value="REFRESH MEASURE" onClick= { () => this.getAllMeasures(this.state.selectedService) }></input></p>
-
-                        <p><input type="button" className="btn btn-success ml-2" value="ADD MEASURE" onClick= { () => this.addMeasure(this.state.selectedService) }></input></p>
+                        <p><input type="button" className="tester-button" value="ADD MEASURE" onClick= { () => this.addMeasure(this.state.selectedService) }></input></p>
 
                         {this.state.listMeasures[0].length > 0 
                             &&
                             this.state.listMeasures[0].map((measure, index) => (
-                                <div className="m-2" key={"measureKey"+index}><p> {measure} </p> </div>       
+                                <div className="" key={"measureKey"+index}><p> {measure} </p> </div>       
                             ))
                         }   
-
-
-
                     </div>
                 }
 

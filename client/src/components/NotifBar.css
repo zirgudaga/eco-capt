@@ -1,0 +1,21 @@
+
+.tester-button-alerte{
+    background: rgb(206, 64, 64);
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.tester-button-notice{
+    background: green;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.tester-button-waiting{
+    background: orange;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+}

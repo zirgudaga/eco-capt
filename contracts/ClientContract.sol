@@ -202,7 +202,6 @@ contract ClientContract is Ownable {
         return (_serviceHeaderMeasures[_serviceId][_measureId], _serviceBodyMeasures[_serviceId][_measureId]);
     }  
 
-
     function addAlertConfigCustomer(
         uint _serviceId,
         bytes8 _version,   

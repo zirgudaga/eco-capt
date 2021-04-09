@@ -1,0 +1,21 @@
+.tester-button{
+    background:#415877;
+    color: white;
+    margin: 12px;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.tester-list{
+    background:#41587705;
+    color: white;
+    padding: 8px;      
+}
+
+.tester-input-number{
+
+}
+
+h2.tester{
+    padding: 8px;      
+}

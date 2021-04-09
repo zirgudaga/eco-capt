@@ -17,7 +17,7 @@
     animation: animatedBackground 60s linear infinite;
     opacity: .1;
   }
-
+ 
 main .wrap {
   position: relative;
   z-index: 1;
@@ -26,9 +26,17 @@ main .wrap {
   transform: translateY(-50%);
 }
 
-main {
-  height: 100vh;
-  position: relative;
+.home main {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    position: relative;
+}
+
+header.home {
+    box-shadow: none;
+    background-color: transparent;
+    display: block;
 }
 
 .home main p {

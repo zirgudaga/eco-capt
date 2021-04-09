@@ -1,13 +1,25 @@
 import React from 'react';
 
+import {getTabtSelect} from '../../utilsEco.js';
+
 export default class MySelect extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {myValue: ''};
+        this.state = {
+            myValue: '',
+            myTabOptions: []
+        };
     
         this.handleChange = this.handleChange.bind(this);
     }
+
+    componentDidMount = () => {
+        let myTabOptions = [];
+        myTabOptions = getTabtSelect(this.props.myName);
+        this.setState({ myTabOptions });       
+    }
+
 
     handleChange(event) {
         this.setState({myValue: event.target.value});
@@ -18,7 +30,7 @@ export default class MySelect extends React.Component {
         return (
             <select value={this.state.myValue} onChange={this.handleChange}>
                 <option value="">-Choississez une option-</option>
-                {this.props.myTabOptions.map((myOption) => (
+                {this.state.myTabOptions.map((myOption) => (
                     <option key={myOption.code} value={myOption.code}>{myOption.aff}</option>       
                 ))}
             </select>

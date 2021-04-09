@@ -25,10 +25,8 @@ export default class DashboardClient extends React.Component {
     render() {
         return (
             <div className="App">
-    
                 <DashboardClientSidebar state={this.props.state} goTo={(currentModuleSelect) => {this.setState({ currentModuleSelect });}}/>
                 {this.selectedDashboardLaucher()}
-                <label className="body-label sidebar-toggle"></label>
             </div>
         )
     }

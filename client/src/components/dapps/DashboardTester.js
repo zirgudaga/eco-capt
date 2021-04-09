@@ -1,7 +1,7 @@
 import React from 'react';
 import {stringToHex} from '../../utilsEco.js';
 import MySelect from '../elements/MySelect.js';
-import NotifBar from '../elements/NotifBar.js';
+import MyNotif from '../elements/MyNotif.js';
 
 import "./DashboardTester.css";
 
@@ -14,26 +14,12 @@ export default class DashboardTester extends React.Component {
             selectedService: -1,
             listMeasures: [], 
 
-            addServiceTabVersions: [
-                {code:'00.01.00', aff:'Version 0.1'},
-                {code:'00.02.00', aff:'Version 0.2'}
-            ], 
             addServiceVersion: '',
 
-            addServiceTabMeasureType: [
-                {code:'SON_0001', aff:'Accoustique version 1'},
-                {code:'SOUF0001', aff:'Emission de soufre version 1'},   
-                {code:'SOUF0002', aff:'Emission de soufre version 2'}                              
-            ], 
+ 
             addServiceMeasureType: '',
 
-            addServiceTabTimeType: [
-                {code:'Y', aff:'Année'},
-                {code:'m', aff:'Mois'},
-                {code:'d', aff:'Journée'},
-                {code:'H', aff:'Heure'},                                
-                {code:'i', aff:'Minutes'},                
-            ], 
+
             addServiceTimeType: '',
             errorMessage: '',
         };
@@ -157,7 +143,7 @@ export default class DashboardTester extends React.Component {
                 <section className="">
                     <div className="tester-block" > 
 
-                        <NotifBar 
+                        <MyNotif 
                             contract={this.props.state.contractTarget}
                             errorMessage={this.state.errorMessage}    
                         />
@@ -184,7 +170,6 @@ export default class DashboardTester extends React.Component {
                                 </label>
                                 <MySelect 
                                     myName="addServiceVersion" 
-                                    myTabOptions={this.state.addServiceTabVersions}
                                     handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                                 />
                             </p>
@@ -196,7 +181,6 @@ export default class DashboardTester extends React.Component {
                                 </label>
                                 <MySelect 
                                     myName="addServiceMeasureType" 
-                                    myTabOptions={this.state.addServiceTabMeasureType}
                                     handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                                 />
                             </p>
@@ -213,7 +197,6 @@ export default class DashboardTester extends React.Component {
                                 />
                                 <MySelect 
                                     myName="addServiceTimeType" 
-                                    myTabOptions={this.state.addServiceTabTimeType}
                                     handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                                 />
                             </p>

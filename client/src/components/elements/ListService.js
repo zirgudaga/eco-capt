@@ -4,24 +4,23 @@ import "./ListService.css";
 
 export default class ListService extends React.Component {
 
-    myNotice = () => {
-        if(this.props.errorMessage !== ''){
-            return (<input type="button" className="tester-button-alerte" value={this.props.errorMessage}/>);
-        }
-
-        if(this.props.contract !== null){
-            return (<input type="button" className="tester-button-notice" value={"Status OK - " + this.props.contract}/>);
-        }
-        else{
-            return (<input type="button" className="tester-button-waiting" value="Status Waiting WEB3 connection"/>);
-        }
-    }
-
     render() {
         return (
-            <p>
-                {this.myNotice()}
-            </p>
+            <div className="list-service-body">
+                <div className="list-service-ul">
+                    {this.props.state.listServices.length > 0 
+                        ?
+                        this.props.state.listServices.map((service, index) => (
+                            <p key={"serviceKey"+index}><input type="button" className="tester-button" value={service.description} onClick={ () => this.props.setServiceFocus(index) }/></p>       
+                        ))
+                        :
+                        " Aucun service"
+                    }
+                </div>
+                <div>
+                    <input type="button" className="tester-button" value="NEW SERVICE" onClick= { () => this.props.addService() } /> 
+                </div>
+            </div>
         );      
     }
 }

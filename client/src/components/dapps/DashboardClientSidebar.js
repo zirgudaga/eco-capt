@@ -4,6 +4,16 @@ import './DashboardClientSidebar.css';
 
 export default class Sidebar extends React.Component {
 
+    showAddress = () => {      
+        if(this.props.state.accounts !== null){
+
+            return this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4);
+        } 
+        else{
+            return 'Waiting';
+        }       
+    }
+
     render() {
         return (
             <aside className="">
@@ -26,7 +36,7 @@ export default class Sidebar extends React.Component {
                             <img src="2.jpg" alt="" />
                             <div>
                                 <h3>Brand or User Name</h3>
-                                <span>hash adresse Metamask</span>
+                                <span>{this.showAddress()}</span>
                             </div>
                         </div>
                         <div className="sidebar-menu">

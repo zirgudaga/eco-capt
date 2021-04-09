@@ -1,10 +1,10 @@
 import React from 'react';
 
-import "./NotifBar.css";
+import "./MyNotif.css";
 
-export default class NotifBar extends React.Component {
+export default class MyNotif extends React.Component {
 
-    myNotice = () => {
+    myNoticeLauncher = () => {
         if(this.props.errorMessage !== ''){
             return (<input type="button" className="tester-button-alerte" value={this.props.errorMessage}/>);
         }
@@ -20,7 +20,7 @@ export default class NotifBar extends React.Component {
     render() {
         return (
             <p>
-                {this.myNotice()}
+                {this.myNoticeLauncher()}
             </p>
         );      
     }

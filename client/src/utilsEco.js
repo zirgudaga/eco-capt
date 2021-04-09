@@ -86,14 +86,37 @@ const ObjectToHex = (stringValue) => {
 
 };
 
+/**
+ * @dev Table to selector
+ * @param stringValue : String to transfort in Object
+ * @return Hex
+ */
+const getTabtSelect = (nameSelector) => {
 
+    switch(nameSelector){
+        case "addServiceVersion" : return [
+            {code:'00.01.00', aff:'Version 0.1'},
+            {code:'00.02.00', aff:'Version 0.2'}
+        ];
+
+        case "addServiceMeasureType" : return [
+            {code:'SON_0001', aff:'Accoustique version 1'},
+            {code:'SOUF0001', aff:'Emission de soufre version 1'},   
+            {code:'SOUF0002', aff:'Emission de soufre version 2'}   
+        ];
+
+        case "addServiceTimeType" : return [
+            {code:'Y', aff:'Année'},
+            {code:'m', aff:'Mois'},
+            {code:'d', aff:'Journée'},
+            {code:'H', aff:'Heure'},                                
+            {code:'i', aff:'Minutes'},  
+        ];
+    
+        default : return [];
+    }
+
+}  
   
-  
-  
-  
-  
-  
-  
-  
-export { recoltMeasures, hexToString, stringToHex, hexToObject, ObjectToHex };
+export { recoltMeasures, hexToString, stringToHex, hexToObject, ObjectToHex, getTabtSelect };
   

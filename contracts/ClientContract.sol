@@ -96,9 +96,11 @@ contract ClientContract is Ownable {
       _;
     }
 
-    event MeasureReceive(uint _service_id, bytes32 _header, bytes32 _body);   
-    event AlertReceive(uint _service_id, bytes32 _alert);
-    event ContractUpdate(string message);            
+    event MeasureReceive(uint _service_id, bytes32 _header, bytes32 _body, address _author); 
+    event AlertReceive(uint _service_id, bytes32 _alert, address _author); 
+    event ServiceUpdate(uint _service_id, string message, address _author); 
+    event ContractUpdate(string message, address _author);  
+               
 
     Config private _myConfig;
     Service[] private _services;
@@ -148,10 +150,40 @@ contract ClientContract is Ownable {
         measureIdCounter,
         alertIdCounter));
 
-        emit ContractUpdate("New service");
+        emit ContractUpdate("New service", msg.sender);
 
         _serviceIdCounter.increment();
     }  
+
+    function setTechMasterAddress(
+        uint _serviceId,
+        address _techMasterAddress)
+        isServiceOn(_serviceId) onlyOwner external {  
+        
+        _services[_serviceId].techMasterAddress = _techMasterAddress;
+
+        emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
+    }   
+
+    function setBridgeAddress(
+        uint _serviceId,
+        address _bridgeAddress)
+        isServiceOn(_serviceId) onlyTechMaster(_serviceId) external {  
+        
+        _services[_serviceId].bridgeAddress = _bridgeAddress;
+
+        emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
+    }   
+
+    function setLegislatorAddress(
+        uint _serviceId,
+        address _legislatorAddress)
+        isServiceOn(_serviceId) onlyCustomer() external {  
+        
+        _services[_serviceId].legislatorAddress = _legislatorAddress;
+
+        emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
+    }   
     
     function getOneService(
         uint _serviceId) 
@@ -180,7 +212,7 @@ contract ClientContract is Ownable {
         
         _services[_serviceId].measureIdCounter.increment();
 
-        emit MeasureReceive(_serviceId, _measureHeader, _measurebody);
+        emit MeasureReceive(_serviceId, _measureHeader, _measurebody, msg.sender);
     }
 
     function getAllMeasures(
@@ -250,7 +282,7 @@ contract ClientContract is Ownable {
 
         _services[_serviceId].alertConfigIdCounter.increment();
 
-        emit ContractUpdate("New Config Alert");
+        emit ServiceUpdate(_serviceId, "New Config Alert", msg.sender);
     }
 
     function getAllAlertConfigs(
@@ -269,7 +301,7 @@ contract ClientContract is Ownable {
         
         _services[_serviceId].alertIdCounter.increment();
 
-        emit AlertReceive(_serviceId, _alertBody);
+        emit AlertReceive(_serviceId, _alertBody, msg.sender);
     }
 
     function getAlerts(

@@ -93,9 +93,6 @@ export default class DashboardTester extends React.Component {
                 }
             }
         ); 
-        
-        
-       
     };
 
     getAllServices = async () => {
@@ -229,7 +226,7 @@ export default class DashboardTester extends React.Component {
                     {this.state.listServices.length > 0 
                         &&
                         this.state.listServices.map((service, index) => (
-                            <p><input type="button" className="tester-button" key={"serviceKey"+index} value={service.description} onClick={ () => this.setServiceFocus(index) }/></p>       
+                            <p key={"serviceKey"+index}><input type="button" className="tester-button" value={service.description} onClick={ () => this.setServiceFocus(index) }/></p>       
                         ))
                     }
 
@@ -251,7 +248,6 @@ export default class DashboardTester extends React.Component {
                         }   
                     </div>
                 }
-
             </section>
         )
     }

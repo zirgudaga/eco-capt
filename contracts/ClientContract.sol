@@ -17,10 +17,10 @@ contract ClientContract is Ownable {
     // }
     
     // struct mesure donnée (32) { 
-    //   Valeur Max : bytes8
-    //   Valeur Moyenne : bytes8
-    //   Valeur Médiane : bytes8
-    //   Valeur Min : bytes8
+    //   Valeur 1 Max : bytes8
+    //   Valeur 2 Moyenne : bytes8
+    //   Valeur 3 Médiane : bytes8
+    //   Valeur 4 Min : bytes8
     // }
 
     // struct alert donnée (32) { 
@@ -29,7 +29,6 @@ contract ClientContract is Ownable {
     //   Date : YYYYmmddHHii : byte12
     //   Valeur alert : bytes8
     // }
-
 
     /**
     * @dev Contract Configuration
@@ -61,7 +60,8 @@ contract ClientContract is Ownable {
     }
 
     struct AlertConfig {
-        bytes8 version;        
+        bytes8 version;     
+        string description;   
         address legislatorAddress;
         uint64 dateOn;
         uint64 dateOff;
@@ -204,29 +204,32 @@ contract ClientContract is Ownable {
 
     function addAlertConfigCustomer(
         uint _serviceId,
-        bytes8 _version,   
+        bytes8 _version, 
+        string memory _description,  
         uint64 _dateOn,
         uint64 _dateOff,
         bytes8 _codeAlert,         
         bytes8 _valueAlert)         
         isServiceOn(_serviceId) onlyCustomer() external{       
-            _addAlertConfig(_serviceId, _version, address(0), _dateOn, _dateOff, _codeAlert, _valueAlert);
+            _addAlertConfig(_serviceId, _version, _description, address(0), _dateOn, _dateOff, _codeAlert, _valueAlert);
     }
 
     function addAlertConfigLegislator(
         uint _serviceId,
         bytes8 _version,   
+        string memory _description,  
         uint64 _dateOn,
         uint64 _dateOff,
         bytes8 _codeAlert,         
         bytes8 _valueAlert)         
         isServiceOn(_serviceId) onlyLegislator(_serviceId) external{       
-            _addAlertConfig(_serviceId, _version, msg.sender, _dateOn, _dateOff, _codeAlert, _valueAlert);
+            _addAlertConfig(_serviceId, _version, _description, msg.sender, _dateOn, _dateOff, _codeAlert, _valueAlert);
     }
 
     function _addAlertConfig(
         uint _serviceId,
         bytes8 _version,   
+        string memory _description,  
         address _legislatorAddress,
         uint64 _dateOn,
         uint64 _dateOff,
@@ -235,7 +238,8 @@ contract ClientContract is Ownable {
         internal{
 
         _serviceAlertConfig[_serviceId].push(AlertConfig(
-            _version,        
+            _version,    
+            _description,      
             _legislatorAddress,
             _dateOn,
             _dateOff,

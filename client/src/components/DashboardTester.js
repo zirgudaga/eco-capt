@@ -219,14 +219,7 @@ export default class DashboardTester extends React.Component {
                                 handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                             />
                         </p>
-
-
-
-                        
-                        
-                        <p>
-                            
-                        </p>            
+          
                     </form>
                     <div>
                         <input type="button" className="tester-button" value="NEW SERVICE" onClick= { () => this.addService() } />

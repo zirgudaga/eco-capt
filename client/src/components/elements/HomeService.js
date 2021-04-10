@@ -2,7 +2,7 @@ import React from 'react';
 
 import "./HomeService.css";
 
-export default class TemplateElement extends React.Component {
+export default class FormService extends React.Component {
 
     render() {
         return (

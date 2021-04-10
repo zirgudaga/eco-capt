@@ -1,5 +1,5 @@
 import React from 'react';
-import {stringToHex, fakeMeasure} from '../../utilsEco.js';
+import {stringToHex, fakeMeasure, measureToObject} from '../../utilsEco.js';
 import MySelect from '../elements/MySelect.js';
 import MyNotif from '../elements/MyNotif.js';
 
@@ -83,8 +83,6 @@ export default class DashboardTester extends React.Component {
         let { listServices } = this.state;
         listServices = await contract.methods.getAllServices().call();
 
-        console.log(listServices);
-
         this.setState({ listServices });  
     };    
 
@@ -93,8 +91,6 @@ export default class DashboardTester extends React.Component {
         const { contract } = this.props.state;
         let { listMeasures } = this.state;
         listMeasures = await contract.methods.getAllMeasures(serviceId).call();
-
-        console.log(listMeasures);
 
         this.setState({ listMeasures });  
     };  
@@ -138,6 +134,16 @@ export default class DashboardTester extends React.Component {
         listMeasures = await contract.methods.getAllMeasures(serviceId).call();
         this.setState({ contract, selectedService, listMeasures });  
     };     
+
+    showMeasure = (header, body) => {
+        let objetHeader, objetBody;
+
+        [objetHeader, objetBody] = measureToObject(header, body);
+
+        console.log(objetHeader);
+        console.log(objetBody);
+        return header+" - "+body;
+    };
 
     render() {
         return (
@@ -229,7 +235,7 @@ export default class DashboardTester extends React.Component {
                             {this.state.listMeasures[0].length > 0 
                                 &&
                                 this.state.listMeasures[0].map((measure, index) => (
-                                    <div className="" key={"measureKey"+index}><p> {measure} </p> </div>       
+                                    <div className="" key={"measureKey"+index}><p> {this.showMeasure(measure, this.state.listMeasures[1][index])} </p> </div>       
                                 ))
                             }   
                         </div>

@@ -40,10 +40,39 @@ const stringToHex = (stringValue) => {
  * @param stringValue : String to transfort in Object
  * @return Hex
  */
-const measureToObject = (stringValue) => { 
+const measureToObject = (hexHeader, hexBody) => { 
 
+    hexHeader = hexHeader.substr(-64);
+    hexBody = hexBody.substr(-64);
 
+    let version = hexToString(hexHeader.substr(0,16));
+
+    switch(version){
+        case '00.01.00': return _measureToObject_V_00_01_00(hexHeader, hexBody);
+        default : return [{},{}];
+    }
 };
+
+/**
+ * @dev String to Object Measure
+ * @param stringValue : String to transfort in Object
+ * @return Hex
+ */
+ const _measureToObject_V_00_01_00 = (hexHeader, hexBody) => { 
+
+    hexHeader = hexHeader.substr(-64);
+    hexBody = hexBody.substr(-64);
+
+    let objHeader, objBody;
+    let version = hexToString(hexHeader.substr(0,16));
+
+    console.log(version);
+
+
+    return [objHeader, objBody];
+};
+
+
 
 const fakeDateWithSeed = (seed) => {
     let date = new Date();
@@ -75,13 +104,12 @@ const fakeMeasure = (seed, service) => {
     //   Nb temporel : bytes3 
     // }
     
-    let nbTime  = "00000"+service.nbTime;
-    let objectHeader = 
-    '0x'+service.version.substr(-8)+
+    let hexHeader = 
+    '0x'+service.version.substr(-16)+
     stringToHex(fakeDateWithSeed(seed))+
     service.measureType.substr(-16)+
     service.timeCode.substr(-2)+
-    stringToHex(nbTime.substr(-3));
+    stringToHex(("00000"+service.nbTime).substr(-3));
     
     // struct mesure donnée (32) { 
     //   Valeur 1 Max : bytes8
@@ -91,13 +119,13 @@ const fakeMeasure = (seed, service) => {
 
     let tabFakeLine = [60, 76, 92, 88, 70, 62];
 
-    let objectBody = 
+    let hexBody = 
     '0x'+stringToHex(("00000000"+(tabFakeLine[seed%6]*1.5)).substr(-8))+
     stringToHex(("00000000"+(tabFakeLine[seed%6]*1)).substr(-8))+
     stringToHex(("00000000"+(tabFakeLine[seed%6]*0.9)).substr(-8))+
     stringToHex(("00000000"+(tabFakeLine[seed%6]*0.70)).substr(-8));
    
-    return [objectHeader, objectBody];
+    return [hexHeader, hexBody];
 };
 
 /**
@@ -109,8 +137,7 @@ const getTabtSelect = (nameSelector) => {
 
     switch(nameSelector){
         case "addServiceVersion" : return [
-            {code:'00.01.00', aff:'Version 0.1'},
-            {code:'00.02.00', aff:'Version 0.2'}
+            {code:'00.01.00', aff:'Version 0.1'}
         ];
 
         case "addServiceMeasureType" : return [

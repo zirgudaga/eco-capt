@@ -63,12 +63,27 @@ const measureToObject = (hexHeader, hexBody) => {
     hexHeader = hexHeader.substr(-64);
     hexBody = hexBody.substr(-64);
 
-    let objHeader, objBody;
-    let version = hexToString(hexHeader.substr(0,16));
+    //   Date : YYYYmmddHHii : byte12 
+    //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
+    //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
+    //   Nb temporel : bytes3 
+    let objHeader = {};
+    objHeader.version = hexToString(hexHeader.substr(0,16));
+    objHeader.date = hexToString(hexHeader.substr(16,24));
+    objHeader.measureType = hexToString(hexHeader.substr(40,16));   
+    objHeader.timeCode = hexToString(hexHeader.substr(56,2)); 
+    objHeader.nbTime = parseInt(hexToString(hexHeader.substr(58,6)),10); 
 
-    console.log(version);
-
-
+    //   Valeur 1 Max : bytes8
+    //   Valeur 2 Moyenne : bytes8
+    //   Valeur 3 Médiane : bytes8
+    //   Valeur 4 Min : bytes8
+    let objBody = {};
+    objBody.val1 = parseFloat(hexToString(hexBody.substr(0,16)));
+    objBody.val2 = parseFloat(hexToString(hexBody.substr(16,16)));
+    objBody.val3 = parseFloat(hexToString(hexBody.substr(32,16)));
+    objBody.val4 = parseFloat(hexToString(hexBody.substr(48,16)));
+    
     return [objHeader, objBody];
 };
 
@@ -95,15 +110,11 @@ const fakeDateWithSeed = (seed) => {
  */
 const fakeMeasure = (seed, service) => {
 
-    // struct mesure en-tête (32) { 
-    //   //V0.1     XX.XX.XX    00.01.00
     //   Version : bytes8;
     //   Date : YYYYmmddHHii : byte12 
     //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
     //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
-    //   Nb temporel : bytes3 
-    // }
-    
+    //   Nb temporel : bytes3  
     let hexHeader = 
     '0x'+service.version.substr(-16)+
     stringToHex(fakeDateWithSeed(seed))+
@@ -111,20 +122,17 @@ const fakeMeasure = (seed, service) => {
     service.timeCode.substr(-2)+
     stringToHex(("00000"+service.nbTime).substr(-3));
     
-    // struct mesure donnée (32) { 
     //   Valeur 1 Max : bytes8
     //   Valeur 2 Moyenne : bytes8
     //   Valeur 3 Médiane : bytes8
     //   Valeur 4 Min : bytes8
-
     let tabFakeLine = [60, 76, 92, 88, 70, 62];
-
     let hexBody = 
-    '0x'+stringToHex(("00000000"+(tabFakeLine[seed%6]*1.5)).substr(-8))+
-    stringToHex(("00000000"+(tabFakeLine[seed%6]*1)).substr(-8))+
-    stringToHex(("00000000"+(tabFakeLine[seed%6]*0.9)).substr(-8))+
-    stringToHex(("00000000"+(tabFakeLine[seed%6]*0.70)).substr(-8));
-   
+    '0x'+stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*1.50,10))).substr(-8))+
+    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*1.00,10))).substr(-8))+
+    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*0.90,10))).substr(-8))+
+    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*0.70,10))).substr(-8));
+
     return [hexHeader, hexBody];
 };
 

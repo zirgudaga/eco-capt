@@ -24,6 +24,9 @@ main .wrap {
   text-align: center;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .home main {
@@ -41,4 +44,8 @@ header.home {
 
 .home main p {
   margin-bottom: 30px;
+}
+
+.slogan {
+  color: #fff;
 }

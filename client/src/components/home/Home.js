@@ -11,14 +11,12 @@ export default class Home extends React.Component {
                     }}>
                     </div>
                     <div className="wrap">
-                        <div className="m-auto">
-                            <div className="text-center text-white">
-                                <h1>Mieux capter pour construire vrai</h1>
-                                <p>Être honnête n'a jamais été aussi simple</p>
-                                <button className="cta">
-                                    start using
-                                </button>
-                            </div>
+                        <div className="slogan">
+                            <h1>Mieux capter pour construire vrai</h1>
+                            <p>Être honnête n'a jamais été aussi simple</p>
+                            <button className="cta">
+                                start using
+                            </button>
                         </div>
                     </div>
                 </main>  

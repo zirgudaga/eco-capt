@@ -33,23 +33,58 @@ header {
   background: #f1f5f9;
 }
 
+.main-flex {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background: #f1f5f9;
+}
+
 .main-content {
   margin-left: 280px;
   transition: margin-left 300ms;
 }
 
-main {
+.main-client {
   padding: 24px;
-  background: #f1f5f9;
+  background: #fff;
   min-height: calc(100vh - 70px);
   margin-top: 70px;
+  border-radius: 30px;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
   display: flex;
   justify-content: space-between;
+  padding: 50px;
 }
 
 .page-header {
   display: flex;
   justify-content: space-between;
+}
+
+.page-header-title {
+  color: #1a202e;
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+.page-header p {
+  margin: 20px;
+}
+
+.address-color {
+  color: #2277ff;
+}
+
+.page-header-cta {
+  padding: 10px 40px;
+  background-color: #2563eb;
+  color: #fff;
+  border: 2px solid #2563eb;
+  border-radius: 50px;
+  display: inline-block;
+  transition: 0.1s all ease-out;
+  cursor: pointer;
 }
 
 .header-actions button {
@@ -94,7 +129,7 @@ main {
   font-size: 16px;
 }
 
-.card-head small {
+.card-head p {
   font-weight: 600;
   color: #555;
 }

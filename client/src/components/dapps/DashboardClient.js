@@ -16,7 +16,7 @@ export default class DashboardClient extends React.Component {
     selectedDashboardLaucher = () => {
 
         switch(this.state.currentModuleSelect){
-            case "Home" : return (<DashboardClientMainHome state={this.props.state}/>);
+            case "Home" : return (<DashboardClientMainHome state={this.props.state} goTo={(currentModuleSelect) => {this.setState({ currentModuleSelect });}}/>);
             case "Service" : return (<DashboardClientMainService state={this.props.state}/>);
             default: return (<DashboardClientMainHome state={this.props.state}/>);
         }

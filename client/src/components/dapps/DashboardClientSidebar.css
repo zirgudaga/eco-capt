@@ -57,9 +57,11 @@
   border-top: 2px solid #2277ff;
   border-right: 2px solid #2277ff;
   border-bottom: 2px solid #2277ff;
+  margin:auto;
 }
 
 .sidebar-user h3 {
+  margin-top: 30px;
   font-size: 16px;
 }
 
@@ -92,6 +94,7 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .sidebar-menu li a span {

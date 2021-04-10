@@ -16,3 +16,9 @@
 h2.tester{
     padding: 8px;      
 }
+
+main.tester{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}

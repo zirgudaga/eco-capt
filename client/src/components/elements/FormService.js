@@ -40,10 +40,10 @@ export default class FormService extends React.Component {
 
         const { accounts, contract, web3 } = this.props.state;
         await contract.methods.addService(
-            stringToHex(addServiceVersion), 
+            '0x'+stringToHex(addServiceVersion), 
             this.newServiceDescription.value.trim(),
-            stringToHex(addServiceMeasureType), 
-            stringToHex(addServiceTimeType),            
+            '0x'+stringToHex(addServiceMeasureType), 
+            '0x'+stringToHex(addServiceTimeType),            
             this.newServiceNbTime.value        
         ).send({ from: accounts[0] },
             async (erreur, tx) => {

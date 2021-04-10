@@ -1,5 +1,5 @@
 import React from 'react';
-import {stringToHex} from '../../utilsEco.js';
+import {stringToHex, fakeMeasure} from '../../utilsEco.js';
 import MySelect from '../elements/MySelect.js';
 import MyNotif from '../elements/MyNotif.js';
 
@@ -13,13 +13,9 @@ export default class DashboardTester extends React.Component {
             listServices: [],
             selectedService: -1,
             listMeasures: [], 
-
+            currentMeasureFake : 0,
             addServiceVersion: '',
-
- 
             addServiceMeasureType: '',
-
-
             addServiceTimeType: '',
             errorMessage: '',
         };
@@ -61,10 +57,10 @@ export default class DashboardTester extends React.Component {
 
         const { accounts, contract, web3 } = this.props.state;
         await contract.methods.addService(
-            stringToHex(addServiceVersion), 
+            '0x'+stringToHex(addServiceVersion), 
             this.newServiceDescription.value.trim(),
-            stringToHex(addServiceMeasureType), 
-            stringToHex(addServiceTimeType),            
+            '0x'+stringToHex(addServiceMeasureType), 
+            '0x'+stringToHex(addServiceTimeType),            
             this.newServiceNbTime.value        
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
@@ -105,13 +101,19 @@ export default class DashboardTester extends React.Component {
 
     addMeasure = async (serviceId) => {
         const { accounts, contract, web3 } = this.props.state;
+        let {currentMeasureFake } = this.state;
 
         let context = this;
+        let header, body;
+
+        [header, body] = fakeMeasure(currentMeasureFake, this.state.listServices[serviceId]); 
+        currentMeasureFake++;
+        this.setState({ currentMeasureFake });
 
         await contract.methods.addMeasure(
             serviceId,
-            "0x0102030405060708090A0B0C0D0E0F1112131415161718191A1B1C1D1E1F",  
-            "0x0102030405060708090A0B0C0D0E0F1112131415161718191A1B1C1D1E1F"
+            header,  
+            body
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
                 if(tx){
@@ -139,7 +141,7 @@ export default class DashboardTester extends React.Component {
 
     render() {
         return (
-            <main className="test">          
+            <main className="tester">          
                 <section className="">
                     <div className="tester-block" > 
 

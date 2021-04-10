@@ -7,33 +7,6 @@
 * @package EDH_LIBS
 * @copyright 2021 EDH
 */
-
-// struct mesure en-tête (32) { 
-//   //V0.1     XX.XX.XX    00.01.00
-//   Version : bytes8;
-//   Date : YYYYmmddHHii : byte12
-//   Type de mesureID : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
-//   Type temporel : bytes1 (Horaire, Journalier) Y m d H i
-//   Nb temporel : bytes3 
-// }
-
-// struct mesure donnée (32) { 
-//   Valeur Max : bytes8
-//   Valeur Moyenne : bytes8
-//   Valeur Médiane : bytes8
-//   Valeur Min : bytes8
-// }
-
-/**
- * @dev Recolt measures
- * @param myList : Array of hexa_header
- * @param myObject : Array of hexa_body
- * @return array of string
- */
-const recoltMeasures = (tabInputHeader, tabInputBody) => {
-    
-
-};
   
 /**
  * @dev Recolt measures
@@ -59,7 +32,7 @@ const stringToHex = (stringValue) => {
     for(let i=0; i<stringValue.length; i++) {
         hexValue += '' + stringValue.charCodeAt(i).toString(16);
     }
-    return '0x'+hexValue;
+    return hexValue;
 };
 
 /**
@@ -67,23 +40,64 @@ const stringToHex = (stringValue) => {
  * @param stringValue : String to transfort in Object
  * @return Hex
  */
-const hexToObject = (stringValue) => { 
+const measureToObject = (stringValue) => { 
 
 
 };
 
+const fakeDateWithSeed = (seed) => {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month  = "0"+(date.getMonth()+1);
+    let day  = "0"+date.getDate();
+    let hours = "0"+date.getHours();
+    let minutes = "0"+(date.getMinutes()+seed);
 
+    // Date : YYYYmmddHHii 
+    let formattedTime = year+month.substr(-2)+day.substr(-2)+hours.substr(-2)+minutes.substr(-2);
 
-
+    return formattedTime;
+}
 
 /**
- * @dev String to Object Measure
- * @param stringValue : String to transfort in Object
- * @return Hex
+ * @dev Make a fake list of measure
+ * @param seed : Integer of seed
+ * @return 2 size array
  */
-const ObjectToHex = (stringValue) => {
+const fakeMeasure = (seed, service) => {
+
+    // struct mesure en-tête (32) { 
+    //   //V0.1     XX.XX.XX    00.01.00
+    //   Version : bytes8;
+    //   Date : YYYYmmddHHii : byte12 
+    //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
+    //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
+    //   Nb temporel : bytes3 
+    // }
     
+    let nbTime  = "00000"+service.nbTime;
+    let objectHeader = 
+    '0x'+service.version.substr(-8)+
+    stringToHex(fakeDateWithSeed(seed))+
+    service.measureType.substr(-16)+
+    service.timeCode.substr(-2)+
+    stringToHex(nbTime.substr(-3));
+    
+    // struct mesure donnée (32) { 
+    //   Valeur 1 Max : bytes8
+    //   Valeur 2 Moyenne : bytes8
+    //   Valeur 3 Médiane : bytes8
+    //   Valeur 4 Min : bytes8
 
+    let tabFakeLine = [60, 76, 92, 88, 70, 62];
+
+    let objectBody = 
+    '0x'+stringToHex(("00000000"+(tabFakeLine[seed%6]*1.5)).substr(-8))+
+    stringToHex(("00000000"+(tabFakeLine[seed%6]*1)).substr(-8))+
+    stringToHex(("00000000"+(tabFakeLine[seed%6]*0.9)).substr(-8))+
+    stringToHex(("00000000"+(tabFakeLine[seed%6]*0.70)).substr(-8));
+   
+    return [objectHeader, objectBody];
 };
 
 /**
@@ -115,8 +129,7 @@ const getTabtSelect = (nameSelector) => {
     
         default : return [];
     }
-
 }  
   
-export { recoltMeasures, hexToString, stringToHex, hexToObject, ObjectToHex, getTabtSelect };
+export { hexToString, stringToHex, measureToObject, getTabtSelect, fakeMeasure };
   

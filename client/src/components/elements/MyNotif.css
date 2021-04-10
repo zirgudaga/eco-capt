@@ -1,9 +1,9 @@
-
 .tester-button-alerte{
     background: rgb(206, 64, 64);
     color: white;
     padding: 8px;
     border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .tester-button-notice{
@@ -11,6 +11,7 @@
     color: white;
     padding: 8px;
     border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .tester-button-waiting{
@@ -18,4 +19,5 @@
     color: white;
     padding: 8px;
     border-radius: 8px;
+    margin-bottom: 20px;
 }

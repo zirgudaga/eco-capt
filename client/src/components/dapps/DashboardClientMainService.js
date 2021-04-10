@@ -1,5 +1,6 @@
 import React from 'react';
 import './DashboardClientMain.css';
+import './DashboardClientMainService.css'
 
 import HomeService from '../elements/HomeService.js';
 import FocusService from '../elements/FocusService.js';
@@ -93,7 +94,7 @@ export default class DashboardClientMainService extends React.Component {
                         </div>
                     </header>
 
-                    <main>     
+                    <main className="service-main-content">     
                         {this.selectedMainLauncher()}  
                         <ListService 
                             state={this.state}

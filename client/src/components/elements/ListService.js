@@ -18,7 +18,7 @@ export default class ListService extends React.Component {
                     }
                 </div>
                 <div>
-                    <input type="button" className="tester-button" value="NEW SERVICE" onClick= { () => this.props.addService() } /> 
+                    <input type="button" className="list-service-cta" value="NEW SERVICE" onClick= { () => this.props.addService() } /> 
                 </div>
             </div>
         );      

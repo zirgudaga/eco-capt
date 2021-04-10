@@ -1,3 +1,20 @@
-div.list-service-body {
-    background: paleturquoise;
+.list-service-body {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+}
+
+.list-service-cta {
+    padding: 10px 20px;
+    background-color: #2563eb;
+    color: #fff;
+    border: 2px solid #2563eb;
+    border-radius: 50px;
+    display: inline-block;
+    transition: 0.1s all ease-out;
+    cursor: pointer;
+    margin-left: 10px;
 }

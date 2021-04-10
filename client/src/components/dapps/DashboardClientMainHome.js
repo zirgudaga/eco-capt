@@ -45,8 +45,6 @@ export default class DashboardClientMainHome extends React.Component {
                                 <p className="page-header-help">Une question ? Contactez-nous !</p>
                             </div>
                         </div>
-                        
-                        
                     </main>
                 </div>
             </div>

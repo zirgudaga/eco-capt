@@ -12,7 +12,7 @@
 /build
 
 # build 
-/contracts
+/src/contracts
 
 # misc
 .DS_Store

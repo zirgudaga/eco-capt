@@ -129,6 +129,10 @@ contract ClientContract is Ownable {
         );  
     }
 
+    function getConfig() external view returns (Config memory) {
+        return _myConfig;
+    }
+
     function addService(
         bytes8 _version,   
         string memory _description,
@@ -180,15 +184,42 @@ contract ClientContract is Ownable {
         _services[_serviceId].isActive = !_services[_serviceId].isActive;
     }
 
-    // function toogleAlertConfig(uint _serviceId, uint _alertConfigId)
-    //     onlyCustomer() external {
-    //     if(_serviceAlertConfig[_serviceId][_alertConfigId].isActive){
-    //         emit ServiceUpdate(_serviceId, "Alert off", msg.sender);
-    //     }else{
-    //         emit ServiceUpdate(_serviceId, "Alert on", msg.sender);
-    //     } 
-    //     _serviceAlertConfig[_serviceId][_alertConfigId].isActive = !_serviceAlertConfig[_serviceId][_alertConfigId].isActive;
-    // }        
+
+/*
+    function toogleAlertConfig(uint _serviceId, uint _alertConfigId)
+        onlyCustomer() external {
+
+        _serviceAlertConfig[_serviceId][_alertConfigId].isActive;
+
+
+
+  
+    }      
+
+
+    function toogleAlertConfigLegislator(uint _serviceId, uint _alertConfigId)
+        onlyLegislator() external {
+
+        _serviceAlertConfig[_serviceId][_alertConfigId].isActive;
+
+
+    }        
+*/
+
+    function toogleAlertConfigLegislator(uint _serviceId, uint _alertConfigId) internal {
+        if(_serviceAlertConfig[_serviceId][_alertConfigId].isActive){
+            emit ServiceUpdate(_serviceId, "Alert off", msg.sender);
+        }else{
+            emit ServiceUpdate(_serviceId, "Alert on", msg.sender);
+        } 
+        _serviceAlertConfig[_serviceId][_alertConfigId].isActive = !_serviceAlertConfig[_serviceId][_alertConfigId].isActive;
+    }
+
+
+
+
+
+
 
     function setTechMasterAddress(
         uint _serviceId,

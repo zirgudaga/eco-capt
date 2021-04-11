@@ -109,7 +109,7 @@ contract ClientContract is Ownable {
     Config private _myConfig;
     Service[] private _services;
 
-    Counters.Counter private _serviceIdCounter;
+    Counters.Counter public _serviceIdCounter;
 
     mapping(uint => AlertConfig[]) private _serviceAlertConfig;  
     mapping(uint => bytes32[]) private _serviceHeaderMeasures;

@@ -87,8 +87,6 @@ const measureToObject = (hexHeader, hexBody) => {
     return [objHeader, objBody];
 };
 
-
-
 const fakeDateWithSeed = (seed) => {
     let date = new Date();
     let year = date.getFullYear();

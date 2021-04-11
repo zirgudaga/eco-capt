@@ -86,7 +86,7 @@ export default class FormService extends React.Component {
 
                 <form>
                     <div className="form-newservice-label">
-                        <label for="newServiceDescription">
+                        <label>
                             Description du service
                         </label>
                         <input type="text" name="newServiceDescription" className="newServiceDescription" placeholder="Nouveau service"
@@ -118,7 +118,7 @@ export default class FormService extends React.Component {
                     </div>
 
                     <div className="form-newservice-label">
-                        <label for="frequency">
+                        <label>
                             Fréquence
                         </label>
 
@@ -136,18 +136,6 @@ export default class FormService extends React.Component {
                     <input type="button" className="form-service-cta" value="Accept" onClick= { () => this.addService() } />
     
                 </form>
-
-                <div id="dropdown">
-                    <div id="dropdown-select">
-                        <span id="select">Select an option</span>
-                        <i id="fas fa-caret-down"></i>
-                    </div>
-                    <div id="dropdown-list">
-                        <div id="dropdown-list__item">Option 1</div>
-                        <div id="dropdown-list__item">Option 2</div>
-                        <div id="dropdown-list__item">Option 3</div>
-                    </div>
-                </div>
 
             </div>
         );      

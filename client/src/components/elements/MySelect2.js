@@ -2,7 +2,7 @@ import React from 'react';
 
 import {getTabtSelect} from '../../utilsEco.js';
 
-import './MySelect.css'
+import "./MySelect2.css";
 
 export default class MySelect extends React.Component {
 
@@ -30,10 +30,10 @@ export default class MySelect extends React.Component {
     
     render() {
         return (
-            <select value={this.state.myValue} onChange={this.handleChange}>
+            <select value={this.state.myValue}>
                 <option id="select-option" value="">Select</option>
-                {this.state.myTabOptions.map((myOption) => (
-                    <option key={myOption.code} value={myOption.code}>{myOption.aff}</option>       
+                {this.state.myTabOptions.map((myOption, index) => (
+                    <option key={"select_"+myOption.index}>{myOption.aff}</option>       
                 ))}
             </select>
         )

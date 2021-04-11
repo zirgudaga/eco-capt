@@ -71,7 +71,7 @@ contract ClientContract is Ownable {
     }
 
     modifier isContractActive() {
-        require(_myConfig.isActive, "Service off line");
+        require(_myConfig.isActive, "Contract off line");
         _;
     }
 

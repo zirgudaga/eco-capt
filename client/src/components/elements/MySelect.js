@@ -2,6 +2,8 @@ import React from 'react';
 
 import {getTabtSelect} from '../../utilsEco.js';
 
+import './MySelect.css'
+
 export default class MySelect extends React.Component {
 
     constructor(props) {

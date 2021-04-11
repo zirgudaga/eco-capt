@@ -140,9 +140,7 @@ export default class DashboardTester extends React.Component {
 
         [objetHeader, objetBody] = measureToObject(header, body);
 
-        console.log(objetHeader);
-        console.log(objetBody);
-        return header+" - "+body;
+        return (<p> {objetHeader.date} - {objetHeader.measureType} ({objetHeader.version}) : {objetBody.val1} - {objetBody.val2} - {objetBody.val3} - {objetBody.val4} </p>);
     };
 
     render() {
@@ -235,7 +233,7 @@ export default class DashboardTester extends React.Component {
                             {this.state.listMeasures[0].length > 0 
                                 &&
                                 this.state.listMeasures[0].map((measure, index) => (
-                                    <div className="" key={"measureKey"+index}><p> {this.showMeasure(measure, this.state.listMeasures[1][index])} </p> </div>       
+                                    <div className="" key={"measureKey"+index}> {this.showMeasure(measure, this.state.listMeasures[1][index])}  </div>       
                                 ))
                             }   
                         </div>

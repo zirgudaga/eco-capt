@@ -28,12 +28,14 @@ export default class MySelect extends React.Component {
     
     render() {
         return (
-            <select value={this.state.myValue} onChange={this.handleChange}>
-                <option value="">Choisissez une option</option>
-                {this.state.myTabOptions.map((myOption) => (
-                    <option key={myOption.code} value={myOption.code}>{myOption.aff}</option>       
-                ))}
-            </select>
+            <div>
+                <select value={this.state.myValue} onChange={this.handleChange}>
+                    <option id="select-option" value="">Select</option>
+                    {this.state.myTabOptions.map((myOption) => (
+                        <option key={myOption.code} value={myOption.code}>{myOption.aff}</option>       
+                    ))}
+                </select>
+            </div>
         )
     }
 }

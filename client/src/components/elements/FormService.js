@@ -86,10 +86,10 @@ export default class FormService extends React.Component {
 
                 <form>
                     <div className="form-newservice-label">
-                        <label>
+                        <label for="newServiceDescription">
                             Description du service
                         </label>
-                        <input type="text" id="newServiceDescription" 
+                        <input type="text" name="newServiceDescription" id="newServiceDescription" placeholder="Nouveau service"
                             ref={(input) => { 
                                 this.newServiceDescription = input
                             }}
@@ -118,11 +118,11 @@ export default class FormService extends React.Component {
                     </div>
 
                     <div className="form-newservice-label">
-                        <label>
+                        <label for="frequency">
                             Fréquence
                         </label>
 
-                        <input type="number" size="4" className="tester-input-number" id="newServiceNbTime" 
+                        <input type="number" name="frequency" id="frequency" size="4" className="tester-input-number" placeholder="1"
                             ref={(input) => { 
                                 this.newServiceNbTime = input
                             }}
@@ -133,9 +133,21 @@ export default class FormService extends React.Component {
                         />
                     </div>
 
-                    <input type="button" className="form-service-cta" value="Accept" onClick= { () => this.addService() } />
+                    <input type="button" id="form-service-cta" value="Accept" onClick= { () => this.addService() } />
     
                 </form>
+
+                <div id="dropdown">
+                    <div id="dropdown-select">
+                        <span id="select">Select an option</span>
+                        <i id="fas fa-caret-down"></i>
+                    </div>
+                    <div id="dropdown-list">
+                        <div id="dropdown-list__item">Option 1</div>
+                        <div id="dropdown-list__item">Option 2</div>
+                        <div id="dropdown-list__item">Option 3</div>
+                    </div>
+                </div>
 
             </div>
         );      

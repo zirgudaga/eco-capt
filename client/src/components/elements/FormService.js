@@ -77,7 +77,7 @@ export default class FormService extends React.Component {
     render() {
         return (
             <div className="form-newservice-body">
-                <span onClick={()=>this.props.close()}>X</span><br/>
+                <span className="form-service-close" onClick={()=>this.props.close()}>X</span><br/>
 
                 <MyNotif 
                     contract={this.props.state.contractTarget}
@@ -85,7 +85,7 @@ export default class FormService extends React.Component {
                 />
 
                 <form>
-                    <p>
+                    <div className="form-newservice-label">
                         <label>
                             Description du service
                         </label>
@@ -94,9 +94,9 @@ export default class FormService extends React.Component {
                                 this.newServiceDescription = input
                             }}
                         />
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="form-newservice-label">
                         <label>
                             Version du service
                         </label>
@@ -104,10 +104,10 @@ export default class FormService extends React.Component {
                             myName="addServiceVersion" 
                             handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                         />
-                    </p>
+                    </div>
 
 
-                    <p>
+                    <div className="form-newservice-label">
                         <label>
                             Measure du service
                         </label>
@@ -115,9 +115,9 @@ export default class FormService extends React.Component {
                             myName="addServiceMeasureType" 
                             handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                         />
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="form-newservice-label">
                         <label>
                             Fréquence
                         </label>
@@ -131,9 +131,9 @@ export default class FormService extends React.Component {
                             myName="addServiceTimeType" 
                             handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                         />
-                    </p>
+                    </div>
 
-                    <input type="button" className="tester-button" value="Accept" onClick= { () => this.addService() } />
+                    <input type="button" className="form-service-cta" value="Accept" onClick= { () => this.addService() } />
     
                 </form>
 

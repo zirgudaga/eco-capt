@@ -21,7 +21,7 @@ export default class FocusService extends React.Component {
     }
 
     refresh = () => {
-        this.setServiceFocus(this.props.myService.serviceId);
+       this.setServiceFocus(this.props.myService.serviceId);
     }
 
     

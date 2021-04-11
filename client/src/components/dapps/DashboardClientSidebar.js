@@ -35,7 +35,7 @@ export default class Sidebar extends React.Component {
                         <div className="sidebar-user">
                             <img src="2.jpg" alt="" />
                             <div>
-                                <h3>Brand or User Name</h3>
+                                <h3>GDF Suez</h3>
                                 <span>{this.showAddress()}</span>
                             </div>
                         </div>

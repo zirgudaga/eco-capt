@@ -49,3 +49,26 @@ header.home {
 .slogan {
   color: #fff;
 }
+
+.cta {
+  padding: 20px 40px;
+  background-color: #2563eb;
+  color: #fff;
+  border: 2px solid #2563eb;
+  border-radius: 50px;
+  display: inline-block;
+  transition: 0.1s all ease-out;
+}
+
+.cta:hover {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.cta, nav li a {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}

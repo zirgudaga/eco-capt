@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 export default class Home extends React.Component {
     render() {
@@ -15,7 +16,7 @@ export default class Home extends React.Component {
                             <h1>Mieux capter pour construire vrai</h1>
                             <p>Être honnête n'a jamais été aussi simple</p>
                             <button className="cta">
-                                start using
+                            <Link to="/appClient">Start using</Link>
                             </button>
                         </div>
                     </div>

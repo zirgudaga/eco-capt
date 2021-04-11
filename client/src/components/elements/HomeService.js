@@ -6,8 +6,10 @@ export default class FormService extends React.Component {
 
     render() {
         return (
-            <div className="home-service-body">
-                BONJOUR !!!! Tu es bien dans le module service, je suis la HOME !!
+            <div className="service-flex">
+                <div className="service-main">
+                    <h1 className="service-title">Mes services</h1>
+                </div>
             </div>
         );      
     }

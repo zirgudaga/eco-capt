@@ -1,6 +1,7 @@
 .tester-button{
     background:#415877;
     color: white;
+    border: 1px solid black;
     margin: 12px;
     padding: 8px;
     border-radius: 8px;
@@ -10,6 +11,15 @@
     background:#41587705;
     color: white;
     padding: 8px;      
+}
+
+.tester-input{
+    background: paleturquoise;
+    color: white;
+    border: 1px solid black;
+    margin: 12px;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 

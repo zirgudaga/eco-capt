@@ -33,9 +33,6 @@ export default class DashboardClientMainService extends React.Component {
     getAllServices = async () => {
         const { contract } = this.props.state;
 
-        console.log(contract);
-        return;
-
         if(contract != null){
             let { listServices } = this.state;
             listServices = await contract.methods.getAllServices().call();

@@ -159,18 +159,18 @@ export default class DashboardTester extends React.Component {
                         <h2 className="tester">SERVICES</h2>
 
                         <form>
-                            <p>
+                            <div>
                                 <label>
                                     Description du service
                                 </label>
-                                <input type="text" id="newServiceDescription" 
+                                <input type="text" id="newServiceDescription" className="tester-input" 
                                     ref={(input) => { 
                                         this.newServiceDescription = input
                                     }}
                                 />
-                            </p>
+                            </div>
 
-                            <p>
+                            <div>
                                 <label>
                                     Version du service
                                 </label>
@@ -178,10 +178,10 @@ export default class DashboardTester extends React.Component {
                                     myName="addServiceVersion" 
                                     handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                                 />
-                            </p>
+                            </div>
 
 
-                            <p>
+                            <div>
                                 <label>
                                     Measure du service
                                 </label>
@@ -189,14 +189,14 @@ export default class DashboardTester extends React.Component {
                                     myName="addServiceMeasureType" 
                                     handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                                 />
-                            </p>
+                            </div>
 
-                            <p>
+                            <div>
                                 <label>
                                     Fréquence
                                 </label>
 
-                                <input type="number" size="4" className="tester-input-number" id="newServiceNbTime" 
+                                <input type="number" size="4" className="tester-input" id="newServiceNbTime" 
                                     ref={(input) => { 
                                         this.newServiceNbTime = input
                                     }}
@@ -205,7 +205,7 @@ export default class DashboardTester extends React.Component {
                                     myName="addServiceTimeType" 
                                     handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                                 />
-                            </p>
+                            </div>
             
                         </form>
                         <div>
@@ -228,7 +228,7 @@ export default class DashboardTester extends React.Component {
                             <br/>
                             <h2 className="tester">SERVICES - {this.state.listServices[this.state.selectedService].description}</h2>
 
-                            <p><input type="button" className="tester-button" value="ADD MEASURE" onClick= { () => this.addMeasure(this.state.selectedService) }></input></p>
+                            <div><input type="button" className="tester-button" value="ADD MEASURE" onClick= { () => this.addMeasure(this.state.selectedService) }></input></div>
 
                             {this.state.listMeasures[0].length > 0 
                                 &&

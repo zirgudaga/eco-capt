@@ -15,7 +15,6 @@ export default class FocusService extends React.Component {
     }
 
     componentDidMount = () => {
-        return;
         setInterval(()=>{
             this.refresh();
         }, 1000);

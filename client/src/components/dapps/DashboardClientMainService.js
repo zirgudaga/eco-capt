@@ -21,7 +21,6 @@ export default class DashboardClientMainService extends React.Component {
     }
 
     componentDidMount = () => {
-        return;
         setInterval(()=>{
             this.refresh();
         }, 1000);

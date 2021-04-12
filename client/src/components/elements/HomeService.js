@@ -10,7 +10,6 @@ export default class HomeService extends React.Component {
                 <div className="home-service-main">
                     <h1 className="home-service-title">Mes services</h1>
                 </div>
-                <CardGraph />
             </div>
         );      
     }

@@ -2,6 +2,9 @@ import React from 'react';
 
 import {fakeMeasure} from '../../utilsEco.js';
 
+import CardGraph from './CardGraph.js';
+import ServiceInfo from './ServiceInfo.js';
+
 import "./FocusService.css";
 
 export default class FocusService extends React.Component {
@@ -79,13 +82,14 @@ export default class FocusService extends React.Component {
     render() {
         return (
             <div className="focus-service-body">
-                SERVICE FOCUS - {this.props.myService.description}
+                <b>{this.props.myService.description}</b>
 
-                {this.showMeasure()}
+                <CardGraph myService={this.props.myService} myMeasures={this.props.myMesasures}/>
+                <ServiceInfo myService={this.props.myService}/>
 
-                
-
-                <p><input type="button" className="tester-button" value="ADD MEASURE" onClick= { () => this.addMeasure() }></input></p>
+                <button type="button" className="focus-service-cta" 
+                    onClick= { () => this.props.addMeasure() }>New measure
+                </button> 
 
             </div>
         );      

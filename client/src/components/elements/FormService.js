@@ -89,7 +89,7 @@ export default class FormService extends React.Component {
                         <label>
                             Description du service
                         </label>
-                        <input type="text" name="newServiceDescription" className="newServiceDescription" placeholder="Nouveau service"
+                        <input type="text" name="newServiceDescription" className="form-newservice-detail" placeholder="Nouveau service"
                             ref={(input) => { 
                                 this.newServiceDescription = input
                             }}
@@ -122,7 +122,7 @@ export default class FormService extends React.Component {
                             Fréquence
                         </label>
 
-                        <input type="number" name="frequency" className="frequency" size="4" className="tester-input-number" placeholder="1"
+                        <input type="number" name="frequency" className="frequency" size="4" className="form-service-input-number" placeholder="1"
                             ref={(input) => { 
                                 this.newServiceNbTime = input
                             }}
@@ -133,7 +133,9 @@ export default class FormService extends React.Component {
                         />
                     </div>
 
-                    <input type="button" className="form-service-cta" value="Accept" onClick= { () => this.addService() } />
+                    <button type="button" className="form-service-cta" 
+                            onClick= { () => this.addService() }>Add service
+                    </button> 
     
                 </form>
 

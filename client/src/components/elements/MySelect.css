@@ -1,10 +1,6 @@
-/*
-    DROPDOWN START HERE
-*/
-
 .select {
   position: relative;
-  width: 60%;
+  width: 40%;
   color: black;
   display: inline-block;
   vertical-align: middle;
@@ -26,8 +22,8 @@
   z-index: 1;
   cursor: pointer;
   transition: 0.1s all ease-out;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
   padding:0 40px 0 20px;
 }
 

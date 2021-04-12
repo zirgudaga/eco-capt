@@ -4,6 +4,7 @@
     border-radius: 8px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     position: relative;
+    overflow: hidden;
 }
 
 .form-newservice-body input {
@@ -14,23 +15,28 @@
 .form-newservice-label {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 20px;
+    margin-right: 5px;
     border-radius: 3px;
     padding: 5px;
 }
 
-#form-service-cta {
-    margin-top: 20px;
-    padding: 10px 40px;
+.form-service-cta {
+    height: 60px;
+    line-height: 60px;
     background-color: #2563eb;
     color: #fff;
     border: 2px solid #2563eb;
-    border-radius: 30px;
+    border-radius: 8px;
     display: inline-block;
     transition: 0.1s all ease-out;
     cursor: pointer;
-    text-transform: uppercase;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     width: 100%;
+    text-transform: uppercase;
 }
 
 .form-service-close {
@@ -42,14 +48,10 @@
     cursor: pointer;
 }
 
-#frequency {
+.form-service-input-number {
     text-align: center;
 }
 
-#newServiceDescription {
+.form-newservice-detail {
     text-align: center;
-}
-
-#select-option {
-    text-align: end;
 }

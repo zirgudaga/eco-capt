@@ -4,6 +4,7 @@
     padding: 8px;
     border-radius: 8px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .tester-button-notice{
@@ -12,6 +13,7 @@
     padding: 8px;
     border-radius: 8px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .tester-button-waiting{
@@ -20,4 +22,5 @@
     padding: 8px;
     border-radius: 8px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }

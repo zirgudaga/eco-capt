@@ -122,11 +122,11 @@ contract ClientContract is Ownable {
         _;
     }
 
-    event MeasureReceive(uint _serviceId, bytes32 _header, bytes32 _body, address _author); 
-    event AlertReceive(uint _serviceId, bytes32 _alert, address _author); 
+    event MeasureReceive(uint _service_id, bytes32 _header, bytes32 _body, address _author); 
+    event AlertReceive(uint _service_id, bytes32 _alert, address _author); 
     event ContractUpdate(string _message, address _author);      
-    event ServiceUpdate(uint _serviceId, string _message, address _author); 
-    event ServiceElementUpdate(uint _serviceId, uint _id, string _message, address _author); 
+    event ServiceUpdate(uint _service_id, string _message, address _author); 
+    event ServiceElementUpdate(uint _service_id, uint _id, string _message, address _author); 
     
                
     Config private _myConfig;
@@ -164,6 +164,7 @@ contract ClientContract is Ownable {
 
     /**
      * @dev toggle a Contract activation or deactivation
+     * @return a ContractUpdate event
      */
     function toggleContract()
         onlyOwner() external {
@@ -179,11 +180,24 @@ contract ClientContract is Ownable {
 
      /**
      * @dev add a Service
-     * @param _version bytes8 version of service
-     * @param _description string description for the dApps interface
-     * @param _measureType bytes8 type of measure for the dApps interface
-     * @param _timeCode bytes1 time code for the dApps interface
-     * @param _nbTime uint8 number of times for the dApps interface
+     * @param _version 
+     * @param _description
+     * @param _measureType
+     * @param _timeCode
+     * @param _nbTime
+     * @return _version of the service
+     * @return _measureType type of measure collected in the service
+     * @return _timeCode frequence of measure collection
+     * @return _nbTime number of frequences 
+     * @return isActive status of the service
+     * @return _description description of the service
+     * @return bridgeAddress address of the Bridge
+     * @return techMasterAddress address of the techMaster
+     * @return legislatorAddress address of the legislator
+     * @return alertConfigIdCounter counter of alertConfig
+     * @return measureIdCounter counter of measureId
+     * @return alertIdCounter counter of alertId
+     * @return IotIdCounter counter of IotId   
      */
     function addService(
         bytes8 _version,   
@@ -220,8 +234,8 @@ contract ClientContract is Ownable {
 
     /**
      * @dev get a specific Service
-     * @param _serviceId index of service
-     * @return a specific service
+     * @param _serviceId
+     * @return config in memory
      */
     function getOneService(
         uint _serviceId) 
@@ -243,7 +257,7 @@ contract ClientContract is Ownable {
 
     /**
      * @dev toggle a Service activation or deactivation
-     * @param _serviceId index of service
+     * @param _serviceId
      */
     function toggleService(
         uint _serviceId)
@@ -259,8 +273,8 @@ contract ClientContract is Ownable {
 
     /**
      * @dev set a TechMasterAddress
-     * @param _serviceId index of service 
-     * @param _techMasterAddress techMaster's address
+     * @param _serviceId
+     * @param _techMasterAddress
      */
     function setTechMasterAddress(
         uint _serviceId,
@@ -274,8 +288,8 @@ contract ClientContract is Ownable {
 
     /**
      * @dev set a BridgeAdress
-     * @param _serviceId index of service
-     * @param _bridgeAddress bridge's address
+     * @param _serviceId
+     * @param _bridgeAddress
      */
     function setBridgeAddress(
         uint _serviceId,
@@ -290,7 +304,7 @@ contract ClientContract is Ownable {
     /**
      * @dev set a LegislatorAddress
      * @param _serviceId index of service 
-     * @param _legislatorAddress legislator's address
+     * @param _legislatorAddress address of legislator
      */
     function setLegislatorAddress(
         uint _serviceId,
@@ -445,6 +459,7 @@ contract ClientContract is Ownable {
     /**
      * @dev get all alert configs
      * @param _serviceId index of service 
+     * @param _version service's version
      */
     function getAllAlertConfigs(
         uint _serviceId) 

@@ -34,7 +34,7 @@ contract('constructor', function (accounts) {
         this.ClientContract = await ClientContract.new(_version, client, prevContrat, _prevContractDate, {from: owner});
     });
 
-    it('Config struct correcty maked', async function () { 
+    it('Config struct properly made', async function () { 
         // On vérifie bien que l'ajout provoque un revert !
         let myConfig = await this.ClientContract.getConfig();       
         expect(myConfig.version).to.equal(_version);   
@@ -180,6 +180,55 @@ contract('addService', function (accounts) {
 });
 
 
+// Contrat de test pour toggleService
+contract('toggleService', function (accounts) {
+    return
+    const owner = accounts[0];    
+    const client = accounts[1];
+    const other = accounts[2];    
+    const prevContrat = accounts[3];
+    const bridgeAddress = accounts[4];
+    const techMasterAddress = accounts[5];
+    const legislatorAddress = accounts[6];
+    const address0 = "0x0000000000000000000000000000000000000000";
+
+    let _serviceId = '0';
+    let _version = "0x0102030405060708";   
+    let _description = "Description de test";
+    let _measureType = "0x1112131415161718";            
+    let _timeCode = "0x21";
+    let _nbTime = "6"; 
+    let _prevContractDate = "0";   
+    let _measureHeader = "0x0102030405060708091011121314151601020304050607080910111213141516";
+    let _measurebody = "0x0102030405060708091011121314151601020304050607080910111213141516";
+
+    // Avant chaque test unitaire
+    beforeEach(async function () {
+        this.ClientContract = await ClientContract.new(_version, client, prevContrat, _prevContractDate, {from: owner});
+        await this.ClientContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: client});
+    });
+
+    it('Toggle service - On to Off', async function () {     
+        let receipt = await this.ClientContract.toggleService(_serviceId, {from: owner});
+        expectEvent(receipt, "ServiceUpdate", {_serviceId: _serviceId , _message: 'Service off', _author: owner });
+
+        let myService = await this.ClientContract.getOneService(_serviceId);
+        expect(myService.isActive).to.equal(false);    
+    });
+
+    it('Toggle service - Off to On', async function () {  
+        this.ClientContract.toggleService(_serviceId, {from: owner});
+        
+        let receipt = await this.ClientContract.toggleService(_serviceId, {from: owner});
+        expectEvent(receipt, "ServiceUpdate", {_serviceId: _serviceId, _message: 'Service on', _author: owner });
+
+        let myService = await this.ClientContract.getOneService(_serviceId);
+        expect(myService.isActive).to.equal(true);    
+    });   
+
+});
+
+
 // Contrat de test pour addMeasure
 contract('addMeasure', function (accounts) {
     const owner = accounts[0];    
@@ -191,16 +240,20 @@ contract('addMeasure', function (accounts) {
     const legislatorAddress = accounts[6];
     const address0 = "0x0000000000000000000000000000000000000000";
 
+    let _serviceId = '0';
     let _version = "0x0102030405060708";   
     let _description = "Description de test";
     let _measureType = "0x1112131415161718";            
     let _timeCode = "0x21";
     let _nbTime = "6"; 
     let _prevContractDate = "0";   
+    let _measureHeader = "0x0102030405060708091011121314151601020304050607080910111213141516";
+    let _measurebody = "0x0102030405060708091011121314151601020304050607080910111213141516";
 
     // Avant chaque test unitaire
     beforeEach(async function () {
         this.ClientContract = await ClientContract.new(_version, client, prevContrat, _prevContractDate, {from: owner});
+        await this.ClientContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: client});
     });
 
     it('Revert if other : onlyBridge', async function () { 
@@ -212,6 +265,8 @@ contract('addMeasure', function (accounts) {
             _measurebody,
             {from: other}), "Access denied"));  
     });
+
+
 
 });
     

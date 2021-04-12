@@ -8,21 +8,21 @@ export default class CardGraph extends React.Component {
 
 /*
 [
-                        ['x', 'Soufre'],
-                        [0, 0],
-                        [1, 10],
-                        [2, 23],
-                        [3, 17],
-                        [4, 18],
-                        [5, 9],
-                        [6, 11],
-                        [7, 27],
-                        [8, 33],
-                        [9, 40],
-                        [10, 32],
-                        [11, 35],
-                        
-                    ]*/
+    ['x', 'Soufre'],
+    [0, 0],
+    [1, 10],
+    [2, 23],
+    [3, 17],
+    [4, 18],
+    [5, 9],
+    [6, 11],
+    [7, 27],
+    [8, 33],
+    [9, 40],
+    [10, 32],
+    [11, 35],
+    
+]*/
 
 
 
@@ -32,7 +32,7 @@ export default class CardGraph extends React.Component {
         let nbMeasures = myService.measureIdCounter['_value'];
         let myReturn = [];
 
-        if(nbMeasure>0){
+        if(nbMeasures>0){
             myReturn.push([])
             for(let i=0; i<nbMeasures; i++){
 

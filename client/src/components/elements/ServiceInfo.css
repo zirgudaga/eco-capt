@@ -1,3 +1,7 @@
-.service-info-p {
+.service-info {
+  margin-bottom: 50px;
+}
+
+.service-info-details {
   font-weight: 500;
 }

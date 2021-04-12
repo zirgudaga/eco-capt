@@ -1,16 +1,16 @@
-.service-flex {
-    background: #fff;
-    display: flex;
-    justify-content: center;
+.home-service-flex {
+    text-align: center;
     width: 70%;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     min-height: 600px;
+    width: 73%;
+    margin-right: 2%;
 }
 
-.service-title {
+.home-service-title {
     color: #1a202e;
     font-size: 40px;
 }

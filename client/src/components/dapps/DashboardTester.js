@@ -1,7 +1,7 @@
 import React from 'react';
 import {stringToHex, fakeMeasure, measureToObject} from '../../utilsEco.js';
-import MySelect from '../elements/MySelect.js';
 import MyNotif from '../elements/MyNotif.js';
+import MySelect from '../elements/MySelect.js';
 
 import "./DashboardTester.css";
 
@@ -78,7 +78,6 @@ export default class DashboardTester extends React.Component {
     };
 
     getAllServices = async () => {
-        console.log("Get Services");
         const { contract } = this.props.state;
         let { listServices } = this.state;
         listServices = await contract.methods.getAllServices().call();
@@ -87,7 +86,6 @@ export default class DashboardTester extends React.Component {
     };    
 
     getAllMeasures = async (serviceId) => {
-        console.log("Get Services");
         const { contract } = this.props.state;
         let { listMeasures } = this.state;
         listMeasures = await contract.methods.getAllMeasures(serviceId).call();
@@ -127,7 +125,6 @@ export default class DashboardTester extends React.Component {
     };    
 
     setServiceFocus = async (serviceId) => {
-        console.log("Focus Measure "+serviceId);
         let { contract } = this.props.state;
         let { selectedService, listMeasures } = this.state;
         selectedService = serviceId;
@@ -158,8 +155,8 @@ export default class DashboardTester extends React.Component {
 
                         <h2 className="tester">SERVICES</h2>
 
-                        <form>
-                            <div>
+                        <form>                           
+                            <div className="tester-line">
                                 <label>
                                     Description du service
                                 </label>
@@ -170,18 +167,9 @@ export default class DashboardTester extends React.Component {
                                 />
                             </div>
 
-                            <div>
-                                <label>
-                                    Version du service
-                                </label>
-                                <MySelect 
-                                    myName="addServiceVersion" 
-                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
-                                />
-                            </div>
 
 
-                            <div>
+                            <div className="tester-line">
                                 <label>
                                     Measure du service
                                 </label>
@@ -191,7 +179,18 @@ export default class DashboardTester extends React.Component {
                                 />
                             </div>
 
-                            <div>
+                            
+                            <div className="tester-line">
+                                <label>
+                                    Version du service
+                                </label>
+                                <MySelect 
+                                    myName="addServiceVersion" 
+                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                                />
+                            </div>
+
+                            <div className="tester-line">
                                 <label>
                                     Fréquence
                                 </label>

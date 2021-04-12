@@ -15,20 +15,26 @@
 
 .tester-input{
     background: paleturquoise;
-    color: white;
+    color: black;
     border: 1px solid black;
     margin: 12px;
     padding: 8px;
     border-radius: 8px;
 }
 
+.tester-line{
+    margin-bottom: 10px;
+}
+
+.tester-line label{
+    margin-right: 20px;
+}
 
 h2.tester{
     padding: 8px;      
 }
 
 main.tester{
-    display: flex;
-    justify-content: center;
-    align-content: center;
+    max-width: 1024px;
+    margin: 0 auto;
 }

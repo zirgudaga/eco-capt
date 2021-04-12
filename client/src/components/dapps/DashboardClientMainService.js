@@ -94,15 +94,16 @@ export default class DashboardClientMainService extends React.Component {
                             <span className="las la-sms"></span>
                         </div>
                     </header>
-
-                    <main className="service-main-content">     
-                        {this.selectedMainLauncher()}  
-                        <ListService 
-                            state={this.state}
-                            addService= {() => {this.showFormAddService(true);}}
-                            setServiceFocus = {(index) => {this.showFocusService(index);}}
-                        />
-                    </main>
+                    <div className="row">
+                        <main className="service-main-content">     
+                            {this.selectedMainLauncher()}  
+                            <ListService 
+                                state={this.state}
+                                addService= {() => {this.showFormAddService(true);}}
+                                setServiceFocus = {(index) => {this.showFocusService(index);}}
+                            />
+                        </main>
+                    </div>
                 </div>
             </div>
         );

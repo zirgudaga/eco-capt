@@ -2,43 +2,22 @@ import * as React from "react";
 import { render } from "react-dom";
 import { Chart } from "react-google-charts";
 
+import {measureToObject} from '../../utilsEco.js';
+
 import "./CardGraph.css";
 
 export default class CardGraph extends React.Component {
 
-/*
-[
-    ['x', 'Soufre'],
-    [0, 0],
-    [1, 10],
-    [2, 23],
-    [3, 17],
-    [4, 18],
-    [5, 9],
-    [6, 11],
-    [7, 27],
-    [8, 33],
-    [9, 40],
-    [10, 32],
-    [11, 35],
-    
-]*/
-
-
-
     myData = () => {
-        let { myService, myMeasures } = this.props;
+        let { myMeasures } = this.props;
 
-        let nbMeasures = myService.measureIdCounter['_value'];
         let myReturn = [];
-
-        if(nbMeasures>0){
-            myReturn.push([])
-            for(let i=0; i<nbMeasures; i++){
-
-
-
-
+        let header, body;
+        if ((myMeasures[0] !== undefined) && (myMeasures[0].length>0)){
+            myReturn.push(['x', 'Valeur moyenne'])
+            for(let i=0; i<myMeasures[0].length; i++){
+                [header, body] = measureToObject(myMeasures[0][i], myMeasures[1][i]);
+                myReturn.push([i, body.val2]);
             }
         }
 
@@ -50,38 +29,31 @@ export default class CardGraph extends React.Component {
         let { myService, myMeasures } = this.props;
 
         return (
-          <div className="card-graph">
-            <Chart
-            width={'600px'}
-            height={'400px'}
-            chartType="LineChart"
-            loader={<div>Loading Chart</div>}
-            data={[
-              ['x', 'Soufre'],
-              [0, 0],
-              [1, 10],
-              [2, 23],
-              [3, 17],
-              [4, 18],
-              [5, 9],
-              [6, 11],
-              [7, 27],
-              [8, 33],
-              [9, 40],
-              [10, 32],
-              [11, 35],
-            ]}
-            options={{
-              hAxis: {
-                title: 'Time',
-              },
-              vAxis: {
-                title: 'Popularity',
-              },
-            }}
-            rootProps={{ 'data-testid': '1' }}
-          />
-        </div>
+            <div className="card-graph">
+                {((myMeasures[0] !== undefined) && (myMeasures[0].length>0))
+                ?
+                <Chart
+                    width={'600px'}
+                    height={'400px'}
+                    chartType="LineChart"
+                    loader={<div>Loading Chart</div>}
+                    data={this.myData()}
+                    options={{
+                        hAxis: {
+                            title: 'Time',
+                        },
+                        vAxis: {
+                            title: myService.measureType,
+                        },
+                        series: {
+                            0: { curveType: 'function' },
+                        },
+                    }}
+                    rootProps={{ 'data-testid': '1' }}
+                />
+                : "Données en attente"
+                }
+            </div>
         );
     }
 }

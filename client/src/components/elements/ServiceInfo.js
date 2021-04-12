@@ -5,13 +5,15 @@ import "./ServiceInfo.css";
 export default class ServiceInfo extends React.Component {
 
     render() {
-
+        
         let { myService } = this.props;
         let address0 = "0x0000000000000000000000000000000000000000";
+        console.log(myService);
 
         return (
             <div className="service-info">
                 <p>Nom du service : <span className="service-info-details">{myService.description}</span></p>
+                <p>Nombre de mesure : <span className="service-info-details">{myService.measureIdCounter._value}</span></p>
                 <p>Type de mesure : <span className="service-info-details">{myService.measureType}</span></p>
                 <p>Fréquence des mesures : <span className="service-info-details">Toutes les {myService.nbTime} {myService.timeCode}</span></p>
                 <p>Adresse du bridge : <span className="service-info-details">{myService.bridgeAddress===address0?"En attente":myService.bridgeAddress}</span></p>

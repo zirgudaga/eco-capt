@@ -88,7 +88,7 @@ export default class FocusService extends React.Component {
                 <ServiceInfo myService={this.props.myService}/>
 
                 <button type="button" className="focus-service-cta" 
-                    onClick= { () => this.props.addMeasure() }>New measure
+                    onClick= { () => this.addMeasure() }>New measure
                 </button> 
 
             </div>

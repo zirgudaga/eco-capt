@@ -46,8 +46,8 @@ contract ClientContract is Ownable {
     }
     
     /**
-     * @dev Structure of Voter
-     * @notice Feature_V2 : isAbleToPropose and hasProposed
+     * @dev Structure of Service
+     * @notice Feature_V2 
      */
     struct Service {
         bytes8 version;
@@ -66,6 +66,10 @@ contract ClientContract is Ownable {
         Counters.Counter IotIdCounter;     
     }
 
+    /**
+     * @dev Structure of AlertConfig
+     * @notice Feature_V2 
+     */
     struct AlertConfig {
         bytes8 version;     
         string description;   
@@ -77,6 +81,10 @@ contract ClientContract is Ownable {
         bool isActive;
     }
 
+    /**
+     * @dev Structure of Iot
+     * @notice Feature_V2 
+     */
     struct Iot {
         bytes6 mac;     
         string description;
@@ -145,10 +153,19 @@ contract ClientContract is Ownable {
     }
 
     // CONFIG PART
+    
+    /**
+     * @dev get a Config
+     * @return config in memory
+     */
     function getConfig() external view returns (Config memory) {
         return _myConfig;
     }
 
+    /**
+     * @dev toggle a Contract activation or deactivation
+     * @return a ContractUpdate event
+     */
     function toggleContract()
         onlyOwner() external {
         if(_myConfig.isActive){
@@ -160,6 +177,28 @@ contract ClientContract is Ownable {
     }    
 
     // SERVICE PART
+
+     /**
+     * @dev add a Service
+     * @param _version 
+     * @param _description
+     * @param _measureType
+     * @param _timeCode
+     * @param _nbTime
+     * @return _version of the service
+     * @return _measureType type of measure collected in the service
+     * @return _timeCode frequence of measure collection
+     * @return _nbTime number of frequences 
+     * @return isActive status of the service
+     * @return _description description of the service
+     * @return bridgeAddress address of the Bridge
+     * @return techMasterAddress address of the techMaster
+     * @return legislatorAddress address of the legislator
+     * @return alertConfigIdCounter counter of alertConfig
+     * @return measureIdCounter counter of measureId
+     * @return alertIdCounter counter of alertId
+     * @return IotIdCounter counter of IotId   
+     */
     function addService(
         bytes8 _version,   
         string memory _description,
@@ -193,6 +232,11 @@ contract ClientContract is Ownable {
         _serviceIdCounter.increment();
     }  
 
+    /**
+     * @dev get a specific Service
+     * @param _serviceId
+     * @return config in memory
+     */
     function getOneService(
         uint _serviceId) 
         external view returns(Service memory){   
@@ -200,6 +244,10 @@ contract ClientContract is Ownable {
         return (_services[_serviceId]);
     }
 
+    /**
+     * @dev get all Services
+     * @return an array of all the services
+     */
     function getAllServices() 
         external view 
         returns(Service[] memory){    
@@ -207,6 +255,10 @@ contract ClientContract is Ownable {
         return (_services);
     }    
 
+    /**
+     * @dev toggle a Service activation or deactivation
+     * @param _serviceId
+     */
     function toggleService(
         uint _serviceId)
         onlyCustomer() external {
@@ -219,6 +271,11 @@ contract ClientContract is Ownable {
         _services[_serviceId].isActive = !_services[_serviceId].isActive;
     }
 
+    /**
+     * @dev set a TechMasterAddress
+     * @param _serviceId
+     * @param _techMasterAddress
+     */
     function setTechMasterAddress(
         uint _serviceId,
         address _techMasterAddress)
@@ -229,6 +286,11 @@ contract ClientContract is Ownable {
         emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
     }   
 
+    /**
+     * @dev set a BridgeAdress
+     * @param _serviceId
+     * @param _bridgeAddress
+     */
     function setBridgeAddress(
         uint _serviceId,
         address _bridgeAddress)
@@ -239,6 +301,11 @@ contract ClientContract is Ownable {
         emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
     }   
 
+    /**
+     * @dev set a LegislatorAddress
+     * @param _serviceId index of service 
+     * @param _legislatorAddress address of legislator
+     */
     function setLegislatorAddress(
         uint _serviceId,
         address _legislatorAddress)
@@ -250,6 +317,13 @@ contract ClientContract is Ownable {
     }   
     
     // MEASURE PART
+
+    /**
+     * @dev add a Measure
+     * @param _serviceId index of service 
+     * @param _measureHeader header of the measure
+     * @param _measurebody body of the measure
+     */
     function addMeasure(
         uint _serviceId,
         bytes32 _measureHeader,
@@ -264,6 +338,11 @@ contract ClientContract is Ownable {
         emit MeasureReceive(_serviceId, _measureHeader, _measurebody, msg.sender);
     }
 
+    /**
+     * @dev get all Measures
+     * @param _serviceId index of service 
+     * @return an array of all the services
+     */
     function getAllMeasures(
         uint _serviceId) 
         external view 
@@ -273,7 +352,13 @@ contract ClientContract is Ownable {
               
         return (_serviceHeaderMeasures[_serviceId], _serviceBodyMeasures[_serviceId]);
     }
-    
+
+    /**
+     * @dev get a specific measure by id
+     * @param _serviceId index of service 
+     * @param _measureId index of service 
+     * @return the specific measure header and body
+     */    
     function getMeasuresById(
         uint _serviceId,
         uint _measureId) 
@@ -285,6 +370,17 @@ contract ClientContract is Ownable {
     }  
 
     // ALERT CONFIG PART
+
+    /**
+     * @dev add a customer's alert config
+     * @param _serviceId index of service 
+     * @param _version service's version
+     * @param _description alert config description 
+     * @param _dateOn alert's starting date
+     * @param _dateOff alert's ending date
+     * @param _codeAlert alert's code
+     * @param _valueAlert alert's value
+     */
     function addAlertConfigCustomer(
         uint _serviceId,
         bytes8 _version, 
@@ -298,6 +394,16 @@ contract ClientContract is Ownable {
             _addAlertConfig(_serviceId, _version, _description, msg.sender, _dateOn, _dateOff, _codeAlert, _valueAlert);
     }
 
+    /**
+     * @dev add a legislator's alert config
+     * @param _serviceId index of service 
+     * @param _version service's version
+     * @param _description alert config description 
+     * @param _dateOn alert's starting date
+     * @param _dateOff alert's ending date
+     * @param _codeAlert alert's code
+     * @param _valueAlert alert's value
+     */
     function addAlertConfigLegislator(
         uint _serviceId,
         bytes8 _version,   
@@ -311,6 +417,17 @@ contract ClientContract is Ownable {
             _addAlertConfig(_serviceId, _version, _description, msg.sender, _dateOn, _dateOff, _codeAlert, _valueAlert);
     }
 
+    /**
+     * @dev add a fondation's alert config
+     * @param _serviceId index of service 
+     * @param _version service's version
+     * @param _description alert config description 
+     * @param _legislatorAddress legislator's address
+     * @param _dateOn alert's starting date
+     * @param _dateOff alert's ending date
+     * @param _codeAlert alert's code
+     * @param _valueAlert alert's value
+     */
     function _addAlertConfig(
         uint _serviceId,
         bytes8 _version,   
@@ -339,6 +456,11 @@ contract ClientContract is Ownable {
 
     }
 
+    /**
+     * @dev get all alert configs
+     * @param _serviceId index of service 
+     * @param _version service's version
+     */
     function getAllAlertConfigs(
         uint _serviceId) 
         external view 
@@ -347,6 +469,11 @@ contract ClientContract is Ownable {
         return (_serviceAlertConfig[_serviceId]);
     }
 
+    /**
+     * @dev toggle an alert config
+     * @param _serviceId index of service 
+     * @param _alertConfigId index of the alert config
+     */
     function toggleAlertConfig(
         uint _serviceId, uint _alertConfigId) 
         external {
@@ -363,6 +490,12 @@ contract ClientContract is Ownable {
     }       
 
     // ALERTS PART
+
+    /**
+     * @dev add an alert
+     * @param _serviceId index of service 
+     * @param _alertBody alert's body
+     */    
     function addAlert(
         uint _serviceId,
         bytes32 _alertBody) 
@@ -374,6 +507,10 @@ contract ClientContract is Ownable {
         emit AlertReceive(_serviceId, _alertBody, msg.sender);
     }
 
+    /**
+     * @dev get all alerts of a specific service
+     * @param _serviceId index of service 
+     */  
     function getAlerts(
         uint _serviceId) 
         external view 
@@ -383,6 +520,13 @@ contract ClientContract is Ownable {
     }
 
     // SERVICE IOT
+
+    /**
+     * @dev add a sensor to the list
+     * @param _serviceId index of service
+     * @param _macAddress sensor's mac address
+     * @param _description sensor's description
+     */      
     function addIot(
         uint _serviceId,
         bytes6 _macAddress,
@@ -399,6 +543,11 @@ contract ClientContract is Ownable {
         _services[_serviceId].IotIdCounter.increment();   
     }
 
+    /**
+     * @dev get a specific sensor
+     * @param _serviceId index of service
+     * @return get a specific sensor by Id
+     */ 
     function getIot(
         uint _serviceId) 
         external view 
@@ -406,7 +555,12 @@ contract ClientContract is Ownable {
               
         return (_serviceMacIOT[_serviceId]);
     }
-        
+
+    /**
+     * @dev toggle a sensor activation or deactivation
+     * @param _serviceId index of service
+     * @param _iotId index of sensor
+     */     
     function toggleIOT(
         uint _serviceId,
         uint _iotId) 

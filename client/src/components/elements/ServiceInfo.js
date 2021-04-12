@@ -26,12 +26,14 @@ export default class ServiceInfo extends React.Component {
 
         let { myService } = this.props;
 
-        console.log(myService);
-
         return (
             <div>
-                <b>{myService.description}</b>
-                <p></p>
+                <p>Nom du service : <span className="service-info-p">{myService.description}</span></p>
+                <p>Type de mesure : <span className="service-info-p">{myService.measureType}</span></p>
+                <p>Fréquence des mesures : <span className="service-info-p">{myService.nbTime}</span></p>
+                <p>Adresse du bridge : <span className="service-info-p">{myService.bridgeAddress}</span></p>
+                <p>Adresse du législateur : <span className="service-info-p">{myService.legislatorAddress}</span></p>
+                <p>Adresse du technicien : <span className="service-info-p">{myService.techMasterAddress}</span></p>
 
             </div>
         );      

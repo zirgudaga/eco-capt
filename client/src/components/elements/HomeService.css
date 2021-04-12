@@ -1,4 +1,4 @@
-.home-service-flex {
+.home-service {
     text-align: center;
     width: 70%;
     background: #fff;
@@ -13,4 +13,14 @@
 .home-service-title {
     color: #1a202e;
     font-size: 40px;
+}
+
+.home-service-p {
+    margin-top: 50px;
+}
+
+.home-service-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }

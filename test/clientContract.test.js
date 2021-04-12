@@ -102,7 +102,6 @@ contract('toogleContract', function (accounts) {
 
 // Contrat de test pour addService
 contract('addService', function (accounts) {
-    return
     const owner = accounts[0];    
     const client = accounts[1];
     const other = accounts[2];    
@@ -180,8 +179,8 @@ contract('addService', function (accounts) {
 });
 
 
-// Contrat de test pour addMeasure
-contract('addMeasure', function (accounts) {
+// Contrat de test pour addService
+contract('??????', function (accounts) {
     const owner = accounts[0];    
     const client = accounts[1];
     const other = accounts[2];    
@@ -196,21 +195,17 @@ contract('addMeasure', function (accounts) {
     let _measureType = "0x1112131415161718";            
     let _timeCode = "0x21";
     let _nbTime = "6"; 
-    let _prevContractDate = "0";   
+    let _prevContractDate = "0";
+
+    async function myFonction(myClientContract){
+        myClientContract.bla1({from: owner});
+        myClientContract.bla2({from: owner});
+        myClientContract.bla3({from: owner});                
+    }   
 
     // Avant chaque test unitaire
     beforeEach(async function () {
         this.ClientContract = await ClientContract.new(_version, client, prevContrat, _prevContractDate, {from: owner});
-    });
-
-    it('Revert if other : onlyBridge', async function () { 
-        // On vérifie bien que l'ajout provoque un revert !
-        let receipt = await this.ClientContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: client});
-        await (expectRevert(this.ClientContract.addMeasure(
-            _serviceId,
-            _measureHeader,
-            _measurebody,
-            {from: other}), "Access denied"));  
     });
 
 });

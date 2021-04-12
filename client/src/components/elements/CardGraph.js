@@ -21,7 +21,9 @@ export default class CardGraph extends React.Component {
                         [9, 40],
                         [10, 32],
                         [11, 35],
-                        ]*/
+                        
+                    ]*/
+
 
 
     myData = () => {

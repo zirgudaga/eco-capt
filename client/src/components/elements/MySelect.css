@@ -1,0 +1,115 @@
+/*
+    DROPDOWN START HERE
+*/
+
+.select {
+  position: relative;
+  width: 60%;
+  color: black;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-touch-callout: none;
+}
+.select .placeholder {
+  position: relative;
+  display: block;
+  color: black;  
+  border: 1px solid #3b4148;
+  font-weight: bold;
+  word-break: keep-all;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  transition: 0.1s all ease-out;
+  height: 50px;
+  line-height: 50px;
+  padding:0 40px 0 20px;
+}
+
+.select .placeholder:after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 10px;
+    text-align: center;
+    height: 10px;
+    line-height: 10px;
+    border-bottom: 4px solid;
+    border-right: 4px solid;
+    transform: rotate(45deg);
+    transform-origin:center;
+    right: 14px;
+    top: 16px;
+    position: absolute;
+}
+.select.is-open .placeholder:after {
+  transform: rotate(225deg) translateY(-5px) translateX(-5px);
+}
+.select .placeholder:hover {
+  background-color: #EAEAEA;
+  border-color: #EAEAEA;
+}
+.select.is-open .placeholder{
+  background-color: #EAEAEA;
+  border-color: #EAEAEA;
+}
+
+.select ul {
+  position: absolute;
+  overflow: hidden;
+  height: 0;
+  max-height: 400px;
+  width: 100%;
+  border-radius: 2px;
+  top: 100%;
+  left: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-top: 1px;
+  z-index: 100;
+  transition: 0.2s all ease;
+  background: white;
+}
+.select.is-open ul {
+  height: auto;
+  overflow: auto;
+}
+
+.select ul li {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 20px;
+  color: #3b4148;
+  cursor: pointer;
+  border:1px solid #EAEAEA;
+  background-color: white;
+}
+.select ul li:hover {
+  font-weight: bold;
+}
+.select ul li.selected {
+  font-weight: bold;
+}
+
+
+
+.select ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+/*
+.select ul::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+}
+.select ul::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+}
+*/

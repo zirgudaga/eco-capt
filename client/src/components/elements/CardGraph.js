@@ -15,7 +15,7 @@ export default class CardGraph extends React.Component {
             chartType="LineChart"
             loader={<div>Loading Chart</div>}
             data={[
-              ['x', 'Soufre'],
+              ['x', 'Prout'],
               [0, 0],
               [1, 10],
               [2, 23],

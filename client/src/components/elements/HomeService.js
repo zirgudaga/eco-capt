@@ -15,9 +15,11 @@ export default class HomeService extends React.Component {
                     <br />
                     <p>Pour voir le détail d'un service, cliquez dessus.</p>
                     <br />
-                    <p>Vous pouvez ajouter un service ou demandez une nouvelle mesure en cliquant sur les boutons</p>
+                    <p>Vous pouvez ajouter un service en cliquant sur "NEW SERVICE"</p>
                     <br />
-                    <p>"NEW SERVICE" et "NEW MEASURE"</p>
+                    <p>Il vous sera alors demandé : la descritpion, le type de mesure et sa fréquence. 
+                        Une fois cela réalisé, il y sera affecté un intermédiaire technique afin d'y associer votre bridge eco-capt.        
+                        Grace à lui, vos mesures seront traitées, certifiées et affichées dans votre application.</p>
                     <br />
                     <p>Être honnête n'a jamais été aussi simple !</p>
                     <div className="home-service-logo">

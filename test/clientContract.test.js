@@ -12,7 +12,6 @@ const ClientContract = artifacts.require('ClientContract');
 
 // Contrat de test pour addConfig
 contract('constructor', function (accounts) {
-    return;
     const owner = accounts[0];    
     const client = accounts[1];
     const other = accounts[2];    
@@ -49,7 +48,6 @@ contract('constructor', function (accounts) {
 
 // Contrat de test pour addService
 contract('toogleContract', function (accounts) {
-    return;
     const owner = accounts[0];    
     const client = accounts[1];
     const other = accounts[2];    
@@ -102,7 +100,6 @@ contract('toogleContract', function (accounts) {
 
 // Contrat de test pour addService
 contract('addService', function (accounts) {
-    return
     const owner = accounts[0];    
     const client = accounts[1];
     const other = accounts[2];    
@@ -163,14 +160,12 @@ contract('addService', function (accounts) {
         expect(myService.techMasterAddress).to.equal(address0);
         expect(myService.legislatorAddress).to.equal(address0);        
 
-        console.log(myService.alertConfigIdCounter);
-
-        let myCounter = myService.alertConfigIdCounter._value;
+       /* let myCounter = myService.alertConfigIdCounter._value;
         console.log('-'+myCounter+'-');
   
         let myCounter2 = myService.alertConfigIdCounter['_value'];
         console.log('-'+myCounter2+'-');        
-
+        */
         // On regarde que service1 est enregistré - Sur le tableau des services      
 
         // L'event est bien envoyé par l'application
@@ -182,7 +177,6 @@ contract('addService', function (accounts) {
 
 // Contrat de test pour toggleService
 contract('toggleService', function (accounts) {
-    return
     const owner = accounts[0];    
     const client = accounts[1];
     const other = accounts[2];    

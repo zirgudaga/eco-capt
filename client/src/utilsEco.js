@@ -120,16 +120,18 @@ const fakeMeasure = (seed, service) => {
     service.timeCode.substr(-2)+
     stringToHex(("00000"+service.nbTime).substr(-3));
     
+    let taille = 10;
+
     //   Valeur 1 Max : bytes8
     //   Valeur 2 Moyenne : bytes8
     //   Valeur 3 Médiane : bytes8
     //   Valeur 4 Min : bytes8
-    let tabFakeLine = [60, 76, 92, 88, 70, 62];
+    let tabFakeLine = [60, 76, 110, 89, 70, 62, 74, 80, 76, 70];
     let hexBody = 
-    '0x'+stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*1.50,10))).substr(-8))+
-    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*1.00,10))).substr(-8))+
-    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*0.90,10))).substr(-8))+
-    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%6]*0.70,10))).substr(-8));
+    '0x'+stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*1.50,10))).substr(-8))+
+    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*1.00,10))).substr(-8))+
+    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*0.90,10))).substr(-8))+
+    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*0.70,10))).substr(-8));
 
     return [hexHeader, hexBody];
 };
@@ -149,7 +151,8 @@ const getTabtSelect = (nameSelector) => {
         case "addServiceMeasureType" : return [
             {code:'SON_0001', aff:'Accoustique version 1'},
             {code:'SOUF0001', aff:'Emission de soufre version 1'},   
-            {code:'SOUF0002', aff:'Emission de soufre version 2'}   
+            {code:'METH0001', aff:'Emission de méthane version 1'},
+            {code:'METH0002', aff:'Emission de méthane version 2'},
         ];
 
         case "addServiceTimeType" : return [

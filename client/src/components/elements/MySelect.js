@@ -64,30 +64,3 @@ export default class MySelect extends React.Component {
         )
     }
 }
-
-/*
-$('.select').on('click','.placeholder',function(){
-    let parent = $(this).closest('.select');
-    if ( ! parent.hasClass('is-open')){
-      parent.addClass('is-open');
-      $('.select.is-open').not(parent).removeClass('is-open');
-    }else{
-      parent.removeClass('is-open');
-    }
-  }).on('click','ul>li',function(){
-    $('.select ul>li').removeClass('selected');
-    $(this).addClass('selected');
-    let parent = $(this).closest('.select');
-    parent.removeClass('is-open').find('.placeholder').text( $(this).text() );
-  });
-*/
-
-
-/*
-           <select value={this.state.myValue}>
-                <option id="select-option" value="">Select</option>
-                {this.state.myTabOptions.map((myOption, index) => (
-                    <option key={"select_"+myOption.index}>{myOption.aff}</option>       
-                ))}
-            </select>
-            */

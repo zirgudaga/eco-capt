@@ -8,7 +8,7 @@ export default class ServiceInfo extends React.Component {
         
         let { myService } = this.props;
         let address0 = "0x0000000000000000000000000000000000000000";
-        console.log(myService);
+        //console.log(myService);
 
         return (
             <div className="service-info">

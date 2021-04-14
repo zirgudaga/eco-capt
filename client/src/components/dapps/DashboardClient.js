@@ -9,7 +9,7 @@ export default class DashboardClient extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentModuleSelect: 'Service',
+            currentModuleSelect: 'Home',
         };
     }
 

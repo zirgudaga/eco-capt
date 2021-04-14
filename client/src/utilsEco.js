@@ -160,7 +160,7 @@ const getTabtSelect = (nameSelector) => {
             {code:'m', aff:'Mois'},
             {code:'d', aff:'Journée'},
             {code:'H', aff:'Heure'},                                
-            {code:'i', aff:'Minutes'},  
+            //{code:'i', aff:'Minutes'},  
         ];
     
         default : return [];

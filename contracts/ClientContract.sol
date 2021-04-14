@@ -55,6 +55,7 @@ contract ClientContract is Ownable {
         bytes1 timeCode;
         uint8 nbTime;
         bool isActive;
+        bool isAllowed;
         string description;
         address bridgeAddress;
         address techMasterAddress;
@@ -99,6 +100,7 @@ contract ClientContract is Ownable {
     modifier isServiceActive(uint _serviceId) {
         require(_serviceId < _serviceIdCounter.current(), "Service not exist"); 
         require(_services[_serviceId].isActive, "Service off line"); 
+        require(_services[_serviceId].isAllowed, "Service not allowed"); 
         _;
     }
 
@@ -127,7 +129,6 @@ contract ClientContract is Ownable {
     event ContractUpdate(string _message, address _author);      
     event ServiceUpdate(uint _serviceId, string _message, address _author); 
     event ServiceElementUpdate(uint _serviceId, uint _id, string _message, address _author); 
-    
                
     Config private _myConfig;
     Service[] private _services;
@@ -149,7 +150,8 @@ contract ClientContract is Ownable {
             _prevContract,
             address(0),
             true
-        );  
+        );
+        // TODO AJOUTER INSTANCE DU GRAND REGISTRE POUR POUVOIR Y ACCEDER SI NECESSAIRE
     }
 
     // CONFIG PART
@@ -203,7 +205,8 @@ contract ClientContract is Ownable {
         _measureType,  
         _timeCode,    
         _nbTime,   
-        true,                        
+        true,  
+        true,                      
         _description, 
         address(0),
         address(0),
@@ -217,6 +220,12 @@ contract ClientContract is Ownable {
 
         _serviceIdCounter.increment();
     }  
+
+    function _checkValidService(bytes8 _version, bytes8 _measureType, bytes1 _timeCode, uint8 _nbTime) internal pure returns(bool _return){
+        // TODO LINK AU GRAND REGISTRE
+        // Eviter l'usage de type service désactivé car n'étant plus pertinent
+        return true;       
+    }
 
     /**
      * @dev get a specific Service
@@ -258,6 +267,22 @@ contract ClientContract is Ownable {
     }
 
     /**
+     * @dev toggle a Service allowed or desallowed
+     * @param _serviceId index of service
+     */
+    function toggleAllowed(
+        uint _serviceId)
+        onlyOwner() external {
+
+        if(_services[_serviceId].isAllowed){
+            emit ServiceUpdate(_serviceId, "Service desallowed", msg.sender);
+        }else{
+            emit ServiceUpdate(_serviceId, "Service allowed", msg.sender);
+        } 
+        _services[_serviceId].isAllowed = !_services[_serviceId].isAllowed;
+    }
+
+    /**
      * @dev set a TechMasterAddress
      * @param _serviceId index of service 
      * @param _techMasterAddress techMaster's address
@@ -270,7 +295,7 @@ contract ClientContract is Ownable {
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
         emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
-    }   
+    }     
 
     /**
      * @dev set a BridgeAdress
@@ -297,11 +322,18 @@ contract ClientContract is Ownable {
         address _legislatorAddress)
         isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
         
+        require(_checkValidLegislator(_legislatorAddress) == true, "Legistator not valid");
+
         _services[_serviceId].legislatorAddress = _legislatorAddress;
 
         emit ServiceUpdate(_serviceId, "Legislator Address update", msg.sender);
-    }   
-    
+    }     
+
+    function _checkValidLegislator(address _address) internal pure returns(bool _return){
+        // TODO LINK AU GRAND REGISTRE
+        return true;       
+    }
+
     // MEASURE PART
 
     /**

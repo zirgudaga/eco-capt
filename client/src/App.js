@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Home from "./components/home/Home.js"
 import NavBar from "./components/home/NavBar.js"
-import DashboardClient from "./components/dapps/DashboardClient.js";
+import DashboardClient from "./components/dapps/client/DashboardClient.js";
 import DashboardTester from "./components/dapps/DashboardTester.js";
 
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";

@@ -136,6 +136,24 @@ const fakeMeasure = (seed, service) => {
     return [hexHeader, hexBody];
 };
 
+const fakeAlert = (alertCondigId, serviceId) => {
+    //   Version : bytes8
+    //   Code : bytes4    
+    //   Date : YYYYmmddHHii : byte12
+    //   Valeur alert : bytes8
+
+    let body = 
+    '0x'+stringToHex("00.01.00")+
+    stringToHex(("00000000"+alertCondigId).substr(-4))+
+    stringToHex(fakeDateWithSeed(0))+
+    stringToHex(("00000000"+'1').substr(-8));
+
+    return body;
+};
+
+
+
+
 /**
  * @dev Table to selector
  * @param stringValue : String to transfort in Object
@@ -146,6 +164,16 @@ const getTabtSelect = (nameSelector) => {
     switch(nameSelector){
         case "addServiceVersion" : return [
             {code:'00.01.00', aff:'Version 0.1'}
+        ];
+
+        case "addSeuilVersion" : return [
+            {code:'00.01.00', aff:'Version 0.1'}
+        ];
+
+        case "addSeuilCode" : return [
+            {code:'SON_0001', aff:'Accoustique - Maximal'},
+            {code:'SOUF0001', aff:'Emission de soufre - Maximal'},   
+            {code:'METH0001', aff:'Emission de méthane - Moyenne'},
         ];
 
         case "addServiceMeasureType" : return [
@@ -167,5 +195,5 @@ const getTabtSelect = (nameSelector) => {
     }
 }  
   
-export { hexToString, stringToHex, measureToObject, getTabtSelect, fakeMeasure };
+export { hexToString, stringToHex, measureToObject, getTabtSelect, fakeMeasure, fakeAlert };
   

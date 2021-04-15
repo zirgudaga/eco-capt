@@ -2,10 +2,10 @@ import React from 'react';
 import './DashboardClientMain.css';
 import './DashboardClientMainService.css'
 
-import HomeService from '../elements/HomeService.js';
-import FocusService from '../elements/FocusService.js';
-import ListService from '../elements/ListService.js';
-import FormService from '../elements/FormService.js';
+import HomeService from '../../elements/HomeService.js';
+import FocusService from '../../elements/FocusService.js';
+import ListService from '../../elements/ListService.js';
+import FormService from '../../elements/FormService.js';
 
 
 export default class DashboardClientMainService extends React.Component {

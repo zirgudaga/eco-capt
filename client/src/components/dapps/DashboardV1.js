@@ -237,6 +237,60 @@ export default class DashboardTester extends React.Component {
                             }   
                         </div>
                     }
+
+                        <form>                           
+                            <div className="tester-line">
+                                <label>
+                                    Description du service
+                                </label>
+                                <input type="text" id="newServiceDescription" className="tester-input" 
+                                    ref={(input) => { 
+                                        this.newServiceDescription = input
+                                    }}
+                                />
+                            </div>
+
+
+
+                            <div className="tester-line">
+                                <label>
+                                    Measure du service
+                                </label>
+                                <MySelect 
+                                    myName="addServiceMeasureType" 
+                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                                />
+                            </div>
+
+                            
+                            <div className="tester-line">
+                                <label>
+                                    Version du service
+                                </label>
+                                <MySelect 
+                                    myName="addServiceVersion" 
+                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                                />
+                            </div>
+
+                            <div className="tester-line">
+                                <label>
+                                    Fréquence
+                                </label>
+
+                                <input type="number" size="4" className="tester-input" id="newServiceNbTime" 
+                                    ref={(input) => { 
+                                        this.newServiceNbTime = input
+                                    }}
+                                />
+                                <MySelect 
+                                    myName="addServiceTimeType" 
+                                    handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
+                                />
+                            </div>
+            
+                        </form>
+
                 </section>
             </main>  
         )

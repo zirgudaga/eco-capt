@@ -1,4 +1,4 @@
-.home-service {
+.home-rule {
     text-align: center;
     width: 70%;
     background: #fff;
@@ -10,16 +10,16 @@
     margin-right: 2%;
 }
 
-.home-service-title {
+.home-rule-title {
     color: #1a202e;
     font-size: 40px;
 }
 
-.home-service-p {
+.home-rule-p {
     margin-top: 50px;
 }
 
-.home-service-logo {
+.home-rule-logo {
     display: flex;
     justify-content: center;
     margin-top: 50px;

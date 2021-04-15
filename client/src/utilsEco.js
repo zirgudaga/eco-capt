@@ -171,9 +171,9 @@ const fakeAlert = (alertCondigId) => {
 
     let body = 
     '0x'+stringToHex("00.01.00")+
-    stringToHex(("00000000"+alertCondigId).substr(-4))+
+    stringToHex(("0000"+"2").substr(-4))+
     stringToHex(fakeDateWithSeed(0))+
-    stringToHex(("00000000"+'1').substr(-8));
+    stringToHex(("00000000"+'63').substr(-8));
 
     return body;
 };
@@ -198,9 +198,9 @@ const getTabSelect = (nameSelector) => {
         ];
 
         case "addSeuilCode" : return [
-            {code:'SON_0001', aff:'Accoustique - Maximal'},
-            {code:'SOUF0001', aff:'Emission de soufre - Maximal'},   
-            {code:'METH0001', aff:'Emission de méthane - Moyenne'},
+            {code:'MAX_0001', aff:'Seuil maximal'},
+            {code:'MOY_0001', aff:'Moyenne maximale'},   
+            {code:'MIN_0001', aff:'Seuil minimal'},
         ];
 
         case "addServiceMeasureType" : return [

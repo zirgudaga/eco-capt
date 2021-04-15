@@ -1,7 +1,9 @@
-.alert-info {
+.rule-info {
   margin-bottom: 50px;
+  
 }
 
-.alert-info-details {
+.rule-info-details {
   font-weight: 500;
+  background: tomato;
 }

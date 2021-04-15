@@ -78,8 +78,8 @@ export default class FormAlert extends React.Component {
 
     render() {
         return (
-            <div className="form-newAlert-body">
-                <span className="form-Alert-close" onClick={()=>this.props.close()}>X</span><br/>
+            <div className="form-rule-body">
+                <span className="form-rule-close" onClick={()=>this.props.close()}>X</span><br/>
 
                 <MyNotif 
                     contract={this.props.state.contractTarget}
@@ -87,18 +87,18 @@ export default class FormAlert extends React.Component {
                 />
 
                     <form>                           
-                        <div className="tester-line">
+                        <div className="form-rule-label">
                             <label>
                                 Description du seuil
                             </label>
-                            <input type="text" id="newSeuilDescription" className="tester-input" 
+                            <input type="text" id="newSeuilDescription" className="form-rule-input" 
                                 ref={(input) => { 
                                     this.newSeuilDescription = input
                                 }}
                             />
                         </div>
                         
-                        <div className="tester-line">
+                        <div className="form-rule-label">
                             <label>
                                 Version du seuil
                             </label>
@@ -108,7 +108,7 @@ export default class FormAlert extends React.Component {
                             />
                         </div>
 
-                        <div className="tester-line">
+                        <div className="form-rule-label">
                             <label>
                                 Service concerné
                             </label>
@@ -119,12 +119,7 @@ export default class FormAlert extends React.Component {
                             />
                         </div>
 
-
-
-                        
-
-
-                        <div className="tester-line">
+                        <div className="form-rule-label">
                             <label>
                                 Code du seuil
                             </label>
@@ -134,24 +129,23 @@ export default class FormAlert extends React.Component {
                             />
                         </div>
 
-                        <div className="tester-line">
+                        <div className="form-rule-label">
                             <label>
                                 Valeur du seuil
                             </label>
 
-                            <input type="number" size="4" className="tester-input" id="newSeuilLevel" 
+                            <input type="number" size="4" className="form-rule-input" id="newSeuilLevel" 
                                 ref={(input) => { 
                                     this.newSeuilLevel = input
                                 }}
                             />
                         </div>
+
+                        <button type="button" className="form-service-cta" 
+                            onClick= { () => this.addAlertConfig() }>Add rule
+                        </button> 
         
                     </form>
-
-                    <div>
-                        <input type="button" className="tester-button" value="NEW ALERT CONFIG" onClick= { () => this.addAlertConfig() } />
-                    </div>
-
             </div>
         );      
     }

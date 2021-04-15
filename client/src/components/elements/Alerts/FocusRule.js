@@ -4,6 +4,8 @@ import {fakeAlert, _alertToObject_V_00_01_00} from '../../../utilsEco.js';
 
 import InfoRule from './InfoRule.js';
 
+import "./FocusRule.css";
+
 export default class FocusAlert extends React.Component {
 
     constructor(props) {
@@ -42,7 +44,7 @@ export default class FocusAlert extends React.Component {
 
     showAlert = (hex, index) => {
         let objet = _alertToObject_V_00_01_00(hex);
-
+        console.log(objet);
         return (
             <div className="" key={"alertKey"+index}>{objet.date} - {objet.val}</div>
         );
@@ -80,14 +82,14 @@ export default class FocusAlert extends React.Component {
 
     render() {
         return (
-            <div className="focus-alert-body">
+            <div className="focus-rule-body">
                 <b>{this.props.myRule.description}</b>
 
                 {this.showAllAlert()}
 
                 <InfoRule myRule={this.props.myRule}/>
 
-                <button type="button" className="focus-alert-cta" 
+                <button type="button" className="focus-rule-cta" 
                     onClick= { () => this.addAlert() }>New alert
                 </button> 
 

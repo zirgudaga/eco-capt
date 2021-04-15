@@ -1,4 +1,4 @@
-.focus-service-body {
+.focus-rule-body {
     background: #fff;
     border-radius: 8px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
@@ -6,9 +6,10 @@
     overflow: hidden;
     padding-bottom: 60px;
     padding: 10px;
+    width: 700px;
 }
 
-.focus-service-cta {
+.focus-rule-cta {
     height: 60px;
     line-height: 60px;
     background-color: #2563eb;

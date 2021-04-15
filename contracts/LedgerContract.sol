@@ -16,7 +16,7 @@ contract LedgerContract is Ownable {
     struct Legistalor {
         uint32 LegislatorId;
         string description;
-        uint32 LegislatorAddress : ….
+        uint32 LegislatorAddress;
         bool isActive;
     }
 

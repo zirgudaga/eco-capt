@@ -25,6 +25,10 @@ export default class DashboardClientMainHome extends React.Component {
                             </label>
                         </div>
 
+                        <div className="home-logo">
+                            <a href="."><img width="168" height="88" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
+                        </div>
+
                         <div className="header-icons">
                             <span className="las la-search"></span>
                             <span className="las la-bookmark"></span>
@@ -34,7 +38,7 @@ export default class DashboardClientMainHome extends React.Component {
 
                     <main className="main-client">
                         <div className="page-header">
-                            <div>
+                            <div className="page-header-body">
                                 <h1 className="page-header-title">Bienvenue sur votre espace</h1>
                                 <p className="page-header-address">Vous êtes connecté via l'adresse : <span className="address-color">{this.showAddress()}</span></p>
                                 <p className="page-header-contract">Votre contract client est le numéro : <span className="address-color">{this.props.state.contractTarget}</span></p>

@@ -49,6 +49,7 @@ export default class FormService extends React.Component {
             async (erreur, tx) => {
                 context.props.close();                
                 if(tx){
+                    /*
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
                             if(receipt!=null && receipt.status){
@@ -56,6 +57,7 @@ export default class FormService extends React.Component {
                             }
                         }
                     )
+                    */
                 }
             }
         ); 

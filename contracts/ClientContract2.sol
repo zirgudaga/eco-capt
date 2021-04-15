@@ -4,7 +4,7 @@ pragma solidity 0.8.0;
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-contract ClientContract is Ownable {
+contract ClientContract2 is Ownable {
     using Counters for Counters.Counter;
     
     // struct mesure en-tête (32) { 

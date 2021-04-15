@@ -1,0 +1,212 @@
+[
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131005",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000045",
+            "minValue": "00000009",
+            "meanValue": "00000026",
+            "medianValue": "00000018"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0002",
+            "date": "202104131005",
+            "valueAlerte": "00000009"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131008",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000067",
+            "minValue": "00000018",
+            "meanValue": "00000041",
+            "medianValue": "00000025"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0002",
+            "date": "202104131008",
+            "valueAlerte": "00000016"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131011",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000051",
+            "minValue": "00000013",
+            "meanValue": "00000031",
+            "medianValue": "00000019"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0002",
+            "date": "202104131011",
+            "valueAlerte": "00000009"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131014",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000061",
+            "minValue": "00000014",
+            "meanValue": "00000036",
+            "medianValue": "00000024"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0001",
+            "date": "202104131014",
+            "valueAlerte": "00000067"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131017",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000057",
+            "minValue": "00000017",
+            "meanValue": "00000036",
+            "medianValue": "00000020"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0002",
+            "date": "202104131017",
+            "valueAlerte": "00000009"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131020",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000055",
+            "minValue": "00000010",
+            "meanValue": "00000031",
+            "medianValue": "00000023"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0002",
+            "date": "202104131020",
+            "valueAlerte": "00000000"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131023",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000063",
+            "minValue": "00000021",
+            "meanValue": "00000041",
+            "medianValue": "00000021"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0003",
+            "date": "202104131023",
+            "valueAlerte": "00000059"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131026",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000049",
+            "minValue": "00000006",
+            "meanValue": "00000027",
+            "medianValue": "00000022"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0001",
+            "date": "202104131026",
+            "valueAlerte": "00000063"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131029",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000069",
+            "minValue": "00000025",
+            "meanValue": "00000045",
+            "medianValue": "00000022"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0002",
+            "date": "202104131029",
+            "valueAlerte": "00000009"
+        }
+    },
+    {
+        "_measureHeader": {
+            "version": "00.01.00",
+            "date": "202104131032",
+            "measureType": "SON_0001",
+            "timeCode": "i",
+            "nbTime": "001"
+        },
+        "_measureBody": {
+            "maxValue": "00000043",
+            "minValue": "00000002",
+            "meanValue": "00000022",
+            "medianValue": "00000021"
+        },
+        "_alerteConfig": {
+            "version": "00.01.00",
+            "idAlerte": "0003",
+            "date": "202104131032",
+            "valueAlerte": "00000049"
+        }
+    }
+]

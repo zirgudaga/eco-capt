@@ -1,12 +1,11 @@
 import * as React from "react";
-import { render } from "react-dom";
 import { Chart } from "react-google-charts";
 
-import {measureToObject} from '../../utilsEco.js';
+import {measureToObject} from '../../../utilsEco.js';
 
-import "./CardGraph.css";
+import "./GraphService.css";
 
-export default class CardGraph extends React.Component {
+export default class GraphService extends React.Component {
 
     myData = () => {
         let { myMeasures } = this.props;

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {fakeMeasure} from '../../utilsEco.js';
+import {fakeMeasure} from '../../../utilsEco.js';
 
-import CardGraph from './CardGraph.js';
-import ServiceInfo from './ServiceInfo.js';
+import GraphService from './GraphService.js';
+import ServiceInfo from './InfoService.js';
 
 import "./FocusService.css";
 
@@ -84,7 +84,7 @@ export default class FocusService extends React.Component {
             <div className="focus-service-body">
                 <b>{this.props.myService.description}</b>
 
-                <CardGraph myService={this.props.myService} myMeasures={this.state.listMeasures}/>
+                <GraphService myService={this.props.myService} myMeasures={this.state.listMeasures}/>
                 <ServiceInfo myService={this.props.myService}/>
 
                 <button type="button" className="focus-service-cta" 

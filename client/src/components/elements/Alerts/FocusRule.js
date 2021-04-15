@@ -1,6 +1,8 @@
 import React from 'react';
 
-import {fakeAlert} from '../../utilsEco.js';
+import {fakeAlert, _alertToObject_V_00_01_00} from '../../../utilsEco.js';
+
+import InfoRule from './InfoRule.js';
 
 export default class FocusAlert extends React.Component {
 
@@ -8,7 +10,6 @@ export default class FocusAlert extends React.Component {
         super(props);
         this.state = {
             listALert: [],
-            currentAlertFake: 0,
         };        
     }
 
@@ -19,42 +20,46 @@ export default class FocusAlert extends React.Component {
     }
 
     refresh = () => {
-       this.setAlertFocus(this.props.myAlert.alertId);
+       this.setAlertFocus(this.props.myRule.ruleId);
     }
-    
-    setAlertFocus = async (alertId) => {
+  
+    setAlertFocus = async (ruleId) => {
         let { contract } = this.props.state;
-        let { selectedAlert, listAlerts } = this.state;
-        selectedAlert = alertId;
-        listAlerts = await contract.methods.getAllAlerts(alertId).call();
+        let { listAlerts } = this.state;
+        listAlerts = await contract.methods.getAlerts(ruleId).call();
         this.setState({ listAlerts });  
     };   
     
-    showAlert = () => {
-        if ((this.state.listAlerts[0] !== undefined) && (this.state.listAlerts[0].length>0)){
+    showAllAlert = () => {
+        if ((this.state.listAlerts !== undefined) && (this.state.listAlerts.length>0)){
             return (
-                this.state.listAlerts[0].map((alert, index) => (
-                    <div className="" key={"alertKey"+index}>{alert}</div>       
+                this.state.listAlerts.map((alert, index) => (
+                    this.showAlert(alert, index)      
                 ))
             );
         }
-    }
+    };
+
+    showAlert = (hex, index) => {
+        let objet = _alertToObject_V_00_01_00(hex);
+
+        return (
+            <div className="" key={"alertKey"+index}>{objet.date} - {objet.val}</div>
+        );
+    };
 
     addAlert = async () => {
         const { accounts, contract, web3 } = this.props.state;
-        let {currentAlertFake } = this.state;
 
-        let alertId=this.props.myAlert.alertId;
+        let body = fakeAlert(this.props.myRule.ruleId); 
 
-        let header, body;
-
-        [header, body] = fakeAlert(currentAlertFake, this.props.myAlert); 
-        currentAlertFake++;
-        this.setState({ currentAlertFake });
+        console.log(this.props.myRule.serviceId);
+        console.log(this.props.myRule.ruleId);
+        console.log(body);
 
         await contract.methods.addAlert(
-            alertId,
-            header,  
+            this.props.myRule.serviceId,
+            this.props.myRule.ruleId,  
             body
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
@@ -71,15 +76,14 @@ export default class FocusAlert extends React.Component {
         );  
     };    
 
-
-
     render() {
         return (
             <div className="focus-alert-body">
-                <b>{this.props.myAlert.description}</b>
+                <b>{this.props.myRule.description}</b>
 
-                <CardGraph myAlert={this.props.myAlert} myAlerts={this.state.listAlerts}/>
-                <AlertInfo myAlert={this.props.myAlert}/>
+                {this.showAllAlert()}
+
+                <InfoRule myRule={this.props.myRule}/>
 
                 <button type="button" className="focus-alert-cta" 
                     onClick= { () => this.addAlert() }>New alert

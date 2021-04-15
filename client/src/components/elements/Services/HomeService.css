@@ -1,0 +1,26 @@
+.home-service {
+    text-align: center;
+    width: 70%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+    min-height: 600px;
+    width: 73%;
+    margin-right: 2%;
+}
+
+.home-service-title {
+    color: #1a202e;
+    font-size: 40px;
+}
+
+.home-service-p {
+    margin-top: 50px;
+}
+
+.home-service-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}

@@ -1,10 +1,8 @@
 import React from 'react';
 
-import {getTabSelect} from '../../utilsEco.js';
-
 import "./MySelect.css";
 
-export default class MySelect extends React.Component {
+export default class MySelectEth extends React.Component {
 
     constructor(props) {
         super(props);
@@ -16,10 +14,35 @@ export default class MySelect extends React.Component {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount = async() => {
         let myTabOptions = [];
-        myTabOptions = getTabSelect(this.props.myName);
+
+        switch (this.props.myName){
+            case "addService" : myTabOptions = await this.recoltAllServiceOfContract(); break;
+            default : myTabOptions = []
+        }
+
+        console.log("MyTab", myTabOptions)
+
         this.setState({ myTabOptions });       
+    }
+
+    
+    //TODO ADAPTER CETTE LISTE DEROULANTE A CHAQUE PROFIL
+    recoltAllServiceOfContract = async() => {
+        const { contract } = this.props.state;
+
+        let returnTab = [];
+        
+        if(contract != null){
+            let listServices;
+            listServices = await contract.methods.getAllServices().call();
+            for(let index in listServices){
+                returnTab.push({code: index, aff: listServices[index].description});
+            }
+        }     
+     
+        return returnTab;
     }
 
     clickSelector() {

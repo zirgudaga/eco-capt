@@ -41,21 +41,27 @@ class App extends Component {
             const deployedNetwork = ClientContract.networks[networkId];
             const deployedNetwork2 = ClientContract2.networks[networkId];
 
+            // ADDD
+            if(networkId == 3){
+                deployedNetwork.address = "0x77D1aE180104A257a6B208Bc04bAae41C0F26bE8";
+            }
+            
+
             const contract = new web3.eth.Contract(
                 ClientContract.abi,
                 deployedNetwork && deployedNetwork.address,
             );
-
+            
             const contract2 = new web3.eth.Contract(
                 ClientContract2.abi,
                 deployedNetwork2 && deployedNetwork2.address,
-            );            
-
+            );   
+                    
             const contractTarget = deployedNetwork.address;
             const contractTarget2 = deployedNetwork2.address;
 
             console.log("Adresse contract : ", deployedNetwork.address);
-            console.log("Adresse contract : ", deployedNetwork2.address);            
+            console.log("Adresse contract 2 : ", deployedNetwork2.address);            
 
             this.setState({ web3, accounts, contract, contract2, contractTarget, contractTarget2});  
 

@@ -87,6 +87,33 @@ const measureToObject = (hexHeader, hexBody) => {
     return [objHeader, objBody];
 };
 
+
+
+/**
+ * @dev String to Object Measure
+ * @param stringValue : String to transfort in Object
+ * @return Hex
+ */
+ const _alertToObject_V_00_01_00 = (hexBody) => { 
+
+    hexBody = hexBody.substr(-64);
+
+    // struct alert donnée (32) { 
+    //   Version : bytes8
+    //   CodeAlert : bytes4    
+    //   Date : YYYYmmddHHii : byte12
+    //   Valeur alert : bytes8
+    let objBody = {};
+    objBody.version = hexToString(hexBody.substr(0,16));
+    objBody.codeAlert = hexToString(hexBody.substr(16,8));
+    objBody.date = hexToString(hexBody.substr(24,24));
+    objBody.val = parseFloat(hexToString(hexBody.substr(48,16)));
+    
+    return objBody;
+};
+
+
+
 const fakeDateWithSeed = (seed) => {
     let date = new Date();
     let year = date.getFullYear();
@@ -136,7 +163,7 @@ const fakeMeasure = (seed, service) => {
     return [hexHeader, hexBody];
 };
 
-const fakeAlert = (alertCondigId, serviceId) => {
+const fakeAlert = (alertCondigId) => {
     //   Version : bytes8
     //   Code : bytes4    
     //   Date : YYYYmmddHHii : byte12
@@ -159,7 +186,7 @@ const fakeAlert = (alertCondigId, serviceId) => {
  * @param stringValue : String to transfort in Object
  * @return Hex
  */
-const getTabtSelect = (nameSelector) => {
+const getTabSelect = (nameSelector) => {
 
     switch(nameSelector){
         case "addServiceVersion" : return [
@@ -193,7 +220,10 @@ const getTabtSelect = (nameSelector) => {
     
         default : return [];
     }
+
+    
+
 }  
   
-export { hexToString, stringToHex, measureToObject, getTabtSelect, fakeMeasure, fakeAlert };
+export { hexToString, stringToHex, measureToObject, getTabSelect, fakeMeasure, fakeAlert, _alertToObject_V_00_01_00 };
   

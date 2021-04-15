@@ -1,5 +1,4 @@
 import React from 'react';
-import CardGraph from './CardGraph.js';
 import "./HomeService.css";
 
 export default class HomeService extends React.Component {

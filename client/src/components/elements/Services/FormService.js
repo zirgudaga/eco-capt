@@ -1,8 +1,8 @@
 import React from 'react';
 import "./FormService.css";
-import {stringToHex} from '../../utilsEco.js';
-import MySelect from '../elements/MySelect.js';
-import MyNotif from '../elements/MyNotif.js';
+import {stringToHex} from '../../../utilsEco.js';
+import MySelect from '../MySelect.js';
+import MyNotif from '../MyNotif.js';
 
 export default class FormService extends React.Component {
 

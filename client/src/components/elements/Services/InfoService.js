@@ -1,14 +1,13 @@
 import React from 'react';
 
-import "./ServiceInfo.css";
+import "./InfoService.css";
 
-export default class ServiceInfo extends React.Component {
+export default class InfoService extends React.Component {
 
     render() {
         
         let { myService } = this.props;
         let address0 = "0x0000000000000000000000000000000000000000";
-        //console.log(myService);
 
         return (
             <div className="service-info">

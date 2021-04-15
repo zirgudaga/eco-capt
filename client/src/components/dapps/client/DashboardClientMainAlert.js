@@ -1,19 +1,20 @@
 import React from 'react';
 import './DashboardClientMain.css';
-import './DashboardClientMainService.css'
+import './DashboardClientMainAlert.css'
 
-import HomeService from '../../elements/Services/HomeService.js';
-import FocusService from '../../elements/Services/FocusService.js';
-import ListService from '../../elements/Services/ListService.js';
-import FormService from '../../elements/Services/FormService.js';
+import HomeRule from '../../elements/Alerts/HomeRule.js';
+import FocusRule from '../../elements/Alerts/FocusRule.js';
+import ListRule from '../../elements/Alerts/ListRule.js';
+import FormRule from '../../elements/Alerts/FormRule.js';
 
-export default class DashboardClientMainService extends React.Component {
+
+export default class DashboardClientMainAlert extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            listServices: [],
-            selectedService: -1,
+            listRules: [],
+            selectedRule: -1,
             currentMainSelect: "Home",
             errorMessage: '',
         };
@@ -26,54 +27,54 @@ export default class DashboardClientMainService extends React.Component {
     }
 
     refresh = () => {
-        this.getAllServices();
+        this.getAllRules();
     }
 
-    getAllServices = async () => {
+    getAllRules = async () => {
         const { contract } = this.props.state;
 
         if(contract != null){
-            let { listServices } = this.state;
-            listServices = await contract.methods.getAllServices().call();
-            for(let index in listServices){
-                listServices[index].serviceId = index;
+            let { listRules } = this.state;
+            listRules = await contract.methods.getAllAlertConfigs().call();
+            for(let index in listRules){
+                listRules[index].ruleId = index;
             }
-            this.setState({ listServices });  
+            this.setState({ listRules });  
         }        
     };    
 
     selectedMainLauncher = () => {
 
         switch(this.state.currentMainSelect){
-            case "Home" : return (<HomeService state={this.props.state}/>);
-            case "FocusService" : return (<FocusService 
+            case "Home" : return (<HomeRule state={this.props.state}/>);
+            case "FocusRule" : return (<FocusRule 
                 state={this.props.state}
-                myService={this.state.listServices[this.state.selectedService]} 
+                myRule={this.state.listRules[this.state.selectedRule]} 
             />);
-            case "NewService" : return (<FormService 
+            case "NewRule" : return (<FormRule 
                 state={this.props.state} 
-                close={()=>{this.showFormAddService(false)}}
+                close={()=>{this.showFormAddRule(false)}}
             />);
             
-            default: return (<HomeService state={this.props.state}/>);
+            default: return (<HomeRule state={this.props.state}/>);
         }
     }
 
-    showFormAddService = (isOpen) => {
+    showFormAddRule = (isOpen) => {
         if(isOpen){
-            this.setState({ currentMainSelect: "NewService" });
+            this.setState({ currentMainSelect: "NewRule" });
             return;
         }
 
-        if(this.state.selectedService > -1){
-            this.setState({ currentMainSelect : "FocusService" });
+        if(this.state.selectedRule > -1){
+            this.setState({ currentMainSelect : "FocusRule" });
         }else{
             this.setState({ currentMainSelect : "Home" });
         }
     }
 
-    showFocusService = (index) => {
-        this.setState({ selectedService: index, currentMainSelect : "FocusService" });
+    showFocusRule = (index) => {
+        this.setState({ selectedRule: index, currentMainSelect : "FocusRule" });
     }
 
     render() {
@@ -94,12 +95,12 @@ export default class DashboardClientMainService extends React.Component {
                         </div>
                     </header>
                     <div className="row">
-                        <main className="service-main-content">     
+                        <main className="rule-main-content">     
                             {this.selectedMainLauncher()}  
-                            <ListService 
+                            <ListRule 
                                 state={this.state}
-                                addService= {() => {this.showFormAddService(true);}}
-                                setServiceFocus = {(index) => {this.showFocusService(index);}}
+                                addRule= {() => {this.showFormAddRule(true);}}
+                                setRuleFocus = {(index) => {this.showFocusRule(index);}}
                             />
                         </main>
                     </div>

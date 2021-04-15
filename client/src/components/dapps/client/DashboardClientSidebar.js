@@ -24,10 +24,6 @@ export default class Sidebar extends React.Component {
                     <div className="sidebar-brand">
                         <div className="brand-flex">
                             <img src="logo.png" width="40px" alt="" />
-                            <div className="brand-icons">
-                                <span className="las la-bell"></span>
-                                <span className="las la-user-circle"></span>
-                            </div>
                         </div>
                     </div>
 
@@ -56,6 +52,12 @@ export default class Sidebar extends React.Component {
                                         Services
                                     </a>
                                 </li>
+                                <li>
+                                    <a onClick = { () => {this.props.goTo("Alert");} }>
+                                        <span className="las la-bell"></span>
+                                        Alertes
+                                    </a>
+                                </li>
                             </ul>
                             <div className="menu-head">
                                 <span>Applications</span>
@@ -77,12 +79,6 @@ export default class Sidebar extends React.Component {
                                     <a href=".">
                                         <span className="las la-envelope"></span>
                                         Mailbox
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href=".">
-                                        <span className="las la-check-circle"></span>
-                                        Todo
                                     </a>
                                 </li>
                             </ul>

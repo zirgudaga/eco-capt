@@ -13,6 +13,8 @@ export default class NavBar extends React.Component {
                         <ul>
                             <li><Link to="/appClient">App Client</Link></li>
                             <li><Link to="/appTesteur">App Testeur</Link></li>
+                            <li><Link to="/appTesteurTest">App Testeur 2</Link></li>
+                            
                             <li><a href=".">About</a></li>
                             <li><a href=".">Contact us</a></li>
                         </ul>

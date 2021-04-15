@@ -78,6 +78,7 @@ export default class DashboardTester extends React.Component {
             this.newServiceNbTime.value        
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
+                /*
                 if(tx){
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
@@ -87,6 +88,7 @@ export default class DashboardTester extends React.Component {
                         }
                     )
                 }
+                */
             }
         ); 
     };
@@ -133,6 +135,7 @@ export default class DashboardTester extends React.Component {
             body
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
+                /*
                 if(tx){
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
@@ -143,6 +146,7 @@ export default class DashboardTester extends React.Component {
                         }
                     )
                 }
+                */
             }
         );  
     };    
@@ -160,6 +164,7 @@ export default class DashboardTester extends React.Component {
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
                 if(tx){
+                    /*
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
                             if(receipt!=null && receipt.status){
@@ -168,6 +173,7 @@ export default class DashboardTester extends React.Component {
                             }
                         }
                     )
+                    */
                 }
             }
         );  
@@ -236,6 +242,7 @@ export default class DashboardTester extends React.Component {
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
                 if(tx){
+                    /*
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
                             if(receipt!=null && receipt.status){
@@ -243,6 +250,7 @@ export default class DashboardTester extends React.Component {
                             }
                         }
                     )
+                    */
                 }
             }
         ); 

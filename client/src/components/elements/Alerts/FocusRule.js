@@ -64,6 +64,7 @@ export default class FocusAlert extends React.Component {
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
                 if(tx){
+                    /*
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
                             if(receipt!=null && receipt.status){
@@ -71,6 +72,7 @@ export default class FocusAlert extends React.Component {
                             }
                         }
                     )
+                    */
                 }
             }
         );  

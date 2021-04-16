@@ -2,7 +2,7 @@
 
 *Ce document doit expliquer les tests écrits et pourquoi vous les avez écrit.*
 
-Les tests du **clientContract.sol** ont été réalisés en parallèle des déploiements.
+📌 Les tests du **clientContract.sol** ont été réalisés en parallèle des déploiements.
 Nous avons ensuite décidé d'élaborer nos tests en amont afin d'écrire notre contrat **ledgerContrat.sol** en conséquence.
 L'objectif est de tester toutes les fonctions de chaque smart contract afin de s'assurer du bon fonctionnement de ces derniers.
 

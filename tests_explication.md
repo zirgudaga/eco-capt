@@ -8,39 +8,39 @@ L'objectif est de tester toutes les fonctions de chaque smart contract afin de s
 
 Concernant le contrat c**lientContract.sol** par exemple, la fonction **addService** se doit d'être testée pour une question de securité.
 
-    ```function addService(
-            bytes8 _version,   
-            string memory _description,
-            bytes8 _measureType,          
-            bytes1 _timeCode,
-            uint8 _nbTime) 
-            onlyCustomer() isContractActive() external{
+    function addService(
+        bytes8 _version,   
+        string memory _description,
+        bytes8 _measureType,          
+        bytes1 _timeCode,
+        uint8 _nbTime) 
+        onlyCustomer() isContractActive() external{
         
-            Counters.Counter memory measureIdCounter;       
-            Counters.Counter memory IotIdCounter;    
+        Counters.Counter memory measureIdCounter;       
+        Counters.Counter memory IotIdCounter;    
 
-            _services.push(Service(
-            _version, 
-            _measureType,  
-            _timeCode,    
-            _nbTime,   
-            true,  
-            true,                      
-            _description, 
-            address(0),
-            address(0),
-            address(0),                     
-            measureIdCounter,
-            IotIdCounter));
+        _services.push(Service(
+        _version, 
+        _measureType,  
+        _timeCode,    
+        _nbTime,   
+        true,  
+        true,                      
+        _description, 
+        address(0),
+        address(0),
+        address(0),                     
+        measureIdCounter,
+        IotIdCounter));
 
-            emit ContractUpdate("New service", msg.sender);
+        emit ContractUpdate("New service", msg.sender);
 
-            _serviceIdCounter.increment();
-        }  ```
+        _serviceIdCounter.increment();
+    }  
 
 Nous testons donc les accès aux fonctions au travers de **modifiers** présents dans **clientContract.sol** :
 
-    ```modifier onlyCustomer() {
+    modifier onlyCustomer() {
         require (_myConfig.customerAddress == msg.sender || owner() ==  msg.sender, "Access denied");
         _;
     }
@@ -48,13 +48,13 @@ Nous testons donc les accès aux fonctions au travers de **modifiers** présents
     modifier isContractActive() {
         require(_myConfig.isActive, "Contract off line");
         _;
-    }```
+    }
 
 Si la personne faisant appel à cette fonction n'est pas présente dans le tableau des **customers**, le test **onlyCustomer** de la fonction **addService** renverra l'erreur **"Access denied"**.
 
 Le contrat test pour **addService** a donc la structure suivante :
 
-    ```// Contrat de test pour addService
+    // Contrat de test pour addService
         contract('addService', function (accounts) {
             const owner = accounts[0];    
             const client = accounts[1];
@@ -120,7 +120,7 @@ Le contrat test pour **addService** a donc la structure suivante :
             expectEvent(receipt, "ContractUpdate", { _author: client });
         });
     
-    });```
+    });
 
 Au travers des tests nous vérifions également le bon déroulement de chaque fonction.
 Nous effectuons également un rapprochement entre le résultat attendu du test et le résultat effectif.

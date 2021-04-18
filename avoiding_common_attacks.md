@@ -1,14 +1,14 @@
-## avoiding_common_attacks.md
+# avoiding_common_attacks.md
 
-Pour l'heure, voici l'ensemble des sécurités mise en place :
+📌 Pour l'heure, voici l'ensemble des sécurités mises en place :
 
-1) Aucun emploi de contract extérieur possible hors le contract Ledger dont l'adresse sera renseigné au déployement et ne pourra pas être changée.
+- Aucun emploi de smart contract extérieur possible hors le **contract Ledger**. L'adresse dudit **Ledger** sera renseignée au déploiement et ne pourra pas être modifiée.
 
-2) L'usage du isOwner pour l'ensemble des actions critiques du contrats.
+- L'usage du **isOwner** pour l'ensemble des actions critiques du contrats.
 
-3) Un ensemble de modifier destinés à limiter l'accès des fonctionnalités par status d'activiation ou par identité certifiée :
+- Un ensemble de **modifier** destinés à limiter l'accès des fonctionnalités par **status d'activation** ou par **identité certifiée** :
 
-   modifier isAddressValid(address _addr){
+   ```modifier isAddressValid(address _addr){
         require(_addr != address(0));
         _;
     }
@@ -43,11 +43,10 @@ Pour l'heure, voici l'ensemble des sécurités mise en place :
     modifier onlyLegislator(uint _serviceId) {
         require (_services[_serviceId].legislatorAddress == msg.sender || owner() ==  msg.sender, "Access denied");
         _;
-    }
+    }```
 
-4) La grande majorité des données sont en private afin de contrôler par nos getters l'information envoyée.
+- La grande majorité des données sont en **private** afin de contrôler par nos **getters** l'information envoyée
 
-5) Usage de la librairie compteur d'OpenZepellin pour éviter les erreurs d'incrémentation
+- Usage de la librairie compteur d'**OpenZepellin** pour éviter les erreurs d'incrémentation
 
-6) L'emploi du contrat Ledger indiqué au déployement afin de vérifier valider l'identité certifiées des acteurs. (en cours)
-
+- L'emploi du **contrat Ledger** indiqué au déployement afin de vérifier  et valider l'identité certifiée des acteurs. *en cours*

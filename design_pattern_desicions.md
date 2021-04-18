@@ -1,37 +1,37 @@
-## design_pattern_desicions.md
+# design_pattern_desicions.md
 
-Pour nos smart contracts, nous avons naturellement mis en place plusieurs bonnes pratiques présentes dans https://fravoll.github.io/solidity-patterns/
+Pour nos **smart contracts**, nous avons naturellement mis en place plusieurs bonnes pratiques présentes dans [https://fravoll.github.io/solidity-patterns/](https://fravoll.github.io/solidity-patterns/)
 
-- Guard Check
+## Guard Check
 
-Par l'intermédiaire de plusieurs modifiers, nous vérifions que l'appels aux fonctions se fait correctement. En vérifiant la validation des données. Exemple :
+Par l'intermédiaire de plusieurs **modifiers**, nous vérifions que l'appel aux fonctions se fait correctement. En vérifiant la validation des données. Exemple :
 
     modifier isAddressValid(address _addr){
         require(_addr != address(0));
         _;
     }
 
-- State Machine
+## State Machine
 
-Nos contrats n'ayant pas pour objectif d'ordonner un workflow, le State Machine se concentre sur la disponinilité des différentes actions. Est-ce qu'un service est active, est-ce qu'un seuil d'alerte est actif ? Ces états sont consultés par le Guard Check et modifié par qui de droit :
+Nos contrats n'ayant pas pour objectif d'ordonner un workflow, le **State Machine** se concentre sur la disponinilité des différentes actions. Est-ce qu'un **service** a un **statut active**, est-ce qu'un **seuil d'alerte** est **actif** ? Ces états sont consultés par le Guard Check et modifié par qui de droit :
 
     function toggleContract()
         onlyOwner() external {
         emit ContractUpdate("Contract on/off", msg.sender);
         _myConfig.isActive = !_myConfig.isActive;
-    }   
+    }
 
-- Oracle
+## Oracle
 
-Notre application se base sur la prise d'informations issus des capteurs. Ces informations sont traitées par un server de confiance dont l'installateur est certifié par notre solution. A ce titre là, l'emploi d'Oracle n'est pas nécessaire.
+Notre application se base sur la prise d'informations issus des capteurs. Ces informations sont traitées par un serveur de confiance dont l'installateur est certifié par notre solution. À ce titre là, l'emploi d'**Oracle** n'est pas nécessaire.
 
-- Randomness
+## Randomness
 
-Notre application n'a nul besoin de donnée aléatoire. Mais si cela était nécessaire, le bridge sera parfait pour cela.
+Notre application n'a nul besoin de donnée aléatoire. Mais si cela était nécessaire, le bridge serait parfait pour cela.
 
-- Access Restriction
+## Access Restriction
 
-Comme détaillé dans la partie Guard Check, chaque contrat client dispose de services dont certaines adresses possèdent des droit particuliers.
+Comme détaillé dans la partie **Guard Check**, chaque contrat client dispose de services dont certaines adresses possèdent des droit particuliers.
 
     /**
      * @dev Structure of Service
@@ -53,7 +53,7 @@ Comme détaillé dans la partie Guard Check, chaque contrat client dispose de se
         Counters.Counter IotIdCounter;     
     }
 
-Ces adresses ne sont renseignées que par des utilisateurs acceptées :
+Ces adresses ne sont renseignées que par des utilisateurs acceptés :
 
     /**
      * @dev set a TechMasterAddress
@@ -68,33 +68,33 @@ Ces adresses ne sont renseignées que par des utilisateurs acceptées :
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
         emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
-    }    
+    }
+    
+La vérification de ces adresses pour les actions est encadrée par notre **Guard Check**.
 
-La vérification de ces adresses pour les actions est encadrées par notre Guard Check.
+## Checks Effects Interactions
 
-- Checks Effects Interactions
+L'implémentation d'un **ERC-20** est en cours de réalisation. Le contrôle de l'intéraction s'assurera de la bonne tenue des paiements réalisés par l'**ERC-20** en question.
 
-L'implémentation d'un ERC-20 est en cours de réalisation. Le contrôle de l'intéractions s'assurera de la bonne tenue des payements réalisés par l'ERC-20 en question.
+## Secure Ether Transfer
 
-- Secure Ether Transfer
+*L'application ne prévoit pas de dépôt et de transfert d'ETH.*
 
-L'application ne prévoit pas de dépôt et de transfert d'ETH.
+## Pull over Push
 
-- Pull over Push
+*L'application ne prévoit pas de dépôt et de transfert d'ETH.*
 
-L'application ne prévoit pas de dépôt et de transfert d'ETH.
+## Emergency Stop
 
-- Emergency Stop
+*L'application ne prévoit pas de dépôt et de transfert d'ETH.* Et l'**Owner** peut désactiver le **contract du client** en cas de mauvais paiement ou non respect des consignes d'Eco-capt.
 
-L'application ne prévoit pas de dépôt et de transfert d'ETH. Et l'Owner peut desactiver le contract du client en cas de mauvais payement ou non respect des consignes d'Eco-capt.
+## Proxy Delegate
 
-- Proxy Delegate
+*Non utilisé dans notre projet*
 
-Non utilisé dans notre projet
+## Eternal Storage
 
-- Eternal Storage
-
-Nous avons prévu que chaque contract client soit versionné. L'ensemble des donneés (rapport de mesures, services) est donc conservés et accessible même si à l'avenir le client passe sur nouveau contrat offrait plus de fonctionnalités. La structure Config est en charge d'assurer cette possibilité à l'avenir.
+Nous avons prévu que chaque contrat client soit versionné. L'ensemble des donneés (rapport de mesures, services) est donc conservé et accessible même si à l'avenir le client passe sur un nouveau contrat qui offrirait plus de fonctionnalités. La structure **Config** est en charge d'assurer cette possibilité à l'avenir.
 
     /**
     * @dev Structure of Configuration
@@ -112,11 +112,11 @@ Nous avons prévu que chaque contract client soit versionné. L'ensemble des don
         bool isActive;
     }
 
-- String Equality Comparison
+## String Equality Comparison
 
-Les rares strings utilisées dans notre application ne demande pas de comparaison. Par contre, pour la partie KYC enregistrée dans le contrat Ledger, nous utiliserons la fonction keccak256 afin de comparer les hashs des élements importants (SIRET, Nom de socièté, etc...)
+Les rares strings utilisées dans notre application ne demande pas de comparaison. Par contre, pour la partie **KYC** enregistrée dans le **contrat Ledger**, nous utiliserons la fonction **keccak256** afin de comparer les hashs des élements importants (SIRET, Nom de socièté, etc...)
 
-- Tight Variable Packing
+## Tight Variable Packing
 
 L'ordre des variables de nos structures est étudiés pour packer dans la mesure du possible les différentes tailles de variable :
 
@@ -140,11 +140,11 @@ L'ordre des variables de nos structures est étudiés pour packer dans la mesure
         Counters.Counter IotIdCounter;     
     }
 
-Cette bonne pratique sera totalement effectif sur la fin du projet.
+Cette bonne pratique sera totalement effective sur la fin du projet.
 
-- Memory Array Building
+## Memory Array Building
 
-Afin d'économier au mieux le gaz, nous utilisons systématiquement l'attribut view pour l'ensemble de nos getters :
+Afin d'économier au mieux le gaz, nous utilisons systématiquement l'attribut **view** pour l'ensemble de nos getters :
 
     /**
     * @dev get a Config
@@ -154,7 +154,7 @@ Afin d'économier au mieux le gaz, nous utilisons systématiquement l'attribut v
         return _myConfig;
     }
 
-D'un autre côté, pour continuer à économiser au mieux le gaz, sans que cela soit du Memory Array Building. Nous favorisons l'emploi de mapping astucieux de manière à éviter l'emploi de boucle au maximum. Pour l'heure, aucune boucle n'est utilisé.
+D'un autre côté, pour continuer à économiser au mieux le gaz, sans que cela soit du **Memory Array Building**. Nous favorisons l'emploi de **mapping** astucieux de manière à éviter l'emploi de boucle au maximum. Pour l'heure, aucune boucle n'est utilisée.
 
     Service[] private _services;
     mapping(uint => bytes32[]) private _serviceHeaderMeasures;
@@ -162,16 +162,13 @@ D'un autre côté, pour continuer à économiser au mieux le gaz, sans que cela 
     mapping(uint => Iot[]) private _serviceMacIOT;
     Counters.Counter public _serviceIdCounter;
 
-Pour finir, les données vouées à être nombreuses sont compactés de manière économique en bytes32, même si elles sont composites.
+Pour finir, les données vouées à être nombreuses sont compactées de manière économique en **bytes32**, même si elles sont composites.
 
-// struct mesure en-tête (32) { 
-//   //V0.1     XX.XX.XX    00.01.00
-//   Version : bytes8;
-//   Date : YYYYmmddHHii : byte12
-//   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
-//   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
-//   Nb temporel : bytes3 
-// }
-
-
-
+    // struct mesure en-tête (32) { 
+    //   //V0.1     XX.XX.XX    00.01.00
+    //   Version : bytes8;
+    //   Date : YYYYmmddHHii : byte12
+    //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
+    //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
+    //   Nb temporel : bytes3 
+    // }

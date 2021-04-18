@@ -10,13 +10,15 @@ contract LedgerContract is Ownable {
     struct Client {
         uint32 clientId;
         string description;
+        address addressClient;
+
         bool isActive;
     }
 
     struct Legistalor {
         uint32 LegislatorId;
         string description;
-        uint32 LegislatorAddress;
+        address LegislatorAddress;
         bool isActive;
     }
 
@@ -30,7 +32,7 @@ contract LedgerContract is Ownable {
     struct TechMaster {
         uint32 techMasterId;
         string description;
-        uint32 techMasterAddress;
+        address techMasterAddress;
         bool isActive;
     }
 
@@ -54,10 +56,12 @@ contract LedgerContract is Ownable {
         bool isActive;
     }
 
+    string public ledgerDescription;
+
+    constructor (string memory _description) {
+        ledgerDescription = _description;
+    }
 
 
-constructor (uint32 _foundationAddress, string _description) {
-        _myLedger = Ledger(
-            _foundationAddress,
-            _description,
-        );
+
+}

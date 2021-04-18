@@ -56,7 +56,6 @@ contract ClientContract is Ownable {
         bytes1 timeCode;
         uint8 nbTime;
         bool isActive;
-        bool isAllowed;
         string description;
         address bridgeAddress;
         address techMasterAddress;
@@ -95,6 +94,11 @@ contract ClientContract is Ownable {
         bool isActive;
     }
 
+    modifier isAddressValid(address _addr){
+        require(_addr != address(0));
+        _;
+    }
+
     modifier isContractActive() {
         require(_myConfig.isActive, "Contract off line");
         _;
@@ -103,7 +107,6 @@ contract ClientContract is Ownable {
     modifier isServiceActive(uint _serviceId) {
         require(_serviceId < _serviceIdCounter.current(), "Service not exist"); 
         require(_services[_serviceId].isActive, "Service off line"); 
-        require(_services[_serviceId].isAllowed, "Service not allowed"); 
         _;
     }
 
@@ -204,8 +207,7 @@ contract ClientContract is Ownable {
         _measureType,  
         _timeCode,    
         _nbTime,   
-        true,  
-        true,                      
+        true,                     
         _description, 
         address(0),
         address(0),
@@ -258,28 +260,9 @@ contract ClientContract is Ownable {
         uint _serviceId)
         onlyCustomer() external {
 
-        if(_services[_serviceId].isActive){
-            emit ServiceUpdate(_serviceId, "Service off", msg.sender);
-        }else{
-            emit ServiceUpdate(_serviceId, "Service on", msg.sender);
-        } 
+        emit ServiceUpdate(_serviceId, "Service on/off", msg.sender);
+
         _services[_serviceId].isActive = !_services[_serviceId].isActive;
-    }
-
-    /**
-     * @dev toggle a Service allowed or desallowed
-     * @param _serviceId index of service
-     */
-    function toggleAllowed(
-        uint _serviceId)
-        onlyOwner() external {
-
-        if(_services[_serviceId].isAllowed){
-            emit ServiceUpdate(_serviceId, "Service desallowed", msg.sender);
-        }else{
-            emit ServiceUpdate(_serviceId, "Service allowed", msg.sender);
-        } 
-        _services[_serviceId].isAllowed = !_services[_serviceId].isAllowed;
     }
 
     /**
@@ -290,7 +273,7 @@ contract ClientContract is Ownable {
     function setTechMasterAddress(
         uint _serviceId,
         address _techMasterAddress)
-        isContractActive() isServiceActive(_serviceId) onlyOwner() external {  
+        isAddressValid(_techMasterAddress) isContractActive() isServiceActive(_serviceId) onlyOwner() external {  
         
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
@@ -305,7 +288,7 @@ contract ClientContract is Ownable {
     function setBridgeAddress(
         uint _serviceId,
         address _bridgeAddress)
-        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
+        isAddressValid(_bridgeAddress) isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
         
         _services[_serviceId].bridgeAddress = _bridgeAddress;
 
@@ -320,7 +303,7 @@ contract ClientContract is Ownable {
     function setLegislatorAddress(
         uint _serviceId,
         address _legislatorAddress)
-        isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
+        isAddressValid(_legislatorAddress) isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
         
         require(_checkValidLegislator(_legislatorAddress) == true, "Legistator not valid");
 

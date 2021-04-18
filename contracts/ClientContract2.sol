@@ -4,7 +4,7 @@ pragma solidity 0.8.0;
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-contract ClientContract2 is Ownable {
+contract ClientContract is Ownable {
     using Counters for Counters.Counter;
     
     // struct mesure en-tête (32) { 
@@ -56,7 +56,6 @@ contract ClientContract2 is Ownable {
         bytes1 timeCode;
         uint8 nbTime;
         bool isActive;
-        bool isAllowed;
         string description;
         address bridgeAddress;
         address techMasterAddress;
@@ -103,7 +102,6 @@ contract ClientContract2 is Ownable {
     modifier isServiceActive(uint _serviceId) {
         require(_serviceId < _serviceIdCounter.current(), "Service not exist"); 
         require(_services[_serviceId].isActive, "Service off line"); 
-        require(_services[_serviceId].isAllowed, "Service not allowed"); 
         _;
     }
 
@@ -204,8 +202,7 @@ contract ClientContract2 is Ownable {
         _measureType,  
         _timeCode,    
         _nbTime,   
-        true,  
-        true,                      
+        true,                     
         _description, 
         address(0),
         address(0),
@@ -258,28 +255,9 @@ contract ClientContract2 is Ownable {
         uint _serviceId)
         onlyCustomer() external {
 
-        if(_services[_serviceId].isActive){
-            emit ServiceUpdate(_serviceId, "Service off", msg.sender);
-        }else{
-            emit ServiceUpdate(_serviceId, "Service on", msg.sender);
-        } 
+        emit ServiceUpdate(_serviceId, "Service on/off", msg.sender);
+
         _services[_serviceId].isActive = !_services[_serviceId].isActive;
-    }
-
-    /**
-     * @dev toggle a Service allowed or desallowed
-     * @param _serviceId index of service
-     */
-    function toggleAllowed(
-        uint _serviceId)
-        onlyOwner() external {
-
-        if(_services[_serviceId].isAllowed){
-            emit ServiceUpdate(_serviceId, "Service desallowed", msg.sender);
-        }else{
-            emit ServiceUpdate(_serviceId, "Service allowed", msg.sender);
-        } 
-        _services[_serviceId].isAllowed = !_services[_serviceId].isAllowed;
     }
 
     /**

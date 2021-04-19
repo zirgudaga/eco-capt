@@ -178,7 +178,6 @@ export default class DashboardTesterTest extends React.Component {
         );  
     }
 
-
     setServiceFocus = async (serviceId) => {
         let { contract2 } = this.props.state;
         let { selectedService, listMeasures } = this.state;
@@ -186,7 +185,6 @@ export default class DashboardTesterTest extends React.Component {
         listMeasures = await contract2.methods.getAllMeasures(serviceId).call();
         this.setState({ contract2, selectedService, listMeasures });  
     };     
-
 
     setAlertConfigFocus = async (alertConfigId) => {
         let { contract2 } = this.props.state;
@@ -196,8 +194,6 @@ export default class DashboardTesterTest extends React.Component {
         this.setState({selectedAlertConfig,  listAlerts });  
     };     
    
-
-
     showAlert = (alert) =>{
        return alert;
     };

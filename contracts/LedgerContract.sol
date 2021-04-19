@@ -7,61 +7,127 @@ import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 contract LedgerContract is Ownable {
     using Counters for Counters.Counter;
 
-    struct Client {
-        uint32 clientId;
+    struct Customer {
         string description;
-        address addressClient;
-
+        address contractAddress;
+        uint siretNumber;
         bool isActive;
+        bool exist;
     }
 
-    struct Legistalor {
-        uint32 LegislatorId;
+    struct Legislator {
         string description;
-        address LegislatorAddress;
+        uint siretNumber;        
         bool isActive;
-    }
-
-    struct AffectationLegislator{
-	    uint32 clientId;
-        uint32 serviceId;
-        uint32 alertConfigId;
-        bool isActive;
+        bool exist;        
     }
 
     struct TechMaster {
-        uint32 techMasterId;
         string description;
-        address techMasterAddress;
+        uint siretNumber;        
         bool isActive;
+        bool exist;        
     }
 
-    struct AffectationTechmaster{
-	    uint32 clientId;
-        uint32 serviceId;
-        bool isActive;
-    }
-
-    struct TypeMesure{
-	    uint32 idMesure; 
+    struct TypeMeasure{
 	    string description;
         string info;
         bool isActive;
 	    bool isAllowed;
+        bool exist;        
     }
 
-    struct AffectationMeasure{
-   	    uint32 clientId;
-        uint32 serviceId;
-        bool isActive;
+    event LedgerUpdate(string _message, address _target, address _author);  
+    event TypeMeasureUpdate(string _message, bytes8 _target, address _author);  
+  
+    mapping(address => Customer) public _customers; 
+    mapping(address => Legislator) public _legislators; 
+    mapping(address => TechMaster) public _techMasters;
+    mapping(bytes8 => TypeMeasure) public _typeMeasures;
+
+    function setCustomer (
+        string memory _description,
+        address _customerAddress, 
+        address _contratAddress,
+        uint _siretNumber,
+        bool _isActive) 
+        onlyOwner() external {
+
+        if(!_customers[_customerAddress].exist){
+            emit LedgerUpdate("New Customer", _customerAddress, msg.sender);
+        }else{
+            emit LedgerUpdate("Update Customer", _customerAddress, msg.sender);
+        }
+
+        _customers[_customerAddress] = Customer(
+        _description,
+        _contratAddress,         
+        _siretNumber,
+        _isActive, 
+        true);
     }
 
-    string public ledgerDescription;
+    function setLegislator (
+        string memory _description,        
+        address _legislatorAddress,
+        uint _siretNumber,
+        bool _isActive) 
+        onlyOwner() external {
 
-    constructor (string memory _description) {
-        ledgerDescription = _description;
-    }
+        if(!_legislators[_legislatorAddress].exist){
+            emit LedgerUpdate("New Legislator", _legislatorAddress, msg.sender);
+        }else{
+            emit LedgerUpdate("Update Legislator", _legislatorAddress, msg.sender);
+        }
 
+        _legislators[_legislatorAddress] = Legislator(
+        _description,
+        _siretNumber,
+        _isActive,
+        true);   
+    }    
 
+    function setTechMaster (
+        string memory _description,
+        address _techMasterAddress,       
+        uint _siretNumber,
+        bool _isActive) 
+        onlyOwner() external {
+
+        if(!_techMasters[_techMasterAddress].exist){
+            emit LedgerUpdate("New TechMaster", _techMasterAddress, msg.sender);
+        }else{
+            emit LedgerUpdate("Update TechMaster", _techMasterAddress, msg.sender);
+        }
+
+        _techMasters[_techMasterAddress] = TechMaster(
+        _description,
+        _siretNumber,
+        _isActive,
+        true);
+    }    
+    
+    function setTypeMeasure (
+        string memory _description,
+        string memory _info,
+        bytes8 _codeMeasure,
+        bool _isActive,
+        bool _isAllowed       
+        ) 
+        onlyOwner() external {  
+
+        if(!_typeMeasures[_codeMeasure].exist){
+            emit TypeMeasureUpdate("New TypeMesure", _codeMeasure, msg.sender);
+        }else{
+            emit TypeMeasureUpdate("Update TypeMesure", _codeMeasure, msg.sender);
+        }
+
+        _typeMeasures[_codeMeasure] = TypeMeasure(
+        _description,
+        _info,
+        _isActive,
+        _isAllowed,
+        true);
+    }    
 
 }

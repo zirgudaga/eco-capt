@@ -4,7 +4,7 @@ pragma solidity 0.8.0;
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-contract ClientContract is Ownable {
+contract CustomerContract is Ownable {
     using Counters for Counters.Counter;
     
     // struct mesure en-tête (32) { 
@@ -37,7 +37,7 @@ contract ClientContract is Ownable {
     */
     struct Config {
         bytes8 version;
-        uint32 clientId;
+        address _ledgerAddress;
         uint64 prevContractDate;
         uint64 nextContractDate;
         address customerAddress;
@@ -69,7 +69,7 @@ contract ClientContract is Ownable {
      * @dev Structure of AlertConfig
      * @notice Feature_V2 
      */
-    struct AlertConfig {
+    struct Rule {
         bytes8 version;        
         uint16 serviceId;
         string description;   
@@ -80,7 +80,6 @@ contract ClientContract is Ownable {
         bytes8 valueAlert;
         bool isActive;
 
-        Counters.Counter alertConfigIdCounter;
         Counters.Counter alertIdCounter;         
     }
 
@@ -88,10 +87,14 @@ contract ClientContract is Ownable {
      * @dev Structure of Iot
      * @notice Feature_V2 
      */
-    struct Iot {
-        bytes6 mac;     
+    struct Iot {   
         string description;
         bool isActive;
+    }
+
+    modifier isAddressValid(address _addr){
+        require(_addr != address(0));
+        _;
     }
 
     modifier isContractActive() {
@@ -102,6 +105,12 @@ contract ClientContract is Ownable {
     modifier isServiceActive(uint _serviceId) {
         require(_serviceId < _serviceIdCounter.current(), "Service not exist"); 
         require(_services[_serviceId].isActive, "Service off line"); 
+        _;
+    }
+
+    modifier isRulesActive(uint _ruleId) {
+        require(_ruleId < _ruleIdCounter.current(), "Rules not exist"); 
+        require(_serviceRules[_ruleId].isActive, "Rules off line"); 
         _;
     }
 
@@ -125,28 +134,29 @@ contract ClientContract is Ownable {
         _;
     }
 
-    event MeasureReceive(uint _serviceId, bytes32 _header, bytes32 _body, address _author); 
-    event AlertReceive(uint _serviceId, uint _alertConfigId, bytes32 _alert, address _author); 
     event ContractUpdate(string _message, address _author);      
-    event ServiceUpdate(uint _serviceId, string _message, address _author); 
-    event ServiceElementUpdate(uint _serviceId, uint _id, string _message, address _author); 
-               
-    Config private _myConfig;
+    
+    event ServiceUpdate(uint _serviceId, string _message, address _author);  
+    event ServiceRulesUpdate(uint _serviceId, uint _ruleId, string _message, address _author); 
+    event ServiceIotUpdate(uint _serviceId, bytes6 _iotId, string _message, address _author); 
 
-    Service[] private _services;
-    mapping(uint => bytes32[]) private _serviceHeaderMeasures;
-    mapping(uint => bytes32[]) private _serviceBodyMeasures;
-    mapping(uint => Iot[]) private _serviceMacIOT;
+    event MeasureReceive(uint _serviceId, bytes32 _header, bytes32 _body, address _author); 
+    event AlertReceive(uint _serviceId, uint _alertConfigId, bytes32 _alert, address _author);        
+
+    Config public _myConfig;
+
+    mapping(uint => Service) public _services;
     Counters.Counter public _serviceIdCounter;
 
-    AlertConfig[] private _serviceAlertConfig;
-    mapping(uint => bytes32[]) private _alerts; 
-    Counters.Counter public _alertConfigIdCounter;
- 
-    constructor (bytes8 _version, uint32 _clientId, address _customerAddress, address _prevContract, uint64 _prevContractDate) {
+    mapping(uint => mapping(bytes6 => Iot)) public _serviceIots;
+
+    mapping(uint => Rule) public _serviceRules;
+    Counters.Counter public _ruleIdCounter;
+
+    constructor (bytes8 _version, address _ledgerAddress, address _customerAddress, address _prevContract, uint64 _prevContractDate) {
         _myConfig = Config(
             _version,
-            _clientId,
+            _ledgerAddress,
             _prevContractDate,
             0,
             _customerAddress,
@@ -156,17 +166,7 @@ contract ClientContract is Ownable {
         );
         // TODO AJOUTER INSTANCE DU GRAND REGISTRE POUR POUVOIR Y ACCEDER SI NECESSAIRE
     }
-
-    // CONFIG PART
-    
-    /**
-     * @dev get a Config
-     * @return config in memory
-     */
-    function getConfig() external view returns (Config memory) {
-        return _myConfig;
-    }
-
+  
     /**
      * @dev toggle a Contract activation or deactivation
      */
@@ -197,7 +197,7 @@ contract ClientContract is Ownable {
         Counters.Counter memory measureIdCounter;       
         Counters.Counter memory IotIdCounter;    
 
-        _services.push(Service(
+        _services[_serviceIdCounter.current()] = Service(
         _version, 
         _measureType,  
         _timeCode,    
@@ -208,44 +208,12 @@ contract ClientContract is Ownable {
         address(0),
         address(0),                     
         measureIdCounter,
-        IotIdCounter));
+        IotIdCounter);
 
-        emit ContractUpdate("New service", msg.sender);
+        emit ServiceUpdate(_serviceIdCounter.current(), "New service", msg.sender); 
 
         _serviceIdCounter.increment();
     }  
-
-    /*
-    function _checkValidService(bytes8 _version, bytes8 _measureType, bytes1 _timeCode, uint8 _nbTime) 
-        internal pure returns(bool _return){
-        // TODO LINK AU GRAND REGISTRE
-        // Eviter l'usage de type service désactivé car n'étant plus pertinent
-        return true;       
-    }
-    */
-
-    /**
-     * @dev get a specific Service
-     * @param _serviceId index of service
-     * @return a specific service
-     */
-    function getOneService(
-        uint _serviceId) 
-        external view returns(Service memory){   
-
-        return (_services[_serviceId]);
-    }
-
-    /**
-     * @dev get all Services
-     * @return an array of all the services
-     */
-    function getAllServices() 
-        external view 
-        returns(Service[] memory){    
-
-        return (_services);
-    }    
 
     /**
      * @dev toggle a Service activation or deactivation
@@ -268,11 +236,11 @@ contract ClientContract is Ownable {
     function setTechMasterAddress(
         uint _serviceId,
         address _techMasterAddress)
-        isContractActive() isServiceActive(_serviceId) onlyOwner() external {  
+        isAddressValid(_techMasterAddress) isContractActive() isServiceActive(_serviceId) onlyOwner() external {  
         
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
-        emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
+        emit ServiceUpdate(_serviceId, "TechMaster Address update", msg.sender);
     }     
 
     /**
@@ -283,7 +251,7 @@ contract ClientContract is Ownable {
     function setBridgeAddress(
         uint _serviceId,
         address _bridgeAddress)
-        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
+        isAddressValid(_bridgeAddress) isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
         
         _services[_serviceId].bridgeAddress = _bridgeAddress;
 
@@ -298,7 +266,7 @@ contract ClientContract is Ownable {
     function setLegislatorAddress(
         uint _serviceId,
         address _legislatorAddress)
-        isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
+        isAddressValid(_legislatorAddress) isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
         
         require(_checkValidLegislator(_legislatorAddress) == true, "Legistator not valid");
 
@@ -332,44 +300,10 @@ contract ClientContract is Ownable {
         bytes32 _measurebody) 
         isContractActive() isServiceActive(_serviceId) onlyBridge(_serviceId) external {    
         
-        _serviceHeaderMeasures[_serviceId].push(_measureHeader);
-        _serviceBodyMeasures[_serviceId].push(_measurebody);
-        
         _services[_serviceId].measureIdCounter.increment();
 
         emit MeasureReceive(_serviceId, _measureHeader, _measurebody, msg.sender);
     }
-
-    /**
-     * @dev get all Measures
-     * @param _serviceId index of service 
-     * @return an array of all the services
-     */
-    function getAllMeasures(
-        uint _serviceId) 
-        external view 
-        returns(
-            bytes32[] memory,
-            bytes32[] memory){
-              
-        return (_serviceHeaderMeasures[_serviceId], _serviceBodyMeasures[_serviceId]);
-    }
-
-    /**
-     * @dev get a specific measure by id
-     * @param _serviceId index of service 
-     * @param _measureId index of service 
-     * @return the specific measure header and body
-     */    
-    function getMeasuresById(
-        uint _serviceId,
-        uint _measureId) 
-        external view returns(
-            bytes32,
-            bytes32){
-              
-        return (_serviceHeaderMeasures[_serviceId][_measureId], _serviceBodyMeasures[_serviceId][_measureId]);
-    }  
 
     // ALERT CONFIG PART
 
@@ -383,7 +317,7 @@ contract ClientContract is Ownable {
      * @param _codeAlert alert's code
      * @param _valueAlert alert's value
      */
-    function addAlertConfig(
+    function addRule(
         bytes8 _version,   
         uint16 _serviceId,        
         string memory _description,  
@@ -398,10 +332,9 @@ contract ClientContract is Ownable {
         // TODO Penser à fermer la porte !!
         // TODO Penser a vérifier que le service existe
         
-        Counters.Counter memory alertConfigIdCounter;
         Counters.Counter memory alertIdCounter;
 
-        _serviceAlertConfig.push(AlertConfig(
+        _serviceRules[_ruleIdCounter.current()] = Rule(
             _version,  
             _serviceId,  
             _description,      
@@ -411,39 +344,26 @@ contract ClientContract is Ownable {
             _codeAlert,
             _valueAlert,
             true,
-            alertConfigIdCounter,
             alertIdCounter
-        ));
+        );
 
-        emit ServiceElementUpdate(_serviceId, _alertConfigIdCounter.current(), "New Config Alert", msg.sender);
+        emit ServiceRulesUpdate(_serviceId, _ruleIdCounter.current(), "New Rule", msg.sender);
 
-        _alertConfigIdCounter.increment();
-    }
-
-    /**
-     * @dev get all alert configs
-     */
-    function getAllAlertConfigs() 
-        external view 
-        returns(AlertConfig[] memory){
-              
-        return (_serviceAlertConfig);
+        _ruleIdCounter.increment();
     }
 
     /**
      * @dev toggle an alert config
-     * @param _alertConfigId index of the alert config
+     * @param _ruleId index of the alert config
      */
-    function toggleAlertConfig(uint _alertConfigId) 
+    function toggleRule(uint _ruleId) 
         external {
 
-        require ((msg.sender == _serviceAlertConfig[_alertConfigId].legislatorAddress) || (msg.sender == owner()));
+        require ((msg.sender == _serviceRules[_ruleId].legislatorAddress) || (msg.sender == owner()));
 
-        uint _serviceId = _serviceAlertConfig[_alertConfigId].serviceId;
-
-        emit ServiceElementUpdate(_serviceId, _alertConfigId, "Alert on/off", msg.sender);
-
-        _serviceAlertConfig[_alertConfigId].isActive = !_serviceAlertConfig[_alertConfigId].isActive;
+        emit ServiceRulesUpdate(_serviceRules[_ruleId].serviceId, _ruleId, "Rules on/off", msg.sender);
+        
+        _serviceRules[_ruleId].isActive = !_serviceRules[_ruleId].isActive;
     }       
 
     // ALERTS PART
@@ -455,77 +375,54 @@ contract ClientContract is Ownable {
      */    
     function addAlert(
         uint _serviceId,
-        uint _alertConfigId,
+        uint _ruleId,
         bytes32 _alertBody) 
         isContractActive() isServiceActive(_serviceId) onlyBridge(_serviceId) external {         
                    
-        _alerts[_alertConfigId].push(_alertBody);
-        _serviceAlertConfig[_alertConfigId].alertIdCounter.increment();
+        _serviceRules[_ruleId].alertIdCounter.increment();
 
-        emit AlertReceive(_serviceId, _alertConfigId, _alertBody, msg.sender);
-    }
-
-    /**
-     * @dev get all alerts of a specific alerteConfig
-     * @param _alertConfigId index of alerteConfig 
-     */  
-    function getAlerts(
-        uint _alertConfigId) 
-        external view 
-        returns(bytes32[] memory){
-            
-        return (_alerts[_alertConfigId]);        
+        emit AlertReceive(_serviceId, _ruleId, _alertBody, msg.sender);
     }
 
     // SERVICE IOT
 
-    // /**
-    //  * @dev add a sensor to the list
-    //  * @param _serviceId index of service
-    //  * @param _macAddress sensor's mac address
-    //  * @param _description sensor's description
-    //  */      
-    // function addIot(
-    //     uint _serviceId,
-    //     bytes6 _macAddress,
-    //     string memory _description) 
-    //     isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
-    //         _serviceMacIOT[_serviceId].push(Iot(
-    //             _macAddress,    
-    //             _description,      
-    //             true
-    //         ));
+    /**
+     * @dev add a sensor to the list
+     * @param _serviceId index of service
+     * @param _macAddress sensor's mac address
+     * @param _description sensor's description
+     */      
+    function addIot(
+        uint _serviceId,
+        bytes6 _macAddress,
+        string memory _description) 
+        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
 
-    //     emit ServiceElementUpdate(_serviceId, _services[_serviceId].IotIdCounter.current(), "Iot added", msg.sender); 
+        _serviceIots[_serviceId][_macAddress] = Iot(
+            _description,      
+            true
+        );
 
-    //     _services[_serviceId].IotIdCounter.increment();   
-    // }
+        emit ServiceIotUpdate(_serviceId, _macAddress, "Iot added", msg.sender); 
 
-    // // /**
-    // //  * @dev get a specific sensor
-    // //  * @param _serviceId index of service
-    // //  * @return get a specific sensor by Id
-    // //  */ 
-    // // function getIot(
-    // //     uint _serviceId) 
-    // //     external view 
-    //     returns(Iot[] memory) {
-              
-    //     return (_serviceMacIOT[_serviceId]);
-    // }
+        _services[_serviceId].IotIdCounter.increment();   
+    }
 
-    // /**
-    //  * @dev toggle a sensor activation or deactivation
-    //  * @param _serviceId index of service
-    //  * @param _iotId index of sensor
-    //  */     
-    // function toggleIOT(
-    //     uint _serviceId,
-    //     uint _iotId) 
-    //     isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
-    //     emit ServiceElementUpdate(_serviceId, _iotId, "Iot on/off", msg.sender);
+    /**
+     * @dev toggle a sensor activation or deactivation
+     * @param _serviceId index of service
+     * @param _macAddress index of sensor
+     */     
+    function toggleIOT(
+        uint _serviceId,
+        bytes6 _macAddress) 
+        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external { 
 
-    //     _serviceMacIOT[_serviceId][_iotId].isActive = !_serviceMacIOT[_serviceId][_iotId].isActive;
-    // }
+        emit ServiceIotUpdate(_serviceId, _macAddress, "Iot on/off", msg.sender);
+
+        _serviceIots[_serviceId][_macAddress].isActive = !_serviceIots[_serviceId][_macAddress].isActive;
+    }
+
+  
 
 }

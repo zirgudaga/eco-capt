@@ -44,7 +44,7 @@ export default class FocusAlert extends React.Component {
 
     showAlert = (hex, index) => {
         let objet = _alertToObject_V_00_01_00(hex);
-        console.log(objet);
+        //console.log(objet);
         return (
             <div className="" key={"alertKey"+index}>{objet.date} - {objet.val}</div>
         );

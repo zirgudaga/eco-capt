@@ -98,6 +98,8 @@ export default class FocusService extends React.Component {
     render() {
         return (
             <div className="focus-service-body">
+                <i class="fas fa-toggle-on"></i>
+                <i class="fas fa-toggle-off"></i>
                 <b>{this.props.myService.description}</b>
 
                 <GraphService myService={this.props.myService} myMeasures={this.state.listMeasures}/>

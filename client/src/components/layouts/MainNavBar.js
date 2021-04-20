@@ -32,6 +32,7 @@ export default class MainNavBar extends React.Component {
                                 </li>
                                 <li className="main-list">
                                     <span className="address-btn">{this.showAddress()}</span>
+                                    <i class="far fa-check-circle"></i>
                                 </li>
                             </ul>
                         </nav>

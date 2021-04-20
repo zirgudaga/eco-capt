@@ -29,3 +29,8 @@
 .main-list a {
   color: #fff;
 }
+
+.fa-check-circle {
+  color: #03A9F4;
+  margin-left: 3px;
+}

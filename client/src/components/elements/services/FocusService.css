@@ -23,3 +23,11 @@
     width: 100%;
     text-transform: uppercase;
 }
+
+.fa-toggle-on {
+    color: #03A9F4;
+}
+
+.fa-toggle-off {
+    color: tomato;
+}

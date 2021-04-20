@@ -6,7 +6,7 @@ import InfoRule from './InfoRule.js';
 
 import "./FocusRule.css";
 
-export default class FocusAlert extends React.Component {
+export default class FocusRule extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,18 +18,30 @@ export default class FocusAlert extends React.Component {
     componentDidMount = () => {
         setInterval(()=>{
             this.refresh();
-        }, 1000);
+        }, 2000);
     }
 
     refresh = () => {
-       this.setAlertFocus(this.props.myRule.ruleId);
+       this.setAlertFocus();
     }
   
-    setAlertFocus = async (ruleId) => {
+    setAlertFocus = async () => {
         let { contract } = this.props.state;
         let { listAlerts } = this.state;
-        listAlerts = await contract.methods.getAlerts(ruleId).call();
-        this.setState({ listAlerts });  
+
+        //listAlerts = await contract.methods.getAlerts(ruleId).call();
+        contract.getPastEvents('AlertReceive', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+        .then(async (myEvents) => {
+            listAlerts = [];
+            let index=0;
+            for(let myEvent of myEvents){
+                if(myEvent.returnValues['_ruleId'] == this.props.myRule.ruleId){
+                    listAlerts[index] = myEvent.returnValues['_alert'];
+                    index++;
+                }       
+            }
+            this.setState({ listAlerts });  
+        });
     };   
     
     showAllAlert = () => {
@@ -44,7 +56,7 @@ export default class FocusAlert extends React.Component {
 
     showAlert = (hex, index) => {
         let objet = _alertToObject_V_00_01_00(hex);
-        //console.log(objet);
+        console.log(objet);
         return (
             <div className="" key={"alertKey"+index}>{objet.date} - {objet.val}</div>
         );

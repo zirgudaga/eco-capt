@@ -18,11 +18,9 @@ export default class MySelectEth extends React.Component {
         let myTabOptions = [];
 
         switch (this.props.myName){
-            case "addService" : myTabOptions = await this.recoltAllServiceOfContract(); break;
+            case "addService" : await this.recoltAllServiceOfContract(); break;
             default : myTabOptions = []
         }
-
-        console.log("MyTab", myTabOptions)
 
         this.setState({ myTabOptions });       
     }
@@ -30,19 +28,24 @@ export default class MySelectEth extends React.Component {
     
     //TODO ADAPTER CETTE LISTE DEROULANTE A CHAQUE PROFIL
     recoltAllServiceOfContract = async() => {
-        const { contract } = this.props.state;
+        let { contract, myTabOptions } = this.props.state;
 
-        let returnTab = [];
-        
+        myTabOptions = [];
+       
         if(contract != null){
-            let listServices;
-            listServices = await contract.methods.getAllServices().call();
-            for(let index in listServices){
-                returnTab.push({code: index, aff: listServices[index].description});
-            }
-        }     
-     
-        return returnTab;
+            contract.getPastEvents('ServiceUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            .then(async (myEvents) => {
+                let index, serverTemp;
+                for(let myEvent of myEvents){
+                    if(myEvent.returnValues['_message'] == "New service"){
+                        index = myEvent.returnValues['_serviceId'];
+                        serverTemp = await contract.methods._services(index).call();
+                        myTabOptions.push({code: index, aff: serverTemp.description});
+                    }       
+                }
+                this.setState({ myTabOptions });  
+            });
+        }
     }
 
     clickSelector() {

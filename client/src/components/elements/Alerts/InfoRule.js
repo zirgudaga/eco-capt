@@ -2,7 +2,7 @@ import React from 'react';
 
 import "./InfoRule.css";
 
-export default class ServiceInfo extends React.Component {
+export default class InfoRule extends React.Component {
 
     render() {
         

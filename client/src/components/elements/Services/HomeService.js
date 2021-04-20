@@ -22,7 +22,7 @@ export default class HomeService extends React.Component {
                     <br />
                     <p>Être honnête n'a jamais été aussi simple !</p>
                     <div className="home-service-logo">
-                        <a href="."><img width="208" height="128" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
+                        <a href="."><img width="208" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
                     </div>
                 </div>
             </div>

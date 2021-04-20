@@ -12,10 +12,10 @@ export default class GraphService extends React.Component {
 
         let myReturn = [];
         let header, body;
-        if ((myMeasures[0] !== undefined) && (myMeasures[0].length>0)){
+        if ((myMeasures !== undefined) && (myMeasures.length>0)){
             myReturn.push(['x', 'Valeur moyenne'])
-            for(let i=0; i<myMeasures[0].length; i++){
-                [header, body] = measureToObject(myMeasures[0][i], myMeasures[1][i]);
+            for(let i=0; i<myMeasures.length; i++){
+                [header, body] = measureToObject(myMeasures[i].header, myMeasures[i].body);
                 myReturn.push([i, body.val2]);
             }
         }
@@ -29,7 +29,7 @@ export default class GraphService extends React.Component {
 
         return (
             <div className="card-graph">
-                {((myMeasures[0] !== undefined) && (myMeasures[0].length>0))
+                {((myMeasures !== undefined) && (myMeasures.length>0))
                 ?
                 <Chart
                     width={'600px'}

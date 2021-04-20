@@ -1,0 +1,48 @@
+.main-home {
+  display: flex;
+  justify-content: center;
+}
+
+.main-client {
+  padding: 24px;
+  background: #1a202e;
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.page-header-body {
+  text-align: center;
+  background: #fff;
+  padding: 50px;
+  border-radius: 30px;
+}
+
+
+.page-header-title {
+  font-size: 40px;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+
+.page-header-address {
+  margin-bottom: 50px;
+}
+
+.page-header-contract {
+  margin-bottom: 50px;
+}
+
+.page-header-cta {
+  padding: 10px 40px;
+  background-color: #2563eb;
+  color: #fff;
+  border: 2px solid #2563eb;
+  border-radius: 50px;
+  display: inline-block;
+  transition: 0.1s all ease-out;
+  cursor: pointer;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}

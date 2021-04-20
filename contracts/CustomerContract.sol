@@ -141,7 +141,7 @@ contract CustomerContract is Ownable {
     event ServiceIotUpdate(uint _serviceId, bytes6 _iotId, string _message, address _author); 
 
     event MeasureReceive(uint _serviceId, bytes32 _header, bytes32 _body, address _author); 
-    event AlertReceive(uint _serviceId, uint _alertConfigId, bytes32 _alert, address _author);        
+    event AlertReceive(uint _serviceId, uint _ruleId, bytes32 _alert, address _author);        
 
     Config public _myConfig;
 

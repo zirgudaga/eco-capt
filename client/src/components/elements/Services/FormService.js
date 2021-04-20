@@ -136,7 +136,7 @@ export default class FormService extends React.Component {
                     </div>
 
                     <button type="button" className="form-service-cta" 
-                            onClick= { () => this.addService() }>Add service
+                        onClick= { () => this.addService() }>Add service
                     </button> 
     
                 </form>

@@ -1,11 +1,11 @@
 import React from 'react';
-import {stringToHex, fakeMeasure, measureToObject, fakeAlert} from '../../utilsEco.js';
-import MyNotif from '../elements/MyNotif.js';
-import MySelect from '../elements/MySelect.js';
+import {stringToHex, fakeMeasure, measureToObject, fakeAlert} from '../../../utilsEco';
+import MyNotif from '../../Elements/MyNotif.js';
+import MySelect from '../../Elements/MySelect.js';
 
 import "./DashboardTester.css";
 
-export default class DashboardTester extends React.Component {
+export default class DashboardTesterTest extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,7 +19,6 @@ export default class DashboardTester extends React.Component {
             selectedAlertConfig: -1,
 
             listAlerts: [],
-
 
             addServiceVersion: '',
             addServiceMeasureType: '',
@@ -69,8 +68,8 @@ export default class DashboardTester extends React.Component {
             return ;
         }
 
-        const { accounts, contract, web3 } = this.props.state;
-        await contract.methods.addService(
+        const { accounts, contract2, web3 } = this.props.state;
+        await contract2.methods.addService(
             '0x'+stringToHex(addServiceVersion), 
             this.newServiceDescription.value.trim(),
             '0x'+stringToHex(addServiceMeasureType), 
@@ -78,8 +77,8 @@ export default class DashboardTester extends React.Component {
             this.newServiceNbTime.value        
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
-                /*
                 if(tx){
+                    /*
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
                             if(receipt!=null && receipt.status){
@@ -87,39 +86,39 @@ export default class DashboardTester extends React.Component {
                             }
                         }
                     )
+                    */
                 }
-                */
             }
         ); 
     };
 
     getAllServices = async () => {
-        const { contract } = this.props.state;
+        const { contract2 } = this.props.state;
         let { listServices } = this.state;
-        listServices = await contract.methods.getAllServices().call();
+        listServices = await contract2.methods.getAllServices().call();
 
         this.setState({ listServices });  
     };    
 
     getAlertConfig = async () => {
-        const { contract } = this.props.state;
+        const { contract2 } = this.props.state;
         let { listAlertConfig } = this.state;
 
-        listAlertConfig = await contract.methods.getAllAlertConfigs().call();
+        listAlertConfig = await contract2.methods.getAllAlertConfigs().call();
 
         this.setState({ listAlertConfig });  
     };       
 
     getAllMeasures = async (serviceId) => {
-        const { contract } = this.props.state;
+        const { contract2 } = this.props.state;
         let { listMeasures } = this.state;
-        listMeasures = await contract.methods.getAllMeasures(serviceId).call();
+        listMeasures = await contract2.methods.getAllMeasures(serviceId).call();
 
         this.setState({ listMeasures });  
     };  
 
     addMeasure = async (serviceId) => {
-        const { accounts, contract, web3 } = this.props.state;
+        const { accounts, contract2, web3 } = this.props.state;
         let {currentMeasureFake } = this.state;
 
         let context = this;
@@ -129,14 +128,14 @@ export default class DashboardTester extends React.Component {
         currentMeasureFake++;
         this.setState({ currentMeasureFake });
 
-        await contract.methods.addMeasure(
+        await contract2.methods.addMeasure(
             serviceId,
             header,  
             body
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
-                /*
                 if(tx){
+                    /*
                     await web3.eth.getTransactionReceipt(tx, 
                         async (erreur, receipt) => {
                             if(receipt!=null && receipt.status){
@@ -145,19 +144,19 @@ export default class DashboardTester extends React.Component {
                             }
                         }
                     )
+                    */
                 }
-                */
             }
         );  
     };    
 
     addAlert = async (alertConfigId, serviceId) => {
-        const { accounts, contract, web3 } = this.props.state;
+        const { accounts, contract2, web3 } = this.props.state;
 
         let body = fakeAlert(alertConfigId, serviceId);
         let context = this;
 
-        await contract.methods.addAlert(
+        await contract2.methods.addAlert(
             serviceId,
             alertConfigId,  
             body
@@ -181,19 +180,19 @@ export default class DashboardTester extends React.Component {
 
 
     setServiceFocus = async (serviceId) => {
-        let { contract } = this.props.state;
+        let { contract2 } = this.props.state;
         let { selectedService, listMeasures } = this.state;
         selectedService = serviceId;
-        listMeasures = await contract.methods.getAllMeasures(serviceId).call();
-        this.setState({ contract, selectedService, listMeasures });  
+        listMeasures = await contract2.methods.getAllMeasures(serviceId).call();
+        this.setState({ contract2, selectedService, listMeasures });  
     };     
 
 
     setAlertConfigFocus = async (alertConfigId) => {
-        let { contract } = this.props.state;
+        let { contract2 } = this.props.state;
         let { selectedAlertConfig, listAlerts } = this.state;
         selectedAlertConfig = alertConfigId;
-        listAlerts = await contract.methods.getAlerts(alertConfigId).call();
+        listAlerts = await contract2.methods.getAlerts(alertConfigId).call();
         this.setState({selectedAlertConfig,  listAlerts });  
     };     
    
@@ -230,8 +229,8 @@ export default class DashboardTester extends React.Component {
             return ;
         }
 
-        const { accounts, contract, web3 } = this.props.state;
-        await contract.methods.addAlertConfig(
+        const { accounts, contract2, web3 } = this.props.state;
+        await contract2.methods.addAlertConfig(
             '0x'+stringToHex(addSeuilVersion), 
             '0',
             this.newSeuilDescription.value.trim(),
@@ -264,11 +263,11 @@ export default class DashboardTester extends React.Component {
                     <div className="tester-block" > 
 
                         <MyNotif 
-                            contract={this.props.state.contractTarget}
+                            contract={this.props.state.contractTarget2}
                             errorMessage={this.state.errorMessage}    
                         />
 
-                        <h1>Happy testing</h1>
+                        <h1>Happy testing 2</h1>
 
                         <h2 className="tester">SERVICES</h2>
 
@@ -284,8 +283,6 @@ export default class DashboardTester extends React.Component {
                                 />
                             </div>
 
-
-
                             <div className="tester-line">
                                 <label>
                                     Measure du service
@@ -295,7 +292,6 @@ export default class DashboardTester extends React.Component {
                                     handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                                 />
                             </div>
-
                             
                             <div className="tester-line">
                                 <label>

@@ -1,7 +1,7 @@
 import React from 'react';
-import './DashboardClientMain.css';
+import './MainHome.css';
 
-export default class DashboardClientMainHome extends React.Component {
+export default class MainHome extends React.Component {
 
 
     showAddress = () => {      
@@ -16,26 +16,7 @@ export default class DashboardClientMainHome extends React.Component {
 
     render() {
         return (
-            <div className="main-flex">
                 <div className="main-content">
-                    <header>
-                        <div className="menu-toggle">
-                            <label className="sidebar-toggle">
-                                <span className="las la-bars"></span>
-                            </label>
-                        </div>
-
-                        <div className="home-logo">
-                            <a href="."><img width="168" height="88" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
-                        </div>
-
-                        <div className="header-icons">
-                            <span className="las la-search"></span>
-                            <span className="las la-bookmark"></span>
-                            <span className="las la-sms"></span>
-                        </div>
-                    </header>
-
                     <main className="main-client">
                         <div className="page-header">
                             <div className="page-header-body">
@@ -51,7 +32,6 @@ export default class DashboardClientMainHome extends React.Component {
                         </div>
                     </main>
                 </div>
-            </div>
         );
     }
 }

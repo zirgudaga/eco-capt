@@ -20,7 +20,7 @@ export default class FocusService extends React.Component {
     componentDidMount = () => {
         setInterval(()=>{
             this.refresh();
-        }, 1000);
+        }, 2000);
     }
 
     refresh = () => {
@@ -31,9 +31,23 @@ export default class FocusService extends React.Component {
     setServiceFocus = async (serviceId) => {
         let { contract } = this.props.state;
         let { selectedService, listMeasures } = this.state;
-        selectedService = serviceId;
-        listMeasures = await contract.methods.getAllMeasures(serviceId).call();
-        this.setState({ listMeasures });  
+        selectedService = serviceId;    
+        
+        listMeasures=[];
+
+        contract.getPastEvents("MeasureReceive", { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+        .then(async (myEvents) => {
+            let index=0;
+            for(let myEvent of myEvents){
+                if(myEvent.returnValues['_serviceId'] == serviceId){
+                    listMeasures[index] = {};
+                    listMeasures[index].header = myEvent.returnValues['_header'];
+                    listMeasures[index].body = myEvent.returnValues['_body'];
+                    index++;
+                }           
+            }
+            this.setState({ listMeasures });  
+        }); 
     };   
     
     showMeasure = () => {

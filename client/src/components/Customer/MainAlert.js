@@ -1,0 +1,102 @@
+import React from 'react';
+import './MainAlert.css'
+
+import HomeRule from '../Elements/Alerts/HomeRule.js';
+import FocusRule from '../Elements/Alerts/FocusRule';
+import ListRule from '../Elements/Alerts/ListRule.js';
+import FormRule from '../Elements/Alerts/FormRule.js';
+
+
+export default class Alert extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            listRules: [],
+            selectedRule: -1,
+            currentMainSelect: "Home",
+            errorMessage: '',
+        };
+    }
+
+    componentDidMount = () => {
+        setInterval(()=>{
+            this.refresh();
+        }, 2000);
+    }
+
+    refresh = () => {
+        this.getAllRules();
+    }
+
+    getAllRules = async () => {
+        const { contract } = this.props.state;
+
+        if(contract != null){
+            let { listRules } = this.state;
+            listRules=[];
+
+            contract.getPastEvents('ServiceRulesUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            .then(async (myEvents) => {
+                let index;
+                for(let myEvent of myEvents){
+                    if(myEvent.returnValues['_message'] == "New Rule"){
+                        index = myEvent.returnValues['_ruleId'];
+                        listRules[index] = await contract.methods._serviceRules(index).call();
+                        listRules[index].ruleId = index;
+                    }       
+                }
+                this.setState({ listRules });  
+            });
+        }     
+    };    
+
+    selectedMainLauncher = () => {
+
+        switch(this.state.currentMainSelect){
+            case "Home" : return (<HomeRule state={this.props.state}/>);
+            case "FocusRule" : return (<FocusRule 
+                state={this.props.state}
+                myRule={this.state.listRules[this.state.selectedRule]} 
+            />);
+            case "NewRule" : return (<FormRule 
+                state={this.props.state} 
+                close={()=>{this.showFormAddRule(false)}}
+            />);
+            
+            default: return (<HomeRule state={this.props.state}/>);
+        }
+    }
+
+    showFormAddRule = (isOpen) => {
+        if(isOpen){
+            this.setState({ currentMainSelect: "NewRule" });
+            return;
+        }
+
+        if(this.state.selectedRule > -1){
+            this.setState({ currentMainSelect : "FocusRule" });
+        }else{
+            this.setState({ currentMainSelect : "Home" });
+        }
+    }
+
+    showFocusRule = (index) => {
+        this.setState({ selectedRule: index, currentMainSelect : "FocusRule" });
+    }
+
+    render() {
+        return (
+            <div className="main-content">
+                <main className="rule-main-content">     
+                    {this.selectedMainLauncher()}  
+                    <ListRule 
+                        state={this.state}
+                        addRule= {() => {this.showFormAddRule(true);}}
+                        setRuleFocus = {(index) => {this.showFocusRule(index);}}
+                    />
+                </main>
+            </div>
+        );
+    }
+}

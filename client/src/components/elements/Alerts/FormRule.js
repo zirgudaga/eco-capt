@@ -5,7 +5,7 @@ import MySelect from '../MySelect.js';
 import MySelectEth from '../MySelectEth.js';
 import MyNotif from '../MyNotif.js';
 
-export default class FormAlert extends React.Component {
+export default class FormRule extends React.Component {
 
     constructor(props) {
         super(props);
@@ -17,8 +17,10 @@ export default class FormAlert extends React.Component {
         };
     }
 
-    addAlertConfig = async () => {
+    addRule = async () => {
         let { addSeuilVersion, addSeuilCode, addService, errorMessage } = this.state;
+
+        let context = this;
 
         if(addSeuilVersion === '' || 
         addSeuilCode === '' || 
@@ -38,7 +40,7 @@ export default class FormAlert extends React.Component {
         }
 
         const { accounts, contract, web3 } = this.props.state;
-        await contract.methods.addAlertConfig(
+        await contract.methods.addRule(
             '0x'+stringToHex(addSeuilVersion), 
             addService,
             this.newSeuilDescription.value.trim(),
@@ -48,6 +50,7 @@ export default class FormAlert extends React.Component {
             '0x'+stringToHex(("00000000"+this.newSeuilLevel.value).substr(-8))
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
+                context.props.close();
                 if(tx){
                     /*
                     await web3.eth.getTransactionReceipt(tx, 
@@ -142,7 +145,7 @@ export default class FormAlert extends React.Component {
                         </div>
 
                         <button type="button" className="form-service-cta" 
-                            onClick= { () => this.addAlertConfig() }>Add rule
+                            onClick= { () => this.addRule() }>Add rule
                         </button> 
         
                     </form>

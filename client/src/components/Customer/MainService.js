@@ -1,10 +1,10 @@
 import React from 'react';
 import './MainService.css';
 
-import HomeService from '../Elements/Services/HomeService.js';
-import FocusService from '../Elements/Services/FocusService.js';
-import ListService from '../Elements/Services/ListService.js';
-import FormService from '../Elements/Services/FormService.js';
+import HomeService from '../elements/services/HomeService.js';
+import FocusService from '../elements/services/FocusService.js';
+import ListService from '../elements/services/ListService.js';
+import FormService from '../elements/services/FormService.js';
 
 export default class MainService extends React.Component {
 

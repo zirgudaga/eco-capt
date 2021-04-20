@@ -3,7 +3,7 @@ import React from 'react';
 import MainHome from './MainHome.js';
 import MainService from './MainService.js';
 import MainAlert from './MainAlert.js';
-import MainNavBar from '../Layouts/MainNavBar.js';
+import MainNavBar from '../layouts/MainNavBar.js';
 
 import './DashboardClient.css';
 

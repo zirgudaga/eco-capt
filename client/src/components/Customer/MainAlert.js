@@ -1,10 +1,10 @@
 import React from 'react';
 import './MainAlert.css'
 
-import HomeRule from '../Elements/Alerts/HomeRule.js';
-import FocusRule from '../Elements/Alerts/FocusRule';
-import ListRule from '../Elements/Alerts/ListRule.js';
-import FormRule from '../Elements/Alerts/FormRule.js';
+import HomeRule from '../elements/alerts/HomeRule.js';
+import FocusRule from '../elements/alerts/FocusRule';
+import ListRule from '../elements/alerts/ListRule.js';
+import FormRule from '../elements/alerts/FormRule.js';
 
 
 export default class Alert extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {stringToHex, fakeMeasure, measureToObject, fakeAlert} from '../../../utilsEco';
-import MyNotif from '../../Elements/MyNotif.js';
-import MySelect from '../../Elements/MySelect.js';
+import MyNotif from '../../elements/MyNotif.js';
+import MySelect from '../../elements/MySelect.js';
 
 import "./DashboardTester.css";
 

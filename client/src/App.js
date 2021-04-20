@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import './App.css';
-import Welcome from "./Components/Layouts/Welcome.js";
-import WelcomeNavBar from "./Components/Layouts/WelcomeNavBar.js";
+import Welcome from "./components/layouts/Welcome.js";
+import WelcomeNavBar from "./components/layouts/WelcomeNavBar.js";
 
-import DashboardClient from "./Components/Customer/DashboardClient.js";
-import DashboardTester from "./Components/Customer/Tools/DashboardTester.js";
+import DashboardClient from "./components/customer/DashboardClient.js";
+import DashboardTester from "./components/customer/tools/DashboardTester.js";
 //import Counter from './Components/Counter';
 
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";

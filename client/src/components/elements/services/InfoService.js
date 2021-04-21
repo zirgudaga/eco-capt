@@ -5,7 +5,8 @@ import "./InfoService.css";
 export default class InfoService extends React.Component {
 
     render() {
-        
+
+
         let { myService } = this.props;
         let address0 = "0x0000000000000000000000000000000000000000";
 

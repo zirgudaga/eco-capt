@@ -1,6 +1,9 @@
 .service-info {
-  margin-bottom: 50px;
+    margin-bottom: 50px;
+    position: absolute;
+    bottom: 60px;
 }
+
 
 .service-info-details {
   font-weight: 500;

@@ -92,11 +92,6 @@ contract CustomerContract is Ownable {
         bool isActive;
     }
 
-    modifier isAddressValid(address _addr){
-        require(_addr != address(0));
-        _;
-    }
-
     modifier isContractActive() {
         require(_myConfig.isActive, "Contract off line");
         _;
@@ -236,7 +231,7 @@ contract CustomerContract is Ownable {
     function setTechMasterAddress(
         uint _serviceId,
         address _techMasterAddress)
-        isAddressValid(_techMasterAddress) isContractActive() isServiceActive(_serviceId) onlyOwner() external {  
+        isContractActive() isServiceActive(_serviceId) onlyOwner() external {  
         
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
@@ -251,7 +246,7 @@ contract CustomerContract is Ownable {
     function setBridgeAddress(
         uint _serviceId,
         address _bridgeAddress)
-        isAddressValid(_bridgeAddress) isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
+        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
         
         _services[_serviceId].bridgeAddress = _bridgeAddress;
 
@@ -266,7 +261,7 @@ contract CustomerContract is Ownable {
     function setLegislatorAddress(
         uint _serviceId,
         address _legislatorAddress)
-        isAddressValid(_legislatorAddress) isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
+        isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
         
         require(_checkValidLegislator(_legislatorAddress) == true, "Legistator not valid");
 
@@ -325,20 +320,19 @@ contract CustomerContract is Ownable {
         uint64 _dateOff,
         bytes8 _codeAlert,
         bytes8 _valueAlert)
-        external {
+        isContractActive() isServiceActive(_serviceId) external {
 
-        address _legislatorAddress = msg.sender;
+        require (_services[_serviceId].legislatorAddress == msg.sender 
+        || _myConfig.customerAddress == msg.sender 
+        || owner() ==  msg.sender, "Access Denied");
 
-        // TODO Penser à fermer la porte !!
-        // TODO Penser a vérifier que le service existe
-        
         Counters.Counter memory alertIdCounter;
 
         _serviceRules[_ruleIdCounter.current()] = Rule(
             _version,  
             _serviceId,  
             _description,      
-            _legislatorAddress,
+            msg.sender,
             _dateOn,
             _dateOff,
             _codeAlert,
@@ -422,7 +416,5 @@ contract CustomerContract is Ownable {
 
         _serviceIots[_serviceId][_macAddress].isActive = !_serviceIots[_serviceId][_macAddress].isActive;
     }
-
-  
 
 }

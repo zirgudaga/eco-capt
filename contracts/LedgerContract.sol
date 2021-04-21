@@ -112,8 +112,7 @@ contract LedgerContract is Ownable {
         string memory _info,
         bytes8 _codeMeasure,
         bool _isActive,
-        bool _isAllowed       
-        ) 
+        bool _isAllowed) 
         onlyOwner() external {  
 
         if(!_typeMeasures[_codeMeasure].exist){

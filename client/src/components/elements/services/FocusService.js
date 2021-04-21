@@ -14,6 +14,8 @@ export default class FocusService extends React.Component {
         this.state = {
             listMeasures: [],
             currentMeasureFake: 0,
+            onOff: false,
+            elementOnOff: null,
         };        
     }
 
@@ -24,14 +26,27 @@ export default class FocusService extends React.Component {
     }
 
     refresh = () => {
-       this.setServiceFocus(this.props.myService.serviceId);
+       this.setServiceFocus(this.props.myService.serviceId); 
     }
 
+    affActive = () => {
+        if(this.props.myService.isActive){
+            return (<svg key="toggleOn" className="svg-inline--fa fa-toggle-on fa-w-18" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="toggle-on" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M384 64H192C86 64 0 150 0 256s86 192 192 192h192c106 0 192-86 192-192S490 64 384 64zm0 320c-70.8 0-128-57.3-128-128 0-70.8 57.3-128 128-128 70.8 0 128 57.3 128 128 0 70.8-57.3 128-128 128z"></path></svg>); 
+        }else{       
+            return (<svg key="toggleOff" className="svg-inline--fa fa-toggle-off fa-w-18" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="toggle-off" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M384 64H192C85.961 64 0 149.961 0 256s85.961 192 192 192h192c106.039 0 192-85.961 192-192S490.039 64 384 64zM64 256c0-70.741 57.249-128 128-128 70.741 0 128 57.249 128 128 0 70.741-57.249 128-128 128-70.741 0-128-57.249-128-128zm320 128h-48.905c65.217-72.858 65.236-183.12 0-256H384c70.741 0 128 57.249 128 128 0 70.74-57.249 128-128 128z"></path></svg>);
+        }
+    }
     
+    toggleService = async () => {
+        const { accounts, contract, web3 } = this.props.state;
+        await contract.methods.toggleService(
+            this.props.myService.serviceId
+        ).send({ from: accounts[0] }, async (erreur, tx) => {});              
+    }
+
     setServiceFocus = async (serviceId) => {
         let { contract } = this.props.state;
-        let { selectedService, listMeasures } = this.state;
-        selectedService = serviceId;    
+        let { listMeasures } = this.state;
         
         listMeasures=[];
 
@@ -49,16 +64,6 @@ export default class FocusService extends React.Component {
             this.setState({ listMeasures });  
         }); 
     };   
-    
-    showMeasure = () => {
-        if ((this.state.listMeasures[0] !== undefined) && (this.state.listMeasures[0].length>0)){
-            return (
-                this.state.listMeasures[0].map((measure, index) => (
-                    <div className="" key={"measureKey"+index}>{measure}</div>       
-                ))
-            );
-        }
-    }
 
     addMeasure = async () => {
         const { accounts, contract, web3 } = this.props.state;
@@ -98,9 +103,9 @@ export default class FocusService extends React.Component {
     render() {
         return (
             <div className="focus-service-body">
-                <i class="fas fa-toggle-on"></i>
-                <i class="fas fa-toggle-off"></i>
-                <b>{this.props.myService.description}</b>
+                
+                
+                <b>{this.props.myService.description}</b><span onClick= { () => this.toggleService() }>{this.affActive()}</span>
 
                 <GraphService myService={this.props.myService} myMeasures={this.state.listMeasures}/>
                 <ServiceInfo myService={this.props.myService}/>

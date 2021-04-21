@@ -44,7 +44,6 @@ class App extends Component {
                 deployedNetwork.address = "0x77D1aE180104A257a6B208Bc04bAae41C0F26bE8";
           }
           
-
           const contract = new web3.eth.Contract(
                 CustomerContract.abi,
                 deployedNetwork && deployedNetwork.address,

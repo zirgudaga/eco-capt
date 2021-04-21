@@ -32,5 +32,10 @@
 
 .fa-check-circle {
   color: #03A9F4;
-  margin-left: 3px;
+  margin-left: 4px;
 }
+
+.fa-hourglass-half {
+    color: tomato;
+    margin-left: 4px;
+  }

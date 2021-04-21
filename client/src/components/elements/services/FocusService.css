@@ -4,6 +4,8 @@
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
+    min-width: 700px;
+    min-height: 700px;
     padding-bottom: 60px;
     padding: 10px;
 }
@@ -25,9 +27,11 @@
 }
 
 .fa-toggle-on {
+    margin-left: 4px;
     color: #03A9F4;
 }
 
 .fa-toggle-off {
+    margin-left: 4px;    
     color: tomato;
 }

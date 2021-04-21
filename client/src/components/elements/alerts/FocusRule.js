@@ -56,7 +56,6 @@ export default class FocusRule extends React.Component {
 
     showAlert = (hex, index) => {
         let objet = _alertToObject_V_00_01_00(hex);
-        console.log(objet);
         return (
             <div className="" key={"alertKey"+index}>{objet.date} - {objet.val}</div>
         );
@@ -66,10 +65,6 @@ export default class FocusRule extends React.Component {
         const { accounts, contract, web3 } = this.props.state;
 
         let body = fakeAlert(this.props.myRule.ruleId); 
-
-        console.log(this.props.myRule.serviceId);
-        console.log(this.props.myRule.ruleId);
-        console.log(body);
 
         await contract.methods.addAlert(
             this.props.myRule.serviceId,

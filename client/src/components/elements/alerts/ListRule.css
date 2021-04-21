@@ -41,3 +41,23 @@
     width: 100%;
     text-transform: uppercase;
 }
+
+.alert-malibu {
+    border-radius: 8px;
+    color: white;
+    background: #2563eb;
+    padding: 10px;
+    margin: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.alert-notif {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-weight: 500;
+    color: tomato;
+}

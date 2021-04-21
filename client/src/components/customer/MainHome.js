@@ -3,7 +3,6 @@ import './MainHome.css';
 
 export default class MainHome extends React.Component {
 
-
     showAddress = () => {      
         if(this.props.state.accounts !== null){
 

@@ -1,9 +1,10 @@
 .rule-info {
   margin-bottom: 50px;
-  
+  position: absolute;
+  bottom: 60px;
 }
 
 .rule-info-details {
-  font-weight: 500;
-  background: tomato;
+  font-weight: 600;
+  color: tomato;
 }

@@ -41,3 +41,13 @@
     width: 100%;
     text-transform: uppercase;
 }
+
+.list-service {
+    border-radius: 8px;
+    color: white;
+    background: #2563eb;
+    padding: 10px;
+    margin: 4px;
+    display: flex;
+    justify-content: space-between;
+}

@@ -11,9 +11,8 @@ export default class ListService extends React.Component {
                     {this.props.state.listServices.length > 0 
                         ?
                         this.props.state.listServices.map((service, index) => (
-                            <p key={"serviceKey"+index}><input type="button" 
-                            value={service.description} 
-                            onClick={ () => this.props.setServiceFocus(index) }/></p>       
+                            <div className="list-service" key={"serviceKey"+index} onClick={ () => this.props.setServiceFocus(index) }><span>{service.description}</span> 
+                            </div>  
                         ))
                         :
                         " Aucun service"

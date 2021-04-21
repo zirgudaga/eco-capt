@@ -5,6 +5,7 @@
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
+    width: 70%;
 }
 
 .form-rule-body input {

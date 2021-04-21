@@ -88,7 +88,7 @@ export default class Alert extends React.Component {
     render() {
         return (
             <div className="main-content">
-                <main className="rule-main-content">     
+                <main className="rule-main-content wrap">     
                     {this.selectedMainLauncher()}  
                     <ListRule 
                         state={this.state}

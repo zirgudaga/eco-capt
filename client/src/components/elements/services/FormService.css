@@ -5,6 +5,7 @@
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
+    width: 70%;
 }
 
 .form-newservice-body input {
@@ -28,7 +29,6 @@
     background-color: #2563eb;
     color: #fff;
     border: 2px solid #2563eb;
-    border-radius: 8px;
     display: inline-block;
     transition: 0.1s all ease-out;
     cursor: pointer;

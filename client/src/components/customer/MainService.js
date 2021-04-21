@@ -86,7 +86,7 @@ export default class MainService extends React.Component {
     render() {
         return (
             <div className="main-content">
-                <main className="service-main-content">     
+                <main className="service-main-content wrap">     
                     {this.selectedMainLauncher()}  
                     <ListService 
                         state={this.state}

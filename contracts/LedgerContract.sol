@@ -48,7 +48,7 @@ contract LedgerContract is Ownable {
     function setCustomer (
         string memory _description,
         address _customerAddress, 
-        address _contratAddress,
+        address _contractAddress,
         uint _siretNumber,
         bool _isActive) 
         onlyOwner() external {
@@ -61,7 +61,7 @@ contract LedgerContract is Ownable {
 
         _customers[_customerAddress] = Customer(
         _description,
-        _contratAddress,         
+        _contractAddress,         
         _siretNumber,
         _isActive, 
         true);

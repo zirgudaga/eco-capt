@@ -1,10 +1,9 @@
 const { expectRevert, expectEvent, BN } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
-const CustomerContract = artifacts.require('CustomerContract');
 const LedgerContract = artifacts.require('LedgerContract');
 
 
-contract('setCustomer', function (accounts) {
+contract('LedgerContract', function (accounts) {
 
     const owner = accounts[0];    
     const other = accounts[1];    
@@ -12,148 +11,18 @@ contract('setCustomer', function (accounts) {
     const _contractAddress = accounts[3];
     const _techMasterAddress = accounts[4];
     const _legislatorAddress = accounts[5];
-    const _siretNumber = new BN(12345678910111);
+    const _bridgeAddress = accounts[6];
+    const _siretNumber1 = new BN(12345678910111);
+    const _siretNumber2 = new BN(12345678910141);
     const address0 = "0x0000000000000000000000000000000000000000";
-    const _customer1 = 'Alan';
-
-    // Avant chaque test unitaire
-    beforeEach(async function () {
-        this.LedgerContract = await LedgerContract.new({from: owner});
-    });
-
-    it('Revert if other : onlyOwner', async function () { 
-        // On vérifie bien que l'ajout provoque un revert !
-        await (expectRevert(this.LedgerContract.setCustomer(
-            _customer1,
-            _customerAddress,
-            _contractAddress,         
-            _siretNumber,
-            true, 
-            {from: other}), "Ownable: caller is not the owner"));  
-    });
-
-    it('Customer properly set', async function () { 
-        // On procède à l'ajout d'un Customer
-        await this.LedgerContract.setCustomer(
-            _customer1,
-            _customerAddress,
-            _contractAddress,         
-            _siretNumber,
-            true, 
-            {from: owner});
-        let myCustomer = await this.LedgerContract._customers(_customerAddress);   
-        expect(myCustomer.description).to.equal(_customer1); 
-        expect(myCustomer.contractAddress).to.equal(_contractAddress); 
-        expect(myCustomer.siretNumber).to.be.bignumber.equal(_siretNumber); 
-        expect(myCustomer.isActive).to.equal(true);   
-    });   
-
-});
-
-contract('setLegislator', function (accounts) {
-
-    const owner = accounts[0];    
-    const other = accounts[1];    
-    const _customerAddress = accounts[2];
-    const _contractAddress = accounts[3];
-    const _techMasterAddress = accounts[4];
-    const _legislatorAddress = accounts[5];
-    const _siretNumber = new BN(12345678910111);
-    const address0 = "0x0000000000000000000000000000000000000000";
-    const _customer1 = 'Alan';
-    const _legislator1 = 'Thierry';
-
-    // Avant chaque test unitaire
-    beforeEach(async function () {
-        this.LedgerContract = await LedgerContract.new({from: owner});
-    });
-
-    it('Revert if other : onlyOwner', async function () { 
-        // On vérifie bien que l'ajout provoque un revert !
-        await (expectRevert(this.LedgerContract.setLegislator(
-            _legislator1,
-            _legislatorAddress,         
-            _siretNumber,
-            true, 
-            {from: other}), "Ownable: caller is not the owner"));  
-    });
-
-    it('Legislator properly set', async function () { 
-        // On procède à l'ajout d'un Customer
-        await this.LedgerContract.setLegislator(
-            _legislator1,
-            _legislatorAddress,         
-            _siretNumber,
-            true, 
-            {from: owner});
-        let myLegislator = await this.LedgerContract._legislators(_legislatorAddress);   
-        expect(myLegislator.description).to.equal(_legislator1);  
-        expect(myLegislator.siretNumber).to.be.bignumber.equal(_siretNumber); 
-        expect(myLegislator.isActive).to.equal(true);   
-    });   
-
-});
-
-contract('setTechMaster', function (accounts) {
-
-    const owner = accounts[0];    
-    const other = accounts[1];    
-    const _customerAddress = accounts[2];
-    const _contractAddress = accounts[3];
-    const _techMasterAddress = accounts[4];
-    const _legislatorAddress = accounts[5];
-    const _siretNumber = new BN(12345678910111);
-    const address0 = "0x0000000000000000000000000000000000000000";
-    const _customer1 = 'Alan';
-    const _legislator1 = 'Thierry';
-    const _techMaster1 = 'Patrick';
-
-    // Avant chaque test unitaire
-    beforeEach(async function () {
-        this.LedgerContract = await LedgerContract.new({from: owner});
-    });
-
-    it('Revert if other : onlyOwner', async function () { 
-        // On vérifie bien que l'ajout provoque un revert !
-        await (expectRevert(this.LedgerContract.setTechMaster(
-            _techMaster1,
-            _techMasterAddress,       
-            _siretNumber,
-            true, 
-            {from: other}), "Ownable: caller is not the owner"));  
-    });
-
-    it('TechMaster properly set', async function () { 
-        // On procède à l'ajout d'un Customer
-        await this.LedgerContract.setTechMaster(
-            _techMaster1,
-            _techMasterAddress,   
-            _siretNumber,
-            true, 
-            {from: owner});
-        let myTechMaster = await this.LedgerContract._techMasters(_techMasterAddress);   
-        expect(myTechMaster.description).to.equal(_techMaster1); 
-        expect(myTechMaster.siretNumber).to.be.bignumber.equal(_siretNumber); 
-        expect(myTechMaster.isActive).to.equal(true);   
-    });   
-
-});
-
-contract('setTypeMeasure', function (accounts) {
-
-    const owner = accounts[0];    
-    const other = accounts[1];    
-    const _customerAddress = accounts[2];
-    const _contractAddress = accounts[3];
-    const _techMasterAddress = accounts[4];
-    const _legislatorAddress = accounts[5];
-    const _siretNumber = new BN(12345678910111);
-    const address0 = "0x0000000000000000000000000000000000000000";
-    const _customer1 = 'Alan';
-    const _legislator1 = 'Thierry';
-    const _techMaster1 = 'Patrick';
-    const _typeMeasure1 = 'eau air feu';
-    const _info = 'tous les jours'
+    const _customer = 'Alan';
+    const _legislator = 'Thierry';    
+    const _techMaster = 'Patrick';
+    const _bridgeName = 'Bridge1';
+    const _url = '56.98.44.12';
+    const _infoBridge = 'Server Nodes, model 41';           
+    const _typeMeasure = 'eau air feu';
+    const _infoMeasure = 'tous les jours';
     const _codeMeasure = "0xABCD123400000000";
 
     // Avant chaque test unitaire
@@ -161,31 +30,245 @@ contract('setTypeMeasure', function (accounts) {
         this.LedgerContract = await LedgerContract.new({from: owner});
     });
 
-    it('Revert if other : onlyOwner', async function () { 
-        // On vérifie bien que l'ajout provoque un revert !
-        await (expectRevert(this.LedgerContract.setTypeMeasure(
-            _typeMeasure1,      
-            _info,
-            _codeMeasure,
-            true,
-            true, 
-            {from: other}), "Ownable: caller is not the owner"));  
+    describe("setCustomer", function() {
+
+        it('Revert if other : onlyOwner', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.setCustomer(
+                _customer,
+                _customerAddress,
+                _contractAddress,         
+                _siretNumber1,
+                true, 
+                {from: other}), "Ownable: caller is not the owner"));  
+        });
+
+        it('New customer properly set', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setCustomer(
+                _customer,
+                _customerAddress,
+                _contractAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+            let myCustomer = await this.LedgerContract._customers(_customerAddress);   
+            expect(myCustomer.description).to.equal(_customer); 
+            expect(myCustomer.contractAddress).to.equal(_contractAddress); 
+            expect(myCustomer.siretNumber).to.be.bignumber.equal(_siretNumber1); 
+            expect(myCustomer.isActive).to.equal(true);  
+            expect(myCustomer.exist).to.equal(true);              
+        });   
+    });
+    
+    describe('setLegislator', function () {
+
+        it('Revert if other : onlyOwner', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.setLegislator(
+                _legislator,
+                _legislatorAddress,         
+                _siretNumber1,
+                true, 
+                {from: other}), "Ownable: caller is not the owner"));  
+        });
+
+        it('New legislator properly set', async function () { 
+            // On procède à l'ajout d'un Customer
+            let receipt = await this.LedgerContract.setLegislator(
+                _legislator,
+                _legislatorAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            expectEvent(receipt, "LedgerUpdate", {_message: 'New Legislator', _author: owner });
+
+            let myLegislator = await this.LedgerContract._legislators(_legislatorAddress);   
+            expect(myLegislator.description).to.equal(_legislator);  
+            expect(myLegislator.siretNumber).to.be.bignumber.equal(_siretNumber1); 
+            expect(myLegislator.isActive).to.equal(true);   
+            expect(myLegislator.exist).to.equal(true); 
+        });  
+        
+        it('Update legislator properly set', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setLegislator(
+                _legislator,
+                _legislatorAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let receipt = await this.LedgerContract.setLegislator(
+                _legislator,
+                _legislatorAddress,         
+                _siretNumber2,
+                true, 
+                {from: owner});
+
+            expectEvent(receipt, "LedgerUpdate", {_message: 'Update Legislator', _author: owner });
+
+            let myLegislator = await this.LedgerContract._legislators(_legislatorAddress);   
+            expect(myLegislator.siretNumber).to.be.bignumber.equal(_siretNumber2); 
+        });          
+    });
+   
+    describe('setTechMaster', function () {
+
+        it('Revert if other : onlyOwner', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,       
+                _siretNumber1,
+                true, 
+                {from: other}), "Ownable: caller is not the owner"));  
+        });
+
+        it('New techMaster properly set', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,   
+                _siretNumber1,
+                true, 
+                {from: owner});
+            let myTechMaster = await this.LedgerContract._techMasters(_techMasterAddress);   
+            expect(myTechMaster.description).to.equal(_techMaster); 
+            expect(myTechMaster.siretNumber).to.be.bignumber.equal(_siretNumber1); 
+            expect(myTechMaster.isActive).to.equal(true);   
+            expect(myTechMaster.exist).to.equal(true);   
+        });   
     });
 
-    it('Measure properly set', async function () { 
-        // On procède à l'ajout d'un Customer
-        await this.LedgerContract.setTypeMeasure(
-            _typeMeasure1, 
-            _info,
-            _codeMeasure,
-            true,
-            true, 
-            {from: owner});
-        let myTechMaster = await this.LedgerContract._typeMeasures(_codeMeasure);   
-        expect(myTechMaster.description).to.equal(_typeMeasure1); 
-        expect(myTechMaster.info).to.equal(_info); 
-        expect(myTechMaster.isActive).to.equal(true);  
-        expect(myTechMaster.isAllowed).to.equal(true);
-    });   
+    describe('setBridge', function () {
+
+        it('Revert if other : onlyOwner', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.setBridge(
+                _bridgeName ,
+                _url,       
+                _infoBridge,
+                _bridgeAddress,
+                _techMasterAddress,
+                true, 
+                {from: other}), "Ownable: caller is not the owner"));  
+        });
+
+        it('New bridge properly set', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setBridge(
+                _bridgeName,
+                _url,       
+                _infoBridge,
+                _bridgeAddress,
+                _techMasterAddress,                
+                true, 
+                {from: owner});
+            let myBridge = await this.LedgerContract._bridges(_bridgeAddress);   
+            expect(myBridge.description).to.equal(_bridgeName); 
+            expect(myBridge.url).to.equal(_url); 
+            expect(myBridge.info).to.equal(_infoBridge); 
+            expect(myBridge.techMasterAddress).to.equal(_techMasterAddress); 
+            expect(myBridge.isActive).to.equal(true);  
+            expect(myBridge.exist).to.equal(true);              
+        });   
+    });
+
+    describe('setTypeMeasure', function () {
+
+        it('Revert if other : onlyOwner', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.setTypeMeasure(
+                _typeMeasure,      
+                _infoMeasure,
+                _codeMeasure,
+                true,
+                true, 
+                {from: other}), "Ownable: caller is not the owner"));  
+        });
+
+        it('New measure properly set', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setTypeMeasure(
+                _typeMeasure, 
+                _infoMeasure,
+                _codeMeasure,
+                true,
+                true, 
+                {from: owner});
+            let myTechMaster = await this.LedgerContract._typeMeasures(_codeMeasure);   
+            expect(myTechMaster.description).to.equal(_typeMeasure); 
+            expect(myTechMaster.info).to.equal(_infoMeasure); 
+            expect(myTechMaster.isActive).to.equal(true);  
+            expect(myTechMaster.isAllowed).to.equal(true);
+            expect(myTechMaster.exist).to.equal(true);
+        });   
+    }); 
+    
+    describe('rootingApps', function () {
+
+        const adminTypeUser = new BN(1);
+        const customerTypeUser = new BN(2);
+        const lesgislatorTypeUser = new BN(3);
+        const technmasterTypeUser = new BN(4);
+        const publicTypeUser = new BN(5);
+
+        // Check administrator detected
+        it('Detect Administrator', async function () { 
+            let returnRootingApps = await this.LedgerContract.rootingApps({from: owner});
+            expect(returnRootingApps).to.be.bignumber.equal(adminTypeUser);
+        });
+        
+        // Check administrator detected
+        it('Detect Customer', async function () { 
+            await this.LedgerContract.setCustomer(
+                _customer,
+                _customerAddress,
+                _contractAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let returnRootingApps = await this.LedgerContract.rootingApps({from: _customerAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(customerTypeUser);
+        });
+
+        // Check administrator detected
+        it('Detect Legislator', async function () { 
+            await this.LedgerContract.setLegislator(
+                _legislator,
+                _legislatorAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let returnRootingApps = await this.LedgerContract.rootingApps({from: _legislatorAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(lesgislatorTypeUser);
+        });
+
+        // Check Techmaster detected
+        it('Detect Techmaster', async function () { 
+            await this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let returnRootingApps = await this.LedgerContract.rootingApps({from: _techMasterAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(technmasterTypeUser);
+        });
+
+        it('Detect Public', async function () { 
+            let returnRootingApps = await this.LedgerContract.rootingApps({from: other});
+            expect(returnRootingApps).to.be.bignumber.equal(publicTypeUser);
+        });        
+
+    });     
+
+
+
 
 });

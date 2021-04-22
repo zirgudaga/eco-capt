@@ -76,7 +76,7 @@ contract CustomerContract is Ownable {
         address legislatorAddress;
         uint64 dateOn;
         uint64 dateOff;
-        bytes8 codeAlert;
+        bytes4 codeAlert;
         bytes8 valueAlert;
         bool isActive;
 
@@ -318,7 +318,7 @@ contract CustomerContract is Ownable {
         string memory _description,  
         uint64 _dateOn,
         uint64 _dateOff,
-        bytes8 _codeAlert,
+        bytes4 _codeAlert,
         bytes8 _valueAlert)
         isContractActive() isServiceActive(_serviceId) external {
 

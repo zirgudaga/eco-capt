@@ -7,6 +7,11 @@ import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 contract LedgerContract is Ownable {
     using Counters for Counters.Counter;
 
+
+    /**
+     * @dev Structure of Customer
+     * @notice Feature_V2 
+     */
     struct Customer {
         string description;
         address contractAddress;
@@ -15,6 +20,10 @@ contract LedgerContract is Ownable {
         bool exist;
     }
 
+    /**
+     * @dev Structure of Legislator
+     * @notice Feature_V2 
+     */
     struct Legislator {
         string description;
         uint siretNumber;        
@@ -22,6 +31,10 @@ contract LedgerContract is Ownable {
         bool exist;        
     }
 
+    /**
+     * @dev Structure of TechMaster
+     * @notice Feature_V2 
+     */
     struct TechMaster {
         string description;
         uint siretNumber;        
@@ -29,6 +42,10 @@ contract LedgerContract is Ownable {
         bool exist;        
     }
 
+    /**
+     * @dev Structure of Bridge
+     * @notice Feature_V2 
+     */
     struct Bridge {
         string description;
         string url;   
@@ -38,6 +55,10 @@ contract LedgerContract is Ownable {
         bool exist;        
     }
 
+    /**
+     * @dev Structure of TypeMeasure
+     * @notice Feature_V2 
+     */
     struct TypeMeasure{
 	    string description;
         string info;
@@ -56,6 +77,14 @@ contract LedgerContract is Ownable {
     
     mapping(bytes8 => TypeMeasure) public _typeMeasures;
 
+     /**
+     * @dev set a Customer
+     * @param _description string description of a Customer
+     * @param _customerAddress address Customer's address
+     * @param _contractAddress address contract's address
+     * @param _siretNumber uint Customer's siretNumber
+     * @param _isActive bool Customer's status : active / inactive
+     */
     function setCustomer (
         string memory _description,
         address _customerAddress, 
@@ -78,6 +107,13 @@ contract LedgerContract is Ownable {
         true);
     }
 
+     /**
+     * @dev set a Legislator
+     * @param _description string description of a Legislator
+     * @param _legislatorAddress address Legislator's address
+     * @param _siretNumber uint Legislator's siretNumber
+     * @param _isActive bool Legislator's status : active / inactive
+     */
     function setLegislator (
         string memory _description,        
         address _legislatorAddress,
@@ -98,6 +134,13 @@ contract LedgerContract is Ownable {
         true);   
     }    
 
+     /**
+     * @dev set a TechMaster
+     * @param _description string description of a TechMaster
+     * @param _techMasterAddress address TechMaster's address
+     * @param _siretNumber uint TechMaster's siretNumber
+     * @param _isActive bool TechMaster's status : active / inactive
+     */
     function setTechMaster (
         string memory _description,
         address _techMasterAddress,       
@@ -118,6 +161,15 @@ contract LedgerContract is Ownable {
         true);
     }    
 
+     /**
+     * @dev set a Bridge
+     * @param _description string description of a Bridge
+     * @param _url string url of a Bridge
+     * @param _info string info regarding a Bridge
+     * @param _bridgeAddress address Bridge's address
+     * @param _techMasterAddress address TechMaster's address
+     * @param _isActive bool TechMaster's status : active / inactive
+     */
     function setBridge (
         string memory _description,
         string memory _url, 
@@ -141,7 +193,15 @@ contract LedgerContract is Ownable {
         _isActive,
         true);
     } 
-    
+
+     /**
+     * @dev set a TypeMeasure
+     * @param _description string description of a TypeMeasure
+     * @param _info string info regarding a TypeMeasure
+     * @param _codeMeasure bytes8 TypeMeasure's code
+     * @param _isActive bool TechMaster's status : active / inactive 
+     * @param _isAllowed bool TypeMeasure's authorization status
+     */    
     function setTypeMeasure (
         string memory _description,
         string memory _info,
@@ -164,6 +224,10 @@ contract LedgerContract is Ownable {
         true);
     }    
 
+     /**
+     * @dev allows the dApp to process user's type and display the correct interface
+     * @param _myTypeUser uint user's type 
+     */  
     function rootingApps()
         external view returns(uint _myTypeUser){
         /*

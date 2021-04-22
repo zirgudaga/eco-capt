@@ -3,7 +3,7 @@ import "./MainNavBar.css";
 
 export default class MainNavBar extends React.Component {
 
-    showMyAddress = () => {      
+    showMyAddress = () => {    
         if(this.props.state.accounts !== null){
             return <span><i key="fa-user" className="fas fa-user"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;
         } 
@@ -14,7 +14,6 @@ export default class MainNavBar extends React.Component {
 
     showMyContract = () => {      
         if(this.props.state.customerContractAddress !== null){
-
             if(this.props.state.myTypeUser == 2){
                 return <span><i key="fa-clipboard" className="fas fa-clipboard"></i>{this.props.state.customerContractAddress.substr(0,5)+'...'+this.props.state.customerContractAddress.substr(-4)}
                 </span>;                
@@ -29,6 +28,7 @@ export default class MainNavBar extends React.Component {
         }       
     }    
 
+
     render() {
         return ( 
             <header className="welcome-navbar">
@@ -37,20 +37,52 @@ export default class MainNavBar extends React.Component {
                     <nav>
                         <ul>
 
-
-                            {(this.props.state.myTypeUser==1)
+                            { (this.props.state.myTypeUser==='1' 
+                            || this.props.state.myTypeUser==='3' 
+                            || this.props.state.myTypeUser==='4')      
                             &&
-                            <li className="main-list">
-                                <a onClick = { () => {this.props.goTo("Client");} }>
-                                Clients
-                                </a>
-                            </li>
+                                <li className="main-list">
+                                    <a onClick = { () => {this.props.goTo("Customers");} }>
+                                    Cust
+                                    </a>
+                                </li>  
                             }
+
+                            { (this.props.state.myTypeUser==='1')      
+                            &&  
+                                <>       
+                                    <li className="main-list">
+                                        <a onClick = { () => {this.props.goTo("Legislators");} }>
+                                        Leg
+                                        </a>
+                                    </li> 
+                                    <li className="main-list">
+                                        <a onClick = { () => {this.props.goTo("Technicians");} }>
+                                        Techn
+                                        </a>
+                                    </li>
+                                </>                           
+                            }
+
+                            { (this.props.state.myTypeUser==='1' 
+                            || this.props.state.myTypeUser==='4')      
+                            &&
+
+                                <li className="main-list">
+                                    <a onClick = { () => {this.props.goTo("Bridges");} }>
+                                    Bri
+                                    </a>
+                                </li>
+                        
+                    
+                            }
+
+
 
                             {(this.props.state.customerContractAddress !== null)
                             &&                              
                             <li className="main-list">
-                                <a onClick = { () => {this.props.goTo("Service");} }>
+                                <a onClick = { () => {this.props.goTo("Services");} }>
                                 Services
                                 </a>
                             </li>}
@@ -58,8 +90,8 @@ export default class MainNavBar extends React.Component {
                             {(this.props.state.customerContractAddress !== null)
                             &&                             
                             <li className="main-list">
-                                <a onClick = { () => {this.props.goTo("Alert");} }>
-                                Alertes
+                                <a onClick = { () => {this.props.goTo("Alerts");} }>
+                                Alerts
                                 </a>
                             </li>
                             }

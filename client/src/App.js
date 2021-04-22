@@ -20,6 +20,14 @@ import getWeb3 from "./getWeb3.js";
     CUSTOMER 2 : 0x79D147b737F3075c2b870061003E683a7A34c944
 */
 
+/*
+    1 : Admin
+    2 : Client
+    3 : Législateur
+    4 : Techmaster
+    5 : Public
+*/
+
 class App extends Component {
 
     state = { 
@@ -64,13 +72,14 @@ class App extends Component {
         let { ledgerContract, accounts, myTypeUser } = this.state;
 
         if(ledgerContract !== null){
-            let returnType = await ledgerContract.methods.rootingApps().call({from:accounts[0]});
-            myTypeUser = returnType._myTypeUser;
-
+            myTypeUser = await ledgerContract.methods.rootingApps().call({from:accounts[0]});
+            
             if(myTypeUser === '2'){
                 let myContract = await ledgerContract.methods._customers(accounts[0]).call({from:accounts[0]});
                 this.goContract(myContract.contractAddress);
             }
+
+            console.log("Status actuel ", myTypeUser);
 
             this.setState({ myTypeUser });
         }
@@ -84,8 +93,8 @@ class App extends Component {
         customerContractAddress = addr;
 
         customerContract = new web3.eth.Contract(
-        CustomerContract.abi,
-        addr
+            CustomerContract.abi,
+            addr
         );   
 
         this.setState({ customerContract, customerContractAddress });
@@ -105,19 +114,19 @@ class App extends Component {
                     <Router>
                         <Switch>
                             <Route path="/app" exact>
-                            <Dashboard
-                                state={this.state}
-                                goContract = {(addr) => {this.goContract(addr);}}
-                                contractClose = {() => this.closeContract()}
-                            >
-                            </Dashboard>                                    
+                                <Dashboard
+                                    state={this.state}
+                                    goContract = {(addr) => {this.goContract(addr);}}
+                                    contractClose = {() => this.closeContract()}
+                                >
+                                </Dashboard>                                    
                             </Route>
 
                             <Route path="/" exact>
                                 <Route path="/" exact/>
                                     <WelcomeNavBar />
                                     <Welcome />
-                            </Route>
+                                </Route>
                             <Route path="/" compoment={() => <div> ERROR 404 </div>}/>
                         </Switch>
                     </Router>

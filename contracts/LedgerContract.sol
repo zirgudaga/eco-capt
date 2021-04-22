@@ -70,6 +70,11 @@ contract LedgerContract is Ownable {
     event LedgerUpdate(string _message, address _target, address _author);  
     event TypeMeasureUpdate(string _message, bytes8 _target, address _author);  
   
+    modifier onlyTechMaster() {
+        require (_techMasters[msg.sender].exist || owner() ==  msg.sender, "Access denied");
+        _;
+    }
+
     mapping(address => Customer) public _customers; 
     mapping(address => Legislator) public _legislators; 
     mapping(address => TechMaster) public _techMasters;
@@ -177,11 +182,12 @@ contract LedgerContract is Ownable {
         address _bridgeAddress,
         address _techMasterAddress,       
         bool _isActive) 
-        onlyOwner() external {
+        onlyTechMaster() external {
 
         if(!_bridges[_bridgeAddress].exist){
             emit LedgerUpdate("New Bridge", _bridgeAddress, msg.sender);
         }else{
+            require(_bridges[_bridgeAddress].techMasterAddress == msg.sender || owner()==msg.sender, "Access denied");
             emit LedgerUpdate("Update Bridge", _bridgeAddress, msg.sender);
         }
 

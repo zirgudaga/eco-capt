@@ -12,9 +12,9 @@ export default class HomeLegislator extends React.Component {
                     <br />
                     <p>Vous trouverez la liste de nos clients sur votre droite</p>
                     <br />
-                    <p>Pour voir le détail d'un client, cliquez dessus.</p>
+                    <p>Pour voir le détail d'un legislator, cliquez dessus.</p>
                     <br />
-                    <p>Vous pouvez ajouter un client en cliquant sur "NEW CLIENT"</p>
+                    <p>Vous pouvez ajouter un legislator en cliquant sur "NEW legislator"</p>
                     <br />
                     <p>Être honnête n'a jamais été aussi simple !</p>
                     <div className="home-legislator-logo">

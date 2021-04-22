@@ -1,0 +1,26 @@
+.home-technician {
+    text-align: center;
+    width: 70%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+    min-height: 600px;
+    width: 70%;
+    margin-right: 2%;
+}
+
+.home-technician-title {
+    color: #1a202e;
+    font-size: 40px;
+}
+
+.home-technician-p {
+    margin-top: 50px;
+}
+
+.home-technician-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}

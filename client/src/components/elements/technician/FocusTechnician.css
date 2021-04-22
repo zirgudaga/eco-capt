@@ -1,0 +1,38 @@
+.focus-technician-body {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    min-width: 700px;
+    min-height: 700px;
+    padding-bottom: 60px;
+    padding: 10px;
+    width: 70%;    
+}
+
+.focus-technician-cta {
+    height: 60px;
+    line-height: 60px;
+    background-color: #2563eb;
+    color: #fff;
+    border: 2px solid #2563eb;
+    display: inline-block;
+    transition: 0.1s all ease-out;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.fa-toggle-on {
+    margin-left: 4px;
+    color: #03A9F4;
+}
+
+.fa-toggle-off {
+    margin-left: 4px;    
+    color: tomato;
+}

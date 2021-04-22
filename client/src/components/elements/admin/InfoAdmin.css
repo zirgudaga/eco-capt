@@ -1,0 +1,9 @@
+.admin-info {
+    margin-bottom: 50px;
+    position: absolute;
+    bottom: 60px;
+}
+
+.admin-info-details {
+  font-weight: 500;
+}

@@ -211,9 +211,9 @@ contract LedgerContract is Ownable {
         onlyOwner() external {  
 
         if(!_typeMeasures[_codeMeasure].exist){
-            emit TypeMeasureUpdate("New TypeMesure", _codeMeasure, msg.sender);
+            emit TypeMeasureUpdate("New TypeMeasure", _codeMeasure, msg.sender);
         }else{
-            emit TypeMeasureUpdate("Update TypeMesure", _codeMeasure, msg.sender);
+            emit TypeMeasureUpdate("Update TypeMeasure", _codeMeasure, msg.sender);
         }
 
         _typeMeasures[_codeMeasure] = TypeMeasure(

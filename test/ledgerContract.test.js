@@ -18,11 +18,13 @@ contract('LedgerContract', function (accounts) {
     const _customer = 'Alan';
     const _legislator = 'Thierry';    
     const _techMaster = 'Patrick';
-    const _bridgeName = 'Bridge1';
+    const _bridgeName1 = 'Bridge1';
+    const _bridgeName2 = 'Bridge2';
     const _url = '56.98.44.12';
     const _infoBridge = 'Server Nodes, model 41';           
     const _typeMeasure = 'eau air feu';
-    const _infoMeasure = 'tous les jours';
+    const _infoMeasure1 = 'tous les jours';
+    const _infoMeasure2 = 'toutes les heures';
     const _codeMeasure = "0xABCD123400000000";
 
     // Avant chaque test unitaire
@@ -91,7 +93,7 @@ contract('LedgerContract', function (accounts) {
             expect(myLegislator.exist).to.equal(true); 
         });  
         
-        it('Update legislator properly set', async function () { 
+        it('Legislator properly updated', async function () { 
             // On procède à l'ajout d'un Customer
             await this.LedgerContract.setLegislator(
                 _legislator,
@@ -128,18 +130,43 @@ contract('LedgerContract', function (accounts) {
 
         it('New techMaster properly set', async function () { 
             // On procède à l'ajout d'un Customer
-            await this.LedgerContract.setTechMaster(
+            let receipt = await this.LedgerContract.setTechMaster(
                 _techMaster,
                 _techMasterAddress,   
                 _siretNumber1,
                 true, 
                 {from: owner});
+
+            expectEvent(receipt, "LedgerUpdate", {_message: 'New TechMaster', _author: owner });    
+
             let myTechMaster = await this.LedgerContract._techMasters(_techMasterAddress);   
             expect(myTechMaster.description).to.equal(_techMaster); 
             expect(myTechMaster.siretNumber).to.be.bignumber.equal(_siretNumber1); 
             expect(myTechMaster.isActive).to.equal(true);   
             expect(myTechMaster.exist).to.equal(true);   
         });   
+
+        it('TechMaster properly updated', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let receipt = await this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,         
+                _siretNumber2,
+                true, 
+                {from: owner});
+
+            expectEvent(receipt, "LedgerUpdate", {_message: 'Update TechMaster', _author: owner });
+
+            let myTechMaster = await this.LedgerContract._techMasters(_techMasterAddress);   
+            expect(myTechMaster.siretNumber).to.be.bignumber.equal(_siretNumber2); 
+        });      
     });
 
     describe('setBridge', function () {
@@ -147,7 +174,7 @@ contract('LedgerContract', function (accounts) {
         it('Revert if other : onlyOwner', async function () { 
             // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.setBridge(
-                _bridgeName ,
+                _bridgeName1 ,
                 _url,       
                 _infoBridge,
                 _bridgeAddress,
@@ -158,22 +185,52 @@ contract('LedgerContract', function (accounts) {
 
         it('New bridge properly set', async function () { 
             // On procède à l'ajout d'un Customer
-            await this.LedgerContract.setBridge(
-                _bridgeName,
+            let receipt = await this.LedgerContract.setBridge(
+                _bridgeName1,
                 _url,       
                 _infoBridge,
                 _bridgeAddress,
                 _techMasterAddress,                
                 true, 
                 {from: owner});
+
+            expectEvent(receipt, "LedgerUpdate", {_message: 'New Bridge', _author: owner });
+
             let myBridge = await this.LedgerContract._bridges(_bridgeAddress);   
-            expect(myBridge.description).to.equal(_bridgeName); 
+            expect(myBridge.description).to.equal(_bridgeName1); 
             expect(myBridge.url).to.equal(_url); 
             expect(myBridge.info).to.equal(_infoBridge); 
             expect(myBridge.techMasterAddress).to.equal(_techMasterAddress); 
             expect(myBridge.isActive).to.equal(true);  
             expect(myBridge.exist).to.equal(true);              
         });   
+
+        it('Bridge properly updated', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setBridge(
+                _bridgeName1,
+                _url,       
+                _infoBridge,
+                _bridgeAddress,
+                _techMasterAddress,                
+                true,
+                {from: owner});
+
+            let receipt = await this.LedgerContract.setBridge(
+                _bridgeName2,
+                _url,       
+                _infoBridge,
+                _bridgeAddress,
+                _techMasterAddress,                
+                true,
+                {from: owner});
+
+            expectEvent(receipt, "LedgerUpdate", {_message: 'Update Bridge', _author: owner });
+
+            let myBridge = await this.LedgerContract._bridges(_bridgeAddress);   
+            expect(myBridge.description).to.equal(_bridgeName2); 
+        });     
+
     });
 
     describe('setTypeMeasure', function () {
@@ -182,7 +239,7 @@ contract('LedgerContract', function (accounts) {
             // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.setTypeMeasure(
                 _typeMeasure,      
-                _infoMeasure,
+                _infoMeasure1,
                 _codeMeasure,
                 true,
                 true, 
@@ -191,20 +248,47 @@ contract('LedgerContract', function (accounts) {
 
         it('New measure properly set', async function () { 
             // On procède à l'ajout d'un Customer
-            await this.LedgerContract.setTypeMeasure(
+            let receipt = await this.LedgerContract.setTypeMeasure(
                 _typeMeasure, 
-                _infoMeasure,
+                _infoMeasure1,
                 _codeMeasure,
                 true,
                 true, 
                 {from: owner});
+
+            expectEvent(receipt, "TypeMeasureUpdate", {_message: 'New TypeMeasure', _author: owner });
+
             let myTechMaster = await this.LedgerContract._typeMeasures(_codeMeasure);   
             expect(myTechMaster.description).to.equal(_typeMeasure); 
-            expect(myTechMaster.info).to.equal(_infoMeasure); 
+            expect(myTechMaster.info).to.equal(_infoMeasure1); 
             expect(myTechMaster.isActive).to.equal(true);  
             expect(myTechMaster.isAllowed).to.equal(true);
             expect(myTechMaster.exist).to.equal(true);
         });   
+
+        it('TypeMeasure properly updated', async function () { 
+            // On procède à l'ajout d'un Customer
+            await this.LedgerContract.setTypeMeasure(
+                _typeMeasure, 
+                _infoMeasure1,
+                _codeMeasure,
+                true,
+                true, 
+                {from: owner});
+
+            let receipt = await this.LedgerContract.setTypeMeasure(
+                _typeMeasure, 
+                _infoMeasure2,
+                _codeMeasure,
+                true,
+                true, 
+                {from: owner});
+
+            expectEvent(receipt, "TypeMeasureUpdate", {_message: 'Update TypeMeasure', _author: owner });
+
+            let myBridge = await this.LedgerContract._typeMeasures(_codeMeasure);   
+            expect(myBridge.info).to.equal(_infoMeasure2); 
+        });    
     }); 
     
     describe('rootingApps', function () {

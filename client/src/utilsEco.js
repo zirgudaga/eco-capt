@@ -198,9 +198,10 @@ const getTabSelect = (nameSelector) => {
         ];
 
         case "addSeuilCode" : return [
-            {code:'MAX_0001', aff:'Seuil maximal'},
-            {code:'MOY_0001', aff:'Moyenne maximale'},   
-            {code:'MIN_0001', aff:'Seuil minimal'},
+            {code:'MAX1', aff:'Seuil maximal'},
+            {code:'MOY1', aff:'Moyenne maximale'},   
+            {code:'MED1', aff:'Mediane maximale'},
+            {code:'MIN1', aff:'Seuil minimal'},
         ];
 
         case "addServiceMeasureType" : return [
@@ -215,7 +216,6 @@ const getTabSelect = (nameSelector) => {
             {code:'m', aff:'Mois'},
             {code:'d', aff:'Journée'},
             {code:'H', aff:'Heure'},                                
-            //{code:'i', aff:'Minutes'},  
         ];
     
         default : return [];

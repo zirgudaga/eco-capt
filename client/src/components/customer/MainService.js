@@ -29,18 +29,18 @@ export default class MainService extends React.Component {
     }
 
     getAllServices = async () => {
-        const { contract } = this.props.state;
+        const { customerContract, accounts } = this.props.state;
 
-        if(contract != null){
+        if(customerContract != null){
             let { listServices } = this.state;
 
-            contract.getPastEvents('ServiceUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            customerContract.getPastEvents('ServiceUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
             .then(async (myEvents) => {
                 let index;
                 for(let myEvent of myEvents){
                     if(myEvent.returnValues['_message'] == "New service"){
                         index = myEvent.returnValues['_serviceId'];
-                        listServices[index] = await contract.methods._services(index).call();
+                        listServices[index] = await customerContract.methods._services(index).call({from:accounts[0]});
                         listServices[index].serviceId = index;
                     }       
                 }

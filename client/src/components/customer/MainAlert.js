@@ -30,19 +30,19 @@ export default class Alert extends React.Component {
     }
 
     getAllRules = async () => {
-        const { contract } = this.props.state;
+        const { customerContract, accounts } = this.props.state;
 
-        if(contract != null){
+        if(customerContract != null){
             let { listRules } = this.state;
             listRules=[];
 
-            contract.getPastEvents('ServiceRulesUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            customerContract.getPastEvents('ServiceRulesUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
             .then(async (myEvents) => {
                 let index;
                 for(let myEvent of myEvents){
                     if(myEvent.returnValues['_message'] == "New Rule"){
                         index = myEvent.returnValues['_ruleId'];
-                        listRules[index] = await contract.methods._serviceRules(index).call();
+                        listRules[index] = await customerContract.methods._serviceRules(index).call({from:accounts[0]});
                         listRules[index].ruleId = index;
                     }       
                 }

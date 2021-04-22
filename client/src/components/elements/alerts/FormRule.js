@@ -85,7 +85,7 @@ export default class FormRule extends React.Component {
                 <span className="form-rule-close" onClick={()=>this.props.close()}>X</span><br/>
 
                 <MyNotif 
-                    contract={this.props.state.contractTarget}
+                    contractAddress={this.props.state.customerContractAddress}
                     errorMessage={this.state.errorMessage}    
                 />
 

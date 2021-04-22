@@ -9,11 +9,11 @@ export default class MyNotif extends React.Component {
             return (<input type="button" className="tester-button-alerte" value={this.props.errorMessage}/>);
         }
 
-        if(this.props.contract !== null){
-            return (<input type="button" className="tester-button-notice" value={"Status OK - " + this.props.contract}/>);
+        if(this.props.contractAddress !== null){
+            return (<input type="button" className="tester-button-notice" value={"Status OK - " + this.props.contractAddress}/>);
         }
         else{
-            return (<input type="button" className="tester-button-waiting" value="Status Waiting WEB3 connection"/>);
+            return (<input type="button" className="tester-button-waiting" value="Status Waiting Contract Connexion"/>);
         }
     }
 

@@ -15,22 +15,28 @@ export default class MainHome extends React.Component {
 
     render() {
         return (
-                <div className="main-content">
-                    <main className="main-client">
-                        <div className="page-header">
-                            <div className="page-header-body">
-                                <h1 className="page-header-title">Bienvenue sur votre espace</h1>
-                                <p className="page-header-address">Vous êtes connecté via l'adresse : <span className="address-color">{this.showAddress()}</span></p>
-                                <p className="page-header-contract">Votre contract client est le numéro : <span className="address-color">{this.props.state.contractTarget}</span></p>
+            <div className="main-content">
+                <main className="main-client">
+                    <div className="page-header">
+                        <div className="page-header-body">
+                            <h1 className="page-header-title">Bienvenue sur votre espace</h1>
+                            <p className="page-header-address">Vous êtes connecté via l'adresse : <span className="address-color">{this.showAddress()}</span></p>
+                            {this.props.state.customerContractAddress
+                            ?(<p className="page-header-contract">Votre contract client est : <span className="address-color">{this.props.state.customerContractAddress}</span></p>)
+                            :(<p className="page-header-contract">Pas de contract client selectionné...</p>)}
+                            
+                            {this.props.state.customerContractAddress &&
+                            <div>
                                 <p>Pour accéder à vos services, cliquez sur le bouton ci-dessous :</p>
                                 <a className="page-header-cta" type="button" onClick = { () => {this.props.goTo("Service");} }>
                                     Services
                                 </a>
-                                <p className="page-header-help">Une question ? Contactez-nous !</p>
-                            </div>
+                            </div>}
+                            <p className="page-header-help">Une question ? Contactez-nous !</p>
                         </div>
-                    </main>
-                </div>
+                    </div>
+                </main>
+            </div>
         );
     }
 }

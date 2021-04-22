@@ -28,7 +28,7 @@ export default class MySelectEth extends React.Component {
     
     //TODO ADAPTER CETTE LISTE DEROULANTE A CHAQUE PROFIL
     recoltAllServiceOfContract = async() => {
-        let { contract, myTabOptions } = this.props.state;
+        let { contract, myTabOptions, accounts } = this.props.state;
 
         myTabOptions = [];
        
@@ -39,7 +39,7 @@ export default class MySelectEth extends React.Component {
                 for(let myEvent of myEvents){
                     if(myEvent.returnValues['_message'] == "New service"){
                         index = myEvent.returnValues['_serviceId'];
-                        serverTemp = await contract.methods._services(index).call();
+                        serverTemp = await contract.methods._services(index).call({from:accounts[0]});
                         myTabOptions.push({code: index, aff: serverTemp.description});
                     }       
                 }

@@ -94,26 +94,26 @@ export default class DashboardTester extends React.Component {
     };
 
     getAllServices = async () => {
-        const { contract } = this.props.state;
+        const { contract, accounts } = this.props.state;
         let { listServices } = this.state;
-        listServices = await contract.methods.getAllServices().call();
+        listServices = await contract.methods.getAllServices().call({from:accounts[0]});
 
         this.setState({ listServices });  
     };    
 
     getAlertConfig = async () => {
-        const { contract } = this.props.state;
+        const { contract, accounts } = this.props.state;
         let { listAlertConfig } = this.state;
 
-        listAlertConfig = await contract.methods.getAllAlertConfigs().call();
+        listAlertConfig = await contract.methods.getAllAlertConfigs().call({from:accounts[0]});
 
         this.setState({ listAlertConfig });  
     };       
 
     getAllMeasures = async (serviceId) => {
-        const { contract } = this.props.state;
+        const { contract, accounts } = this.props.state;
         let { listMeasures } = this.state;
-        listMeasures = await contract.methods.getAllMeasures(serviceId).call();
+        listMeasures = await contract.methods.getAllMeasures(serviceId).call({from:accounts[0]});
 
         this.setState({ listMeasures });  
     };  
@@ -181,19 +181,19 @@ export default class DashboardTester extends React.Component {
 
 
     setServiceFocus = async (serviceId) => {
-        let { contract } = this.props.state;
+        let { contract, accounts } = this.props.state;
         let { selectedService, listMeasures } = this.state;
         selectedService = serviceId;
-        listMeasures = await contract.methods.getAllMeasures(serviceId).call();
+        listMeasures = await contract.methods.getAllMeasures(serviceId).call({from:accounts[0]});
         this.setState({ contract, selectedService, listMeasures });  
     };     
 
 
     setAlertConfigFocus = async (alertConfigId) => {
-        let { contract } = this.props.state;
+        let { contract, accounts } = this.props.state;
         let { selectedAlertConfig, listAlerts } = this.state;
         selectedAlertConfig = alertConfigId;
-        listAlerts = await contract.methods.getAlerts(alertConfigId).call();
+        listAlerts = await contract.methods.getAlerts(alertConfigId).call({from:accounts[0]});
         this.setState({selectedAlertConfig,  listAlerts });  
     };     
    
@@ -264,7 +264,7 @@ export default class DashboardTester extends React.Component {
                     <div className="tester-block" > 
 
                         <MyNotif 
-                            contract={this.props.state.contractTarget}
+                            customerContractAddress={this.props.state.customerContractAddress}
                             errorMessage={this.state.errorMessage}    
                         />
 

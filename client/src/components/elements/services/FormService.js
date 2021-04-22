@@ -38,8 +38,8 @@ export default class FormService extends React.Component {
             return ;
         }
 
-        const { accounts, contract, web3 } = this.props.state;
-        await contract.methods.addService(
+        const { accounts, customerContract, web3 } = this.props.state;
+        await customerContract.methods.addService(
             '0x'+stringToHex(addServiceVersion), 
             this.newServiceDescription.value.trim(),
             '0x'+stringToHex(addServiceMeasureType), 
@@ -82,7 +82,7 @@ export default class FormService extends React.Component {
                 <span className="form-service-close" onClick={()=>this.props.close()}>X</span><br/>
 
                 <MyNotif 
-                    contract={this.props.state.contractTarget}
+                    contractAddress={this.props.state.customerContractAddress}
                     errorMessage={this.state.errorMessage}    
                 />
 

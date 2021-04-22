@@ -29,13 +29,12 @@ export default class FocusRule extends React.Component {
         let { contract } = this.props.state;
         let { listAlerts } = this.state;
 
-        //listAlerts = await contract.methods.getAlerts(ruleId).call();
         contract.getPastEvents('AlertReceive', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
         .then(async (myEvents) => {
             listAlerts = [];
             let index=0;
             for(let myEvent of myEvents){
-                if(myEvent.returnValues['_ruleId'] == this.props.myRule.ruleId){
+                if(myEvent.returnValues['_ruleId'] === this.props.myRule.ruleId){
                     listAlerts[index] = myEvent.returnValues['_alert'];
                     index++;
                 }       

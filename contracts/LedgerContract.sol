@@ -29,6 +29,15 @@ contract LedgerContract is Ownable {
         bool exist;        
     }
 
+    struct Bridge {
+        string description;
+        string url;   
+        string info;        
+        address techMasterAddress;     
+        bool isActive;
+        bool exist;        
+    }
+
     struct TypeMeasure{
 	    string description;
         string info;
@@ -43,6 +52,8 @@ contract LedgerContract is Ownable {
     mapping(address => Customer) public _customers; 
     mapping(address => Legislator) public _legislators; 
     mapping(address => TechMaster) public _techMasters;
+    mapping(address => Bridge) public _bridges;
+    
     mapping(bytes8 => TypeMeasure) public _typeMeasures;
 
     function setCustomer (
@@ -106,6 +117,30 @@ contract LedgerContract is Ownable {
         _isActive,
         true);
     }    
+
+    function setBridge (
+        string memory _description,
+        string memory _url, 
+        string memory _info,               
+        address _bridgeAddress,
+        address _techMasterAddress,       
+        bool _isActive) 
+        onlyOwner() external {
+
+        if(!_bridges[_bridgeAddress].exist){
+            emit LedgerUpdate("New Bridge", _bridgeAddress, msg.sender);
+        }else{
+            emit LedgerUpdate("Update Bridge", _bridgeAddress, msg.sender);
+        }
+
+        _bridges[_bridgeAddress] = Bridge(
+        _description,
+        _url,        
+        _info,
+        _techMasterAddress,
+        _isActive,
+        true);
+    } 
     
     function setTypeMeasure (
         string memory _description,
@@ -128,5 +163,29 @@ contract LedgerContract is Ownable {
         _isAllowed,
         true);
     }    
+
+    function rootingApps()
+        external view returns(uint _myTypeUser, address _return){
+        /*
+            1 : Admin
+            2 : Client
+            3 : Législateur
+            4 : Techmaster
+            5 : Public
+        */
+        if(msg.sender == owner()){
+            return (1, msg.sender);
+        }
+        if(_customers[msg.sender].exist){
+            return (2, msg.sender);
+        }
+        if(_legislators[msg.sender].exist){
+            return (3, msg.sender);
+        }
+        if(_techMasters[msg.sender].exist){
+            return (4, msg.sender);
+        }
+        return (5, msg.sender);
+    }
 
 }

@@ -39,8 +39,8 @@ export default class FormRule extends React.Component {
             return ;
         }
 
-        const { accounts, contract, web3 } = this.props.state;
-        await contract.methods.addRule(
+        const { accounts, customerContract } = this.props.state;
+        await customerContract.methods.addRule(
             '0x'+stringToHex(addSeuilVersion), 
             addService,
             this.newSeuilDescription.value.trim(),

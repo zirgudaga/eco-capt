@@ -165,7 +165,7 @@ contract LedgerContract is Ownable {
     }    
 
     function rootingApps()
-        external view returns(uint _myTypeUser, address _return){
+        external view returns(uint _myTypeUser){
         /*
             1 : Admin
             2 : Client
@@ -174,18 +174,17 @@ contract LedgerContract is Ownable {
             5 : Public
         */
         if(msg.sender == owner()){
-            return (1, msg.sender);
+            return 1;
         }
         if(_customers[msg.sender].exist){
-            return (2, msg.sender);
+            return 2;
         }
         if(_legislators[msg.sender].exist){
-            return (3, msg.sender);
+            return 3;
         }
         if(_techMasters[msg.sender].exist){
-            return (4, msg.sender);
+            return 4;
         }
-        return (5, msg.sender);
+        return 5;
     }
-
 }

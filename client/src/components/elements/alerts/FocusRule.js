@@ -26,10 +26,10 @@ export default class FocusRule extends React.Component {
     }
   
     setAlertFocus = async () => {
-        let { contract } = this.props.state;
+        let { customerContract } = this.props.state;
         let { listAlerts } = this.state;
 
-        contract.getPastEvents('AlertReceive', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+        customerContract.getPastEvents('AlertReceive', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
         .then(async (myEvents) => {
             listAlerts = [];
             let index=0;
@@ -61,11 +61,11 @@ export default class FocusRule extends React.Component {
     };
 
     addAlert = async () => {
-        const { accounts, contract, web3 } = this.props.state;
+        const { accounts, customerContract } = this.props.state;
 
         let body = fakeAlert(this.props.myRule.ruleId); 
 
-        await contract.methods.addAlert(
+        await customerContract.methods.addAlert(
             this.props.myRule.serviceId,
             this.props.myRule.ruleId,  
             body

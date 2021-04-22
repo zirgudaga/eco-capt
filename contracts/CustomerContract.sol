@@ -62,7 +62,7 @@ contract CustomerContract is Ownable {
         address legislatorAddress;
 
         Counters.Counter measureIdCounter;
-        Counters.Counter IotIdCounter;     
+        Counters.Counter iotIdCounter;     
     }
 
     /**
@@ -190,7 +190,7 @@ contract CustomerContract is Ownable {
         onlyCustomer() isContractActive() external{
       
         Counters.Counter memory measureIdCounter;       
-        Counters.Counter memory IotIdCounter;    
+        Counters.Counter memory iotIdCounter;    
 
         _services[_serviceIdCounter.current()] = Service(
         _version, 
@@ -203,7 +203,7 @@ contract CustomerContract is Ownable {
         address(0),
         address(0),                     
         measureIdCounter,
-        IotIdCounter);
+        iotIdCounter);
 
         emit ServiceUpdate(_serviceIdCounter.current(), "New service", msg.sender); 
 
@@ -263,23 +263,23 @@ contract CustomerContract is Ownable {
         address _legislatorAddress)
         isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
         
-        require(_checkValidLegislator(_legislatorAddress) == true, "Legistator not valid");
+        //require(_checkValidLegislator(_legislatorAddress) == true, "Legistator not valid");
 
         _services[_serviceId].legislatorAddress = _legislatorAddress;
 
         emit ServiceUpdate(_serviceId, "Legislator Address update", msg.sender);
     }     
 
-    function _checkValidLegislator(
-        address _address) 
-        internal view 
-        returns(bool _return){
+    // function _checkValidLegislator(
+    //     address _address) 
+    //     internal view 
+    //     returns(bool _return){
 
-        if(_address != msg.sender)
-            return true;
-        // TODO LINK AU GRAND REGISTRE
-        return true;       
-    }
+    //     if(_address != msg.sender)
+    //         return true;
+    //     // TODO LINK AU GRAND REGISTRE
+    //     return true;       
+    // }
 
     // MEASURE PART
 
@@ -399,7 +399,7 @@ contract CustomerContract is Ownable {
 
         emit ServiceIotUpdate(_serviceId, _macAddress, "Iot added", msg.sender); 
 
-        _services[_serviceId].IotIdCounter.increment();   
+        _services[_serviceId].iotIdCounter.increment();   
     }
 
     /**

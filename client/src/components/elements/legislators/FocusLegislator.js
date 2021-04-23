@@ -23,14 +23,22 @@ export default class FocusLegislator extends React.Component {
     }
     
     toggleLegislator = async () => {
-        
-        const { accounts, contract } = this.props.state;
-        await contract.methods.toggleService(
-            this.props.myLegislator.customerId
-        ).send({ from: accounts[0] }, async (erreur, tx) => {});     
-                 
-    }
+        const { accounts, ledgerContract } = this.props.state;
+        const { myElement } = this.props;
 
+        await ledgerContract.methods.setLegislator(
+            myElement.description.trim(),
+            myElement.legislatorAddress.trim(),
+            myElement.siretNumber.trim(),  
+            !myElement.isActive              
+        ).send({ from: accounts[0] },
+            async (erreur, tx) => {             
+                if(tx){
+
+                }
+            }
+        );          
+    }       
 
     render() {
         return (
@@ -46,7 +54,6 @@ export default class FocusLegislator extends React.Component {
                 <button type="button" className="focus-cta" 
                     onClick= { () => this.props.addElement() }>UPDATE
                 </button> 
-
 
             </div>
         );      

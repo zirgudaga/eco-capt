@@ -4,7 +4,7 @@ import InfoClient from './InfoClient.js';
 
 import "./FocusClient.css";
 
-export default class FocusService extends React.Component {
+export default class FocusClient extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,7 +15,7 @@ export default class FocusService extends React.Component {
     }
 
     affActive = () => {
-        if(this.props.myClient.isActive){
+        if(this.props.myElement.isActive){
             return (<i className="fas fa-toggle-on" key="fa-toggle-on"></i>); 
         }else{       
             return (<i className="fas fa-toggle-off" key="fa-toggle-off"></i>);
@@ -23,29 +23,28 @@ export default class FocusService extends React.Component {
     }
     
     toggleClient = async () => {
-        console.log("Toggle Client");
-        /*
-        const { accounts, contract, web3 } = this.props.state;
+        
+        const { accounts, contract } = this.props.state;
         await contract.methods.toggleService(
-            this.props.myClient.clientId
+            this.props.myClient.customerId
         ).send({ from: accounts[0] }, async (erreur, tx) => {});     
-        */         
+                 
     }
 
 
     render() {
         return (
-            <div className="focus-client-body">
+            <div className="focus-body">
                             
-                <b>{this.props.myClient.description}</b><span onClick= { () => this.toggleClient() }>{this.affActive()}</span>
+                <b>{this.props.myElement.description}</b><span onClick= { () => this.toggleClient() }>{this.affActive()}</span>
 
                 <InfoClient 
-                    myClient={this.props.myClient}
+                    myElement={this.props.myElement}
                     goContract={(addr) => {this.props.goContract(addr)}} 
                 ></InfoClient>
 
-                <button type="button" className="focus-client-cta" 
-                    onClick= { () => {} }>UPDATE
+                <button type="button" className="focus-cta" 
+                    onClick= { () => this.props.addElement() }>UPDATE
                 </button> 
 
 

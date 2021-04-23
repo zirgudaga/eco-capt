@@ -1,4 +1,4 @@
-.form-newclient-body {
+.form-body {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -8,12 +8,12 @@
     width: 70%;
 }
 
-.form-newclient-body input {
+.form-body input {
     border: 1px solid black;
     border-radius: 3px;
 }
 
-.form-newclient-label {
+.form-label {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,7 +23,7 @@
     padding: 5px;
 }
 
-.form-client-cta {
+.form-cta {
     height: 60px;
     line-height: 60px;
     background-color: #2563eb;
@@ -39,7 +39,7 @@
     text-transform: uppercase;
 }
 
-.form-client-close {
+.form-close {
     color: red;
     font-weight: bold;
     position: absolute;
@@ -48,10 +48,10 @@
     cursor: pointer;
 }
 
-.form-client-input-number {
+.form-input-number {
     text-align: center;
 }
 
-.form-newclient-detail {
+.form-detail {
     text-align: center;
 }

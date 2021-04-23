@@ -10,24 +10,55 @@ export default class FormClient extends React.Component {
     // uint _siretNumber,
     // bool _isActive
     
-
     constructor(props) {
         super(props);
         this.state = {
             errorMessage: '',
+            _description: '',
+            _customerAddress: '',
+            _siretNumber: '',
         };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    addClient = async () => {
-        let { errorMessage } = this.state;
+    componentDidMount = () => {
+        let { isNew, elementToUpdate } = this.props;
+
+        console.log(elementToUpdate);
+
+        if(isNew == false){
+            let { _description, _customerAddress, _contractAddress, _siretNumber } = this.props;
+    
+            _description = elementToUpdate.description;
+            _customerAddress = elementToUpdate.customerAddress;
+            _contractAddress = elementToUpdate.contractAddress;
+            _siretNumber = elementToUpdate.siretNumber;        
+
+            this.setState({ _description, _customerAddress, _contractAddress, _siretNumber });  
+        }
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+    
+        this.setState({
+          [name]: value
+        });
+    }
+    
+    addElt = async () => {
+        let { errorMessage, _description, _customerAddress, _contractAddress, _siretNumber } = this.state;
 
         let context = this;
 
         if(
-            this._description.value.trim() === '' ||
-            this._customerAddress.value.trim() === '' ||
-            this._contractAddress.value.trim() === '' ||
-            this._siretNumber.value<= '0'
+            _description.trim() === '' ||
+            _customerAddress.trim() === '' ||
+            _contractAddress.trim() === '' ||
+            _siretNumber <= '0'
         ){
             errorMessage = "Merci de remplir correctement le formulaire !";
             this.setState({ errorMessage });
@@ -42,10 +73,10 @@ export default class FormClient extends React.Component {
 
         const { accounts, ledgerContract } = this.props.state;
         await ledgerContract.methods.setCustomer(
-            this._description.value.trim(),
-            this._customerAddress.value.trim(),
-            this._contractAddress.value.trim(),            
-            this._siretNumber.value,
+            _description.trim(),
+            _customerAddress.trim(),
+            _contractAddress.trim(),            
+            _siretNumber,
             true       
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
@@ -59,8 +90,8 @@ export default class FormClient extends React.Component {
 
     render() {
         return (
-            <div className="form-newclient-body">
-                <span className="form-service-close" onClick={()=>this.props.close()}>X</span><br/>
+            <div className="form-body">
+                <span className="form-close" onClick={()=>this.props.close()}>X</span><br/>
 
                 <MyNotif 
                     contractAddress={this.props.state.ledgerContract._address}
@@ -68,52 +99,60 @@ export default class FormClient extends React.Component {
                 />
 
                 <form>
-                    <div className="form-newclient-label">
+                    <div className="form-label">
                         <label>
                             Nom du client
                         </label>
-                        <input type="text" name="_description" className="form-newclient-detail" placeholder="Nom du client"
-                            ref={(input) => { 
-                                this._description = input
-                            }}
+                        <input type="text" 
+                            name="_description" 
+                            className="form-detail" 
+                            placeholder="Nom du client"
+                            value={this.state._description}
+                            onChange={this.handleInputChange}
                         />
                     </div>
 
-                    <div className="form-newclient-label">
+                    <div className="form-label">
                         <label>
                             Addresse ETH du client
                         </label>
-                        <input type="text" name="_customerAddress" className="form-newclient-detail" placeholder="Addresse ETH du client"
-                            ref={(input) => { 
-                                this._customerAddress = input
-                            }}
+                        <input type="text" 
+                            name="_customerAddress" 
+                            className="form-detail" 
+                            placeholder="Addresse ETH du client"
+                            value={this.state._customerAddress}
+                            onChange={this.handleInputChange}
                         />
                     </div>
 
-                    <div className="form-newclient-label">
+                    <div className="form-label">
                         <label>
                         Addresse ETH du contrat
                         </label>
-                        <input type="text" name="_contractAddress" className="form-newclient-detail" placeholder="Addresse ETH du contrat"
-                            ref={(input) => { 
-                                this._contractAddress = input
-                            }}
+                        <input type="text" 
+                            name="_contractAddress" 
+                            className="form-detail" 
+                            placeholder="Addresse ETH du contrat"
+                            value={this.state._contractAddress}
+                            onChange={this.handleInputChange}
                         />
                     </div>
 
-                    <div className="form-newclient-label">
+                    <div className="form-label">
                         <label>
                             Numéro de siret
                         </label>
-                        <input type="text" name="_siretNumber" className="form-newclient-detail" placeholder="Numéro du Siret du client"
-                            ref={(input) => { 
-                                this._siretNumber = input
-                            }}
+                        <input type="text" 
+                            name="_siretNumber" 
+                            className="form-detail" 
+                            placeholder="Numéro du Siret du client"
+                            value={this.state._siretNumber}
+                            onChange={this.handleInputChange}
                         />
                     </div>
 
-                    <button type="button" className="form-client-cta" 
-                        onClick= { () => this.addClient() }>Add Client
+                    <button type="button" className="form-cta" 
+                        onClick= { () => this.addElt() }>Save
                     </button> 
     
                 </form>

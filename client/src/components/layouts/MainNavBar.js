@@ -77,6 +77,18 @@ export default class MainNavBar extends React.Component {
                     
                             }
 
+                            { (this.props.state.myTypeUser==='1') 
+                            &&
+
+                                <li className="main-list">
+                                    <a onClick = { () => {this.props.goTo("Measure");} }>
+                                    Me
+                                    </a>
+                                </li>
+                        
+                    
+                            }
+
 
 
                             {(this.props.state.customerContractAddress !== null)

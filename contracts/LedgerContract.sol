@@ -79,7 +79,6 @@ contract LedgerContract is Ownable {
     mapping(address => Legislator) public _legislators; 
     mapping(address => TechMaster) public _techMasters;
     mapping(address => Bridge) public _bridges;
-    
     mapping(bytes8 => TypeMeasure) public _typeMeasures;
 
      /**

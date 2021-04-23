@@ -11,8 +11,10 @@ export default class MainClient extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listClients: [],
-            selectedClient: -1,
+            listElements: [],
+            selectedElement: -1,
+            elementToUpdate: null,
+            isNew: false,
             currentMainSelect: "Home",
             errorMessage: '',
         };
@@ -25,14 +27,14 @@ export default class MainClient extends React.Component {
     }
 
     refresh = () => {
-        this.getAllClients();
+        this.getAllElement();
     }
 
-    getAllClients = async () => {
+    getAllElement = async () => {
         const { ledgerContract, accounts } = this.props.state;
 
         if(ledgerContract != null){
-            let { listClients } = this.state;
+            let { listElements } = this.state;
 
             ledgerContract.getPastEvents('LedgerUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
             .then(async (myEvents) => {
@@ -41,14 +43,13 @@ export default class MainClient extends React.Component {
                 for(let myEvent of myEvents){
                     if(myEvent.returnValues['_message'] == "New Customer"){     
                         _customerAddress = myEvent.returnValues['_target'];
-                        listClients[index] = await ledgerContract.methods._customers(_customerAddress).call({from:accounts[0]});
-                        listClients[index].clientId = index;
-                        listClients[index].clientAddress = _customerAddress;
+                        listElements[index] = await ledgerContract.methods._customers(_customerAddress).call({from:accounts[0]});
+                        listElements[index].customerId = index;
+                        listElements[index].customerAddress = _customerAddress;
                         index ++;
-                        
                     }       
                 }
-                this.setState({ listClients });  
+                this.setState({ listElements });  
             });
         }        
     };    
@@ -57,46 +58,57 @@ export default class MainClient extends React.Component {
 
         switch(this.state.currentMainSelect){
             case "Home" : return (<HomeClient state={this.props.state}/>);
+            
             case "FocusClient" : return (<FocusClient 
                 state={this.props.state}
-                myClient={this.state.listClients[this.state.selectedClient]} 
+                myElement={this.state.listElements[this.state.selectedElement]} 
                 goContract = {(addr) => {this.props.goContract(addr);}}
+                addElement= {() => {this.showFormAddElement(true, false);}}
             />);
+
             case "NewClient" : return (<FormClient 
-                state={this.props.state} 
-                close={()=>{this.showFormAddClient(false)}}
+                state={this.props.state}
+                elementToUpdate={this.state.elementToUpdate}
+                isNew={this.state.isNew}
+                close={()=>{this.showFormAddElement(false, false)}}
             />);
             
             default: return (<HomeClient state={this.props.state}/>);
         }
     }
 
-    showFormAddClient = (isOpen) => {
+    showFormAddElement = (isOpen, isNew) => {
+        let elementToUpdate=null;
+        
         if(isOpen){
-            this.setState({ currentMainSelect: "NewClient" });
+            if(this.state.selectedElement > -1){
+                elementToUpdate=this.state.listElements[this.state.selectedElement];
+            }
+
+            this.setState({ currentMainSelect: "NewClient", isNew: isNew, elementToUpdate: elementToUpdate});
             return;
         }
 
-        if(this.state.selectedClient > -1){
+        if(this.state.selectedElement > -1){
             this.setState({ currentMainSelect : "FocusClient" });
         }else{
             this.setState({ currentMainSelect : "Home" });
         }
     }
 
-    showFocusClient = (index) => {
-        this.setState({ selectedClient: index, currentMainSelect : "FocusClient" });
+    showFocusElement = (index) => {
+        this.setState({ selectedElement: index, currentMainSelect : "FocusClient" });
     }
 
     render() {
         return (
             <div className="main-content">
-                <main className="client-main-content wrap">     
+                <main className="main-content wrap">     
                     {this.selectedMainLauncher()}  
                     <ListClient 
                         state={this.state}
-                        addClient= {() => {this.showFormAddClient(true);}}
-                        setClientFocus = {(index) => {this.showFocusClient(index);}}
+                        addElement= {() => {this.showFormAddElement(true, true);}}
+                        setElementFocus = {(index) => {this.showFocusElement(index);}}
                     />
                 </main>
             </div>

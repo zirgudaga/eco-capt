@@ -1,4 +1,4 @@
-.home-client {
+.home {
     text-align: center;
     width: 70%;
     background: #fff;
@@ -10,16 +10,16 @@
     margin-right: 2%;
 }
 
-.home-client-title {
+.home-title {
     color: #1a202e;
     font-size: 40px;
 }
 
-.home-client-p {
+.home-p {
     margin-top: 50px;
 }
 
-.home-client-logo {
+.home-logo {
     display: flex;
     justify-content: center;
     margin-top: 50px;

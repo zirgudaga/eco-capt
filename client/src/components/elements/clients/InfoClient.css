@@ -1,9 +1,9 @@
-.client-info {
+.info {
     margin-bottom: 50px;
     position: absolute;
     bottom: 60px;
 }
 
-.client-info-details {
+.info-details {
   font-weight: 500;
 }

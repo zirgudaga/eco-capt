@@ -171,7 +171,7 @@ contract('LedgerContract', function (accounts) {
 
     describe('setBridge', function () {
 
-        it('Revert if other : onlyOwner', async function () { 
+        it('Revert if other : onlyTechMaster', async function () { 
             // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.setBridge(
                 _bridgeName1 ,
@@ -180,7 +180,7 @@ contract('LedgerContract', function (accounts) {
                 _bridgeAddress,
                 _techMasterAddress,
                 true, 
-                {from: other}), "Ownable: caller is not the owner"));  
+                {from: other}), "Access denied"));  
         });
 
         it('New bridge properly set', async function () { 

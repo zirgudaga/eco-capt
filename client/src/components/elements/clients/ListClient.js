@@ -19,9 +19,11 @@ export default class ListClient extends React.Component {
                         " Aucun client"
                     }
                 </div>
-                <button type="button" className="list-cta" 
-                    onClick= { () => this.props.addElement() }>New customer
-                </button> 
+                {(this.props.state.myTypeUser==='1') &&
+                    <button type="button" className="list-cta" 
+                        onClick= { () => this.props.addElement() }>New customer
+                    </button> 
+                }
             </div>
         );      
     }

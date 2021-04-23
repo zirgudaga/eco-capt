@@ -41,7 +41,7 @@ export default class MainBridge extends React.Component {
                 let index=0;
                 let _bridgeAddress = '';
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Bridges"){     
+                    if(myEvent.returnValues['_message'] == "New Bridge"){    
                         _bridgeAddress = myEvent.returnValues['_target'];
                         listElements[index] = await ledgerContract.methods._bridges(_bridgeAddress).call({from:accounts[0]});
                         listElements[index].bridgeId = index;

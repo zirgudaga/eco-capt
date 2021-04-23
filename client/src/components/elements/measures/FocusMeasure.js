@@ -1,8 +1,10 @@
 import React from 'react';
 
 import InfoMeasure from './InfoMeasure.js';
+import {stringToHex} from '../../../utilsEco.js';
 
 import "./FocusMeasure.css";
+
 
 export default class FocusMeasure extends React.Component {
 
@@ -26,19 +28,19 @@ export default class FocusMeasure extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         const { myElement } = this.props;
 
-        await ledgerContract.methods.setMeasure(
+        await ledgerContract.methods.setTypeMeasure(
             myElement.description.trim(),
-            myElement.measureAddress.trim(),
-            myElement.contractAddress.trim(), 
-            myElement.siretNumber.trim(),  
-            !myElement.isActive              
+            myElement.info.trim(),
+            '0x'+stringToHex(myElement.codeMeasure.trim()),
+            !myElement.isActive,   
+            true       
         ).send({ from: accounts[0] },
-            async (erreur, tx) => {             
+            async (erreur, tx) => {          
                 if(tx){
 
                 }
             }
-        );          
+        );     
     }
 
     render() {

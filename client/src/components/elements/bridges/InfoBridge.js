@@ -11,14 +11,11 @@ export default class InfoBridge extends React.Component {
 
         return (
             <div className="info">
-                <p>Nom du bridge : <span className="info-details">{myElement.description}</span></p>
-                <p>Adresse du bridge : <span className="info-details">{myElement.bridgeAddress===address0?"En attente":myElement.bridgeddress}</span></p>
-                <p>Adresse du contrat : <span className="info-details">{(myElement.contractAddress===address0)
-                ?"En attente"
-                :<>{myElement.contractAddress}<i className="fas fa-clipboard" onClick={()=> {this.props.goContract(this.props.myElement.contractAddress)}}></i></>
-                }
-                </span></p>
-                <p>Numéro de siret : <span className="info-details">{myElement.siretNumber}</span></p>
+                <p>Name : <span className="info-details">{myElement.description}</span></p>
+                <p>URL : <span className="info-details">{myElement.url}</span></p>
+                <p>Info : <span className="info-details">{myElement.info}</span></p>
+                <p>Adresse du bridge : <span className="info-details">{myElement.bridgeAddress===address0?"En attente":myElement.bridgeAddress}</span></p>
+                <p>Adresse du techmaster : <span className="info-details">{(myElement.techMasterAddress===address0)?"En attente":myElement.techMasterAddress}</span></p>
             </div>
         );      
     }

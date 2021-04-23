@@ -26,6 +26,9 @@ export default class FocusClient extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         const { myElement } = this.props;
 
+        if(this.props.state.myTypeUser!=='1')
+            return;
+
         await ledgerContract.methods.setCustomer(
             myElement.description.trim(),
             myElement.customerAddress.trim(),
@@ -52,10 +55,11 @@ export default class FocusClient extends React.Component {
                     goContract={(addr) => {this.props.goContract(addr)}} 
                 ></InfoClient>
 
-                <button type="button" className="focus-cta" 
-                    onClick= { () => this.props.addElement() }>UPDATE
-                </button> 
-
+                {(this.props.state.myTypeUser==='1') &&
+                    <button type="button" className="focus-cta" 
+                        onClick= { () => this.props.addElement() }>UPDATE
+                    </button> 
+                }
 
             </div>
         );      

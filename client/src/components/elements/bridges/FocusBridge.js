@@ -27,18 +27,35 @@ export default class FocusBridge extends React.Component {
         const { myElement } = this.props;
 
         await ledgerContract.methods.setBridge(
-            myElement.description.trim(),
-            myElement.bridgeAddress.trim(),
-            myElement.contractAddress.trim(), 
-            myElement.siretNumber.trim(),  
-            !myElement.isActive              
+            myElement.description,
+            myElement.url,
+            myElement.info,
+            myElement.bridgeAddress,
+            myElement.techMasterAddress,             
+            !myElement.isActive       
         ).send({ from: accounts[0] },
-            async (erreur, tx) => {             
+            async (erreur, tx) => {               
                 if(tx){
 
                 }
             }
-        );          
+        ); 
+    }
+
+    affUpdate = () => {
+
+        if(this.props.state.myTypeUser==='1'){
+            return (<button type="button" className="focus-cta" 
+                onClick= { () => this.props.addElement() }>UPDATE
+            </button>); 
+        }
+
+        if(this.props.state.myTypeUser==='4' && this.props.myElement.techMasterAddress===this.props.state.accounts[0])
+        {
+            return (<button type="button" className="focus-cta" 
+                onClick= { () => this.props.addElement() }>UPDATE
+            </button>); 
+        }
     }
 
     render() {
@@ -52,10 +69,7 @@ export default class FocusBridge extends React.Component {
                     goContract={(addr) => {this.props.goContract(addr)}} 
                 ></InfoBridge>
 
-                <button type="button" className="focus-cta" 
-                    onClick= { () => this.props.addElement() }>UPDATE
-                </button> 
-
+                {this.affUpdate()}
 
             </div>
         );      

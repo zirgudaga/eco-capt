@@ -26,10 +26,9 @@ export default class FocusTechnician extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         const { myElement } = this.props;
 
-        await ledgerContract.methods.setTechnician(
+        await ledgerContract.methods.setTechMaster(
             myElement.description.trim(),
             myElement.technicianAddress.trim(),
-            myElement.contractAddress.trim(), 
             myElement.siretNumber.trim(),  
             !myElement.isActive              
         ).send({ from: accounts[0] },

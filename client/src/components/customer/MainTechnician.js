@@ -41,9 +41,9 @@ export default class MainTechnician extends React.Component {
                 let index=0;
                 let _technicianAddress = '';
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Technicians"){     
+                    if(myEvent.returnValues['_message'] == "New TechMaster"){     
                         _technicianAddress = myEvent.returnValues['_target'];
-                        listElements[index] = await ledgerContract.methods._technicians(_technicianAddress).call({from:accounts[0]});
+                        listElements[index] = await ledgerContract.methods._techMasters(_technicianAddress).call({from:accounts[0]});
                         listElements[index].technicianId = index;
                         listElements[index].technicianAddress = _technicianAddress;
                         index ++;

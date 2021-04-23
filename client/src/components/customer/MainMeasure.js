@@ -1,6 +1,6 @@
 import React from 'react';
 import './MainMeasure.css';
-
+import {hexToString} from '../../utilsEco.js';
 import HomeMeasure from '../elements/measures/HomeMeasure.js';
 import FocusMeasure from '../elements/measures/FocusMeasure.js';
 import ListMeasure from '../elements/measures/ListMeasure.js';
@@ -36,16 +36,16 @@ export default class MainMeasure extends React.Component {
         if(ledgerContract != null){
             let { listElements } = this.state;
 
-            ledgerContract.getPastEvents('LedgerUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            ledgerContract.getPastEvents('TypeMeasureUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
             .then(async (myEvents) => {
                 let index=0;
-                let _measureAddress = '';
+                let _codeMeasure = '';
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Measures"){     
-                        _measureAddress = myEvent.returnValues['_target'];
-                        listElements[index] = await ledgerContract.methods._measures(_measureAddress).call({from:accounts[0]});
+                    if(myEvent.returnValues['_message'] == "New TypeMeasure"){   
+                        _codeMeasure = myEvent.returnValues['_target'];
+                        listElements[index] = await ledgerContract.methods._typeMeasures(_codeMeasure).call({from:accounts[0]});
                         listElements[index].measureId = index;
-                        listElements[index].measureAddress = _measureAddress;
+                        listElements[index].codeMeasure = hexToString(_codeMeasure.substr(-16));
                         index ++;
                     }       
                 }

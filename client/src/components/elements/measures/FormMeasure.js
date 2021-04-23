@@ -1,6 +1,9 @@
 import React from 'react';
 import "./FormMeasure.css";
+import {stringToHex} from '../../../utilsEco.js';
+
 import MyNotif from '../MyNotif.js';
+
 
 export default class FormMeasure extends React.Component {
     
@@ -9,8 +12,8 @@ export default class FormMeasure extends React.Component {
         this.state = {
             errorMessage: '',
             _description: '',
-            _measureAddress: '',
-            _siretNumber: '',
+            _info: '',
+            _codeMeasure: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -19,17 +22,14 @@ export default class FormMeasure extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        console.log(elementToUpdate);
-
         if(isNew == false){
-            let { _description, _measureAddress, _contractAddress, _siretNumber } = this.props;
+            let { _description, _info, _codeMeasure } = this.props;
     
             _description = elementToUpdate.description;
-            _measureAddress = elementToUpdate.measureAddress;
-            _contractAddress = elementToUpdate.contractAddress;
-            _siretNumber = elementToUpdate.siretNumber;        
+            _info = elementToUpdate.info;
+            _codeMeasure = elementToUpdate.codeMeasure;
 
-            this.setState({ _description, _measureAddress, _contractAddress, _siretNumber });  
+            this.setState({ _description, _info, _codeMeasure });  
         }
     }
 
@@ -44,15 +44,15 @@ export default class FormMeasure extends React.Component {
     }
     
     addElt = async () => {
-        let { errorMessage, _description, _measureAddress, _contractAddress, _siretNumber } = this.state;
+        let { errorMessage, _description, _info, _codeMeasure } = this.state;
 
         let context = this;
 
         if(
             _description.trim() === '' ||
-            _measureAddress.trim() === '' ||
-            _contractAddress.trim() === '' ||
-            _siretNumber <= '0'
+            _info.trim() === '' ||
+            _codeMeasure.trim() === '' ||
+            _codeMeasure.length != 8
         ){
             errorMessage = "Merci de remplir correctement le formulaire !";
             this.setState({ errorMessage });
@@ -66,11 +66,11 @@ export default class FormMeasure extends React.Component {
         }
 
         const { accounts, ledgerContract } = this.props.state;
-        await ledgerContract.methods.setMeasure(
+        await ledgerContract.methods.setTypeMeasure(
             _description.trim(),
-            _measureAddress.trim(),
-            _contractAddress.trim(),            
-            _siretNumber,
+            _info.trim(),
+            '0x'+stringToHex(_codeMeasure.trim()),
+            true,
             true       
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
@@ -108,42 +108,30 @@ export default class FormMeasure extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Addresse ETH de la measure
+                            Info sur la measure
                         </label>
                         <input type="text" 
-                            name="_measureAddress" 
+                            name="_info" 
                             className="form-detail" 
-                            placeholder="Addresse ETH du measure"
-                            value={this.state._measureAddress}
+                            placeholder="Info sur de la measure"
+                            value={this.state._info}
                             onChange={this.handleInputChange}
                         />
                     </div>
 
                     <div className="form-label">
                         <label>
-                        Addresse ETH du contrat
+                            Code de la measure
                         </label>
                         <input type="text" 
-                            name="_contractAddress" 
+                            name="_codeMeasure" 
                             className="form-detail" 
-                            placeholder="Addresse ETH du contrat"
-                            value={this.state._contractAddress}
+                            placeholder="Code de la measure"
+                            value={this.state._codeMeasure}
                             onChange={this.handleInputChange}
                         />
                     </div>
 
-                    <div className="form-label">
-                        <label>
-                            Numéro de siret
-                        </label>
-                        <input type="text" 
-                            name="_siretNumber" 
-                            className="form-detail" 
-                            placeholder="Numéro du Siret de la measure"
-                            value={this.state._siretNumber}
-                            onChange={this.handleInputChange}
-                        />
-                    </div>
 
                     <button type="button" className="form-cta" 
                         onClick= { () => this.addElt() }>Save

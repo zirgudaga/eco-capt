@@ -25,8 +25,6 @@ export default class FormClient extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        console.log(elementToUpdate);
-
         if(isNew == false){
             let { _description, _customerAddress, _contractAddress, _siretNumber } = this.props;
     
@@ -150,11 +148,11 @@ export default class FormClient extends React.Component {
                             onChange={this.handleInputChange}
                         />
                     </div>
-
-                    <button type="button" className="form-cta" 
-                        onClick= { () => this.addElt() }>Save
-                    </button> 
-    
+                    {(this.props.state.myTypeUser==='1') &&
+                        <button type="button" className="form-cta" 
+                            onClick= { () => this.addElt() }>Save
+                        </button> 
+                    }
                 </form>
 
             </div>

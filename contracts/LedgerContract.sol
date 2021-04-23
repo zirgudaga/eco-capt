@@ -190,6 +190,10 @@ contract LedgerContract is Ownable {
             emit LedgerUpdate("Update Bridge", _bridgeAddress, msg.sender);
         }
 
+        if(owner()!=msg.sender){
+            _techMasterAddress = msg.sender;
+        }
+
         _bridges[_bridgeAddress] = Bridge(
         _description,
         _url,        

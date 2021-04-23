@@ -4,13 +4,23 @@ import MyNotif from '../MyNotif.js';
 
 export default class FormBridge extends React.Component {
     
+        /*
+        string memory _description,
+        string memory _url, 
+        string memory _info,               
+        address _bridgeAddress,
+        address _techMasterAddress,       
+        bool _isActive) 
+        */
+
     constructor(props) {
         super(props);
         this.state = {
             errorMessage: '',
             _description: '',
+            _url: '',
+            _info: '',
             _bridgeAddress: '',
-            _siretNumber: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -19,17 +29,15 @@ export default class FormBridge extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        console.log(elementToUpdate);
-
         if(isNew == false){
-            let { _description, _bridgeAddress, _contractAddress, _siretNumber } = this.props;
+            let { _description, _url, _info, _bridgeAddress, _techMasterAddress } = this.props;
     
             _description = elementToUpdate.description;
-            _bridgeAddress = elementToUpdate.bridgeAddress;
-            _contractAddress = elementToUpdate.contractAddress;
-            _siretNumber = elementToUpdate.siretNumber;        
+            _url = elementToUpdate.url;
+            _info = elementToUpdate.info;
+            _bridgeAddress = elementToUpdate.bridgeAddress;    
 
-            this.setState({ _description, _bridgeAddress, _contractAddress, _siretNumber });  
+            this.setState({ _description, _url, _info, _bridgeAddress, _techMasterAddress });  
         }
     }
 
@@ -44,15 +52,15 @@ export default class FormBridge extends React.Component {
     }
     
     addElt = async () => {
-        let { errorMessage, _description, _bridgeAddress, _contractAddress, _siretNumber } = this.state;
+        let { errorMessage, _description, _url, _info, _bridgeAddress } = this.state;
 
         let context = this;
 
         if(
             _description.trim() === '' ||
-            _bridgeAddress.trim() === '' ||
-            _contractAddress.trim() === '' ||
-            _siretNumber <= '0'
+            _url.trim() === '' ||
+            _info.trim() === '' ||
+            _bridgeAddress.trim() === '' 
         ){
             errorMessage = "Merci de remplir correctement le formulaire !";
             this.setState({ errorMessage });
@@ -68,9 +76,10 @@ export default class FormBridge extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         await ledgerContract.methods.setBridge(
             _description.trim(),
+            _url.trim(),
+            _info.trim(),
             _bridgeAddress.trim(),
-            _contractAddress.trim(),            
-            _siretNumber,
+            accounts[0],             
             true       
         ).send({ from: accounts[0] },
             async (erreur, tx) => {
@@ -81,6 +90,8 @@ export default class FormBridge extends React.Component {
             }
         ); 
     };
+
+
 
     render() {
         return (
@@ -95,13 +106,39 @@ export default class FormBridge extends React.Component {
                 <form>
                     <div className="form-label">
                         <label>
-                            Nom du bridge
+                            Name bridge
                         </label>
                         <input type="text" 
                             name="_description" 
                             className="form-detail" 
                             placeholder="Nom du bridge"
                             value={this.state._description}
+                            onChange={this.handleInputChange}
+                        />
+                    </div>
+
+                    <div className="form-label">
+                        <label>
+                            URL bridge
+                        </label>
+                        <input type="text" 
+                            name="_url" 
+                            className="form-detail" 
+                            placeholder="Url du bridge"
+                            value={this.state._url}
+                            onChange={this.handleInputChange}
+                        />
+                    </div>
+
+                    <div className="form-label">
+                        <label>
+                            Info bridge
+                        </label>
+                        <input type="text" 
+                            name="_info" 
+                            className="form-detail" 
+                            placeholder="Info du bridge"
+                            value={this.state._info}
                             onChange={this.handleInputChange}
                         />
                     </div>
@@ -119,36 +156,10 @@ export default class FormBridge extends React.Component {
                         />
                     </div>
 
-                    <div className="form-label">
-                        <label>
-                        Addresse ETH du contrat
-                        </label>
-                        <input type="text" 
-                            name="_contractAddress" 
-                            className="form-detail" 
-                            placeholder="Addresse ETH du contrat"
-                            value={this.state._contractAddress}
-                            onChange={this.handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-label">
-                        <label>
-                            Numéro de siret
-                        </label>
-                        <input type="text" 
-                            name="_siretNumber" 
-                            className="form-detail" 
-                            placeholder="Numéro du Siret du bridge"
-                            value={this.state._siretNumber}
-                            onChange={this.handleInputChange}
-                        />
-                    </div>
-
                     <button type="button" className="form-cta" 
                         onClick= { () => this.addElt() }>Save
-                    </button> 
-    
+                    </button>
+
                 </form>
 
             </div>

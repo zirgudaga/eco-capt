@@ -7,8 +7,11 @@ export default class MainNavBar extends React.Component {
         if(this.props.state.accounts !== null){
             if(this.props.state.myTypeUser == 1)
                 return <span><i key="fa-crown" className="fas fa-crown"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;
+            else if(this.props.state.myTypeUser == 3)
+                return <span><i key="fa-gavel" className="fas fa-gavel"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;   
+            else if(this.props.state.myTypeUser == 4)
+                return <span><i key="fa-user-astronaut" className="fas fa-user-astronaut"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;   
             else 
-
                 return <span><i key="fa-user" className="fas fa-user"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;
         } 
         else{
@@ -47,7 +50,7 @@ export default class MainNavBar extends React.Component {
                             &&
                                 <li className="main-list">
                                     <a onClick = { () => {this.props.goTo("Customers");} }>
-                                        <i className="fas fa-user-tag"></i>
+                                        <i className="fas fa-user-tag" alt="Customers" title="Customers"></i>
                                     </a>
                                 </li>  
                             }
@@ -57,12 +60,12 @@ export default class MainNavBar extends React.Component {
                                 <>       
                                     <li className="main-list">
                                         <a onClick = { () => {this.props.goTo("Legislators");} }>
-                                            <i className="fas fa-gavel"></i>
+                                            <i className="fas fa-gavel" alt="Legislator" title="Legislator"></i>
                                         </a>
                                     </li> 
                                     <li className="main-list">
                                         <a onClick = { () => {this.props.goTo("Technicians");} }>
-                                            <i className="fas fa-user-astronaut"></i>
+                                            <i className="fas fa-user-astronaut" alt="Technician" title="Technician"></i>
                                         </a>
                                     </li>
                                 </>                           
@@ -71,32 +74,27 @@ export default class MainNavBar extends React.Component {
                             { (this.props.state.myTypeUser==='1' 
                             || this.props.state.myTypeUser==='4')      
                             &&
-
                                 <li className="main-list">
                                     <a onClick = { () => {this.props.goTo("Bridges");} }>
-                                        <i className="fas fa-sitemap"></i>
+                                        <i className="fas fa-sitemap" alt="Bridge" title="Bridge"></i>
                                     </a>
-                                </li>
-                        
-                    
+                                </li>            
                             }
 
                             { (this.props.state.myTypeUser==='1') 
                             &&
                                 <li className="main-list">
-                                    <a onClick = { () => {this.props.goTo("Measure");} }>
-                                        <i className="fas fa-chart-bar"></i>
+                                    <a onClick = { () => {this.props.goTo("Measures");} }>
+                                        <i className="fas fa-chart-bar" alt="Measure" title="Measure"></i>
                                     </a>
                                 </li>
                             }
-
-
 
                             {(this.props.state.customerContractAddress !== null)
                             &&                              
                             <li className="main-list">
                                 <a onClick = { () => {this.props.goTo("Services");} }>
-                                Services
+                                    <i className="fas fa-concierge-bell"  alt="Service" title="Service"></i>
                                 </a>
                             </li>}
 
@@ -104,7 +102,7 @@ export default class MainNavBar extends React.Component {
                             &&                             
                             <li className="main-list">
                                 <a onClick = { () => {this.props.goTo("Alerts");} }>
-                                Alerts
+                                    <i className="fas fa-exclamation-triangle" alt="Alert" title="Alert"></i>
                                 </a>
                             </li>
                             }

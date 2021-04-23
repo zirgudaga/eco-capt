@@ -25,8 +25,6 @@ export default class FormTechnician extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        console.log(elementToUpdate);
-
         if(isNew == false){
             let { _description, _technicianAddress, _contractAddress, _siretNumber } = this.props;
     
@@ -50,14 +48,13 @@ export default class FormTechnician extends React.Component {
     }
     
     addElt = async () => {
-        let { errorMessage, _description, _technicianAddress, _contractAddress, _siretNumber } = this.state;
+        let { errorMessage, _description, _technicianAddress, _siretNumber } = this.state;
 
         let context = this;
 
         if(
             _description.trim() === '' ||
             _technicianAddress.trim() === '' ||
-            _contractAddress.trim() === '' ||
             _siretNumber <= '0'
         ){
             errorMessage = "Merci de remplir correctement le formulaire !";
@@ -72,10 +69,9 @@ export default class FormTechnician extends React.Component {
         }
 
         const { accounts, ledgerContract } = this.props.state;
-        await ledgerContract.methods.setTechnician(
+        await ledgerContract.methods.setTechMaster(
             _description.trim(),
-            _technicianAddress.trim(),
-            _contractAddress.trim(),            
+            _technicianAddress.trim(),         
             _siretNumber,
             true       
         ).send({ from: accounts[0] },
@@ -121,19 +117,6 @@ export default class FormTechnician extends React.Component {
                             className="form-detail" 
                             placeholder="Addresse ETH du technician"
                             value={this.state._technicianAddress}
-                            onChange={this.handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-label">
-                        <label>
-                        Addresse ETH du contrat
-                        </label>
-                        <input type="text" 
-                            name="_contractAddress" 
-                            className="form-detail" 
-                            placeholder="Addresse ETH du contrat"
-                            value={this.state._contractAddress}
                             onChange={this.handleInputChange}
                         />
                     </div>

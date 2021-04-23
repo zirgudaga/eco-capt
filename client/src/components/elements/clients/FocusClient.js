@@ -22,21 +22,30 @@ export default class FocusClient extends React.Component {
         }
     }
     
-    toggleClient = async () => {
-        
-        const { accounts, contract } = this.props.state;
-        await contract.methods.toggleService(
-            this.props.myClient.customerId
-        ).send({ from: accounts[0] }, async (erreur, tx) => {});     
-                 
-    }
+    toggleCustomer = async () => {
+        const { accounts, ledgerContract } = this.props.state;
+        const { myElement } = this.props;
 
+        await ledgerContract.methods.setCustomer(
+            myElement.description.trim(),
+            myElement.customerAddress.trim(),
+            myElement.contractAddress.trim(), 
+            myElement.siretNumber.trim(),  
+            !myElement.isActive              
+        ).send({ from: accounts[0] },
+            async (erreur, tx) => {             
+                if(tx){
+
+                }
+            }
+        );          
+    }
 
     render() {
         return (
             <div className="focus-body">
                             
-                <b>{this.props.myElement.description}</b><span onClick= { () => this.toggleClient() }>{this.affActive()}</span>
+                <b>{this.props.myElement.description}</b><span onClick= { () => this.toggleCustomer() }>{this.affActive()}</span>
 
                 <InfoClient 
                     myElement={this.props.myElement}

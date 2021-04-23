@@ -1,12 +1,12 @@
 import React from 'react';
-import './MainClient.css';
+import './MainLegislator.css';
 
-import HomeClient from '../elements/clients/HomeClient.js';
-import FocusClient from '../elements/clients/FocusClient.js';
-import ListClient from '../elements/clients/ListClient.js';
-import FormClient from '../elements/clients/FormClient.js';
+import HomeLegislator from '../elements/legislator/HomeClient.js';
+import FocusLegislator from '../elements/legislator/FocusClient.js';
+import ListLegislator from '../elements/legislator/ListClient.js';
+import FormLegislator from '../elements/legislator/FormClient.js';
 
-export default class MainClient extends React.Component {
+export default class MainLegislator extends React.Component {
 
     constructor(props) {
         super(props);
@@ -39,13 +39,13 @@ export default class MainClient extends React.Component {
             ledgerContract.getPastEvents('LedgerUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
             .then(async (myEvents) => {
                 let index=0;
-                let _customerAddress = '';
+                let _legislatorAddress = '';
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Customer"){     
-                        _customerAddress = myEvent.returnValues['_target'];
-                        listElements[index] = await ledgerContract.methods._customers(_customerAddress).call({from:accounts[0]});
-                        listElements[index].customerId = index;
-                        listElements[index].customerAddress = _customerAddress;
+                    if(myEvent.returnValues['_message'] == "New Legislator"){     
+                        _legislatorAddress = myEvent.returnValues['_target'];
+                        listElements[index] = await ledgerContract.methods._legislators(_legislatorAddress).call({from:accounts[0]});
+                        listElements[index].legislatorId = index;
+                        listElements[index].legislatorAddress = _legislatorAddress;
                         index ++;
                     }       
                 }
@@ -57,23 +57,23 @@ export default class MainClient extends React.Component {
     selectedMainLauncher = () => {
 
         switch(this.state.currentMainSelect){
-            case "Home" : return (<HomeClient state={this.props.state}/>);
+            case "Home" : return (<HomeLegislator state={this.props.state}/>);
             
-            case "Focus" : return (<FocusClient 
+            case "Focus" : return (<FocusLegislator 
                 state={this.props.state}
                 myElement={this.state.listElements[this.state.selectedElement]} 
                 goContract = {(addr) => {this.props.goContract(addr);}}
                 addElement= {() => {this.showFormAddElement(true, false);}}
             />);
 
-            case "New" : return (<FormClient 
+            case "New" : return (<FormLegislator 
                 state={this.props.state}
                 elementToUpdate={this.state.elementToUpdate}
                 isNew={this.state.isNew}
                 close={()=>{this.showFormAddElement(false, false)}}
             />);
             
-            default: return (<HomeClient state={this.props.state}/>);
+            default: return (<HomeLegislator state={this.props.state}/>);
         }
     }
 

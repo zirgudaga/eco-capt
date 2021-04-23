@@ -117,10 +117,10 @@ const measureToObject = (hexHeader, hexBody) => {
 const fakeDateWithSeed = (seed) => {
     let date = new Date();
     let year = date.getFullYear();
-    let month  = "0"+(date.getMonth()+1);
-    let day  = "0"+date.getDate();
-    let hours = "0"+date.getHours();
-    let minutes = "0"+(date.getMinutes()+seed);
+    let month  = '0'+(date.getMonth()+1);
+    let day  = '0'+date.getDate();
+    let hours = '0'+date.getHours();
+    let minutes = '0'+(date.getMinutes()+seed);
 
     // Date : YYYYmmddHHii 
     let formattedTime = year+month.substr(-2)+day.substr(-2)+hours.substr(-2)+minutes.substr(-2);
@@ -145,7 +145,7 @@ const fakeMeasure = (seed, service) => {
     stringToHex(fakeDateWithSeed(seed))+
     service.measureType.substr(-16)+
     service.timeCode.substr(-2)+
-    stringToHex(("00000"+service.nbTime).substr(-3));
+    stringToHex(('00000'+service.nbTime).substr(-3));
     
     let taille = 10;
 
@@ -155,10 +155,10 @@ const fakeMeasure = (seed, service) => {
     //   Valeur 4 Min : bytes8
     let tabFakeLine = [60, 76, 110, 89, 70, 62, 74, 80, 76, 70];
     let hexBody = 
-    '0x'+stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*1.50,10))).substr(-8))+
-    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*1.00,10))).substr(-8))+
-    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*0.90,10))).substr(-8))+
-    stringToHex(("00000000"+(parseInt(tabFakeLine[seed%taille]*0.70,10))).substr(-8));
+    '0x'+stringToHex(('00000000'+(parseInt(tabFakeLine[seed%taille]*1.50,10))).substr(-8))+
+    stringToHex(('00000000'+(parseInt(tabFakeLine[seed%taille]*1.00,10))).substr(-8))+
+    stringToHex(('00000000'+(parseInt(tabFakeLine[seed%taille]*0.90,10))).substr(-8))+
+    stringToHex(('00000000'+(parseInt(tabFakeLine[seed%taille]*0.70,10))).substr(-8));
 
     return [hexHeader, hexBody];
 };
@@ -170,10 +170,10 @@ const fakeAlert = (alertCondigId) => {
     //   Valeur alert : bytes8
 
     let body = 
-    '0x'+stringToHex("00.01.00")+
-    stringToHex(("0000"+"2").substr(-4))+
+    '0x'+stringToHex('00.01.00')+
+    stringToHex(('0000'+'2').substr(-4))+
     stringToHex(fakeDateWithSeed(0))+
-    stringToHex(("00000000"+'63').substr(-8));
+    stringToHex(('00000000'+'63').substr(-8));
 
     return body;
 };
@@ -197,25 +197,27 @@ const getTabSelect = (nameSelector) => {
             {code:'00.01.00', aff:'Version 0.1'}
         ];
 
-        case "addSeuilCode" : return [
-            {code:'MAX1', aff:'Seuil maximal'},
-            {code:'MOY1', aff:'Moyenne maximale'},   
-            {code:'MED1', aff:'Mediane maximale'},
-            {code:'MIN1', aff:'Seuil minimal'},
+        case "addSeuilCode": return [
+            {code:'MAX1', aff:'Max Threshold'},
+            {code:'MOY1', aff:'Highest Mean'},   
+            {code:'MED1', aff:'Highest Median'},
+            {code:'MIN1', aff:'Min Threshold'},
         ];
 
         case "addServiceMeasureType" : return [
-            {code:'SON_0001', aff:'Accoustique version 1'},
-            {code:'SOUF0001', aff:'Emission de soufre version 1'},   
-            {code:'METH0001', aff:'Emission de méthane version 1'},
-            {code:'METH0002', aff:'Emission de méthane version 2'},
+            {code:'NOIS0001', aff:'Noise v1', info:'Noise measured in decibel dB'},
+            {code:'TEMP0001', aff:'Temperature v1', info:'Actual temperature in Celsius degree'},
+            {code:'HMDT0001', aff:'Humidity v1', info:'Actual humidity in percentage'},   
+            {code:'ACDT0001', aff:'Acidity v1', info:'Acidity measured with pH value'},
+            {code:'AMNM0001', aff:'Ammonium v1', info:'Ammonium concentration measured in mg by L'},
+            {code:'NUCL0001', aff:'Nuclear Exposure v1', info:'Nuclear exposure in Coulomb by Kg'}
         ];
 
         case "addServiceTimeType" : return [
-            {code:'Y', aff:'Année'},
-            {code:'m', aff:'Mois'},
-            {code:'d', aff:'Journée'},
-            {code:'H', aff:'Heure'},                                
+            {code:'Y', aff:'Year'},
+            {code:'m', aff:'Month'},
+            {code:'d', aff:'Day'},
+            {code:'H', aff:'Hour'},                                
         ];
     
         default : return [];

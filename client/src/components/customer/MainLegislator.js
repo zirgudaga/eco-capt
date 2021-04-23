@@ -41,7 +41,7 @@ export default class MainClient extends React.Component {
                 for(let myEvent of myEvents){
                     if(myEvent.returnValues['_message'] == "New Legislator"){     
                         _legislatorAddress = myEvent.returnValues['_target'];
-                        listLegislators[index] = await ledgerContract.methods._customers(_legislatorAddress).call({from:accounts[0]});
+                        listLegislators[index] = await ledgerContract.methods._legislators(_legislatorAddress).call({from:accounts[0]});
                         listLegislators[index].legislatorId = index;
                         listLegislators[index].legislatorAddress = _legislatorAddress;
                         index ++;
@@ -59,7 +59,7 @@ export default class MainClient extends React.Component {
             case "Home" : return (<HomeLegislator state={this.props.state}/>);
             case "FocusLegislator" : return (<FocusLegislator 
                 state={this.props.state}
-                myLegislator={this.state.listClients[this.state.selectedLegistalor]} 
+                myLegislator={this.state.listLegislators[this.state.selectedLegistalor]} 
                 goContract = {(addr) => {this.props.goContract(addr);}}
             />);
             case "NewLegislator" : return (<FormLegislator 
@@ -95,7 +95,7 @@ export default class MainClient extends React.Component {
                     {this.selectedMainLauncher()}  
                     <ListLegislator 
                         state={this.state}
-                        addLegislator= {() => {this.showFormAddLegistalor(true);}}
+                        addLegislator= {() => {this.showFormAddLegislator(true);}}
                         setLegislatorFocus = {(index) => {this.showFocusLegislator(index);}}
                     />
                 </main>

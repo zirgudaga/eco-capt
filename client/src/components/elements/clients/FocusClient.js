@@ -39,10 +39,13 @@ export default class FocusService extends React.Component {
                             
                 <b>{this.props.myClient.description}</b><span onClick= { () => this.toggleClient() }>{this.affActive()}</span>
 
-                <InfoClient myClient={this.props.myClient}/>
+                <InfoClient 
+                    myClient={this.props.myClient}
+                    goContract={(addr) => {this.props.goContract(addr)}} 
+                ></InfoClient>
 
                 <button type="button" className="focus-client-cta" 
-                    onClick= { () => this.props.goContract(this.props.myClient.contractAddress) }>Focus this contract
+                    onClick= { () => {} }>UPDATE
                 </button> 
 
 

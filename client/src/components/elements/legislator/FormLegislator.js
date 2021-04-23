@@ -9,7 +9,6 @@ export default class FormLegislator extends React.Component {
     // address _contractAddress,
     // uint _siretNumber,
     // bool _isActive
-    
 
     constructor(props) {
         super(props);
@@ -18,15 +17,14 @@ export default class FormLegislator extends React.Component {
         };
     }
 
-    addClient = async () => {
+    addLegislator = async () => {
         let { errorMessage } = this.state;
 
         let context = this;
 
         if(
             this._description.value.trim() === '' ||
-            this._customerAddress.value.trim() === '' ||
-            this._contractAddress.value.trim() === '' ||
+            this._legislatorAddress.value.trim() === '' ||
             this._siretNumber.value<= '0'
         ){
             errorMessage = "Merci de remplir correctement le formulaire !";
@@ -41,10 +39,9 @@ export default class FormLegislator extends React.Component {
         }
 
         const { accounts, ledgerContract } = this.props.state;
-        await ledgerContract.methods.setCustomer(
+        await ledgerContract.methods.setLegislator(
             this._description.value.trim(),
-            this._customerAddress.value.trim(),
-            this._contractAddress.value.trim(),            
+            this._legislatorAddress.value.trim(),          
             this._siretNumber.value,
             true       
         ).send({ from: accounts[0] },
@@ -60,7 +57,7 @@ export default class FormLegislator extends React.Component {
     render() {
         return (
             <div className="form-newlegislator-body">
-                <span className="form-service-close" onClick={()=>this.props.close()}>X</span><br/>
+                <span className="form-legislator-close" onClick={()=>this.props.close()}>X</span><br/>
 
                 <MyNotif 
                     contractAddress={this.props.state.ledgerContract._address}
@@ -83,26 +80,26 @@ export default class FormLegislator extends React.Component {
                         <label>
                             Addresse ETH du legislator
                         </label>
-                        <input type="text" name="_customerAddress" className="form-newlegislator-detail" placeholder="Addresse ETH du legislator"
+                        <input type="text" name="_legislatorAddress" className="form-newlegislator-detail" placeholder="Addresse ETH du legislator"
                             ref={(input) => { 
-                                this._customerAddress = input
+                                this._legislatorAddress = input
                             }}
                         />
                     </div>
 
                     <div className="form-newlegislator-label">
                         <label>
-                        Addresse ETH du contrat
+                            Numéro de siret
                         </label>
-                        <input type="text" name="_contractAddress" className="form-newlegislator-detail" placeholder="Addresse ETH du contrat"
+                        <input type="text" name="_siretNumber" className="form-newlegislator-detail" placeholder="Numéro du Siret du legislator"
                             ref={(input) => { 
-                                this._contractAddress = input
+                                this._siretNumber = input
                             }}
                         />
                     </div>
 
                     <button type="button" className="form-legislator-cta" 
-                        onClick= { () => this.addClient() }>Add Legislator
+                        onClick= { () => this.addLegislator() }>Add Legislator
                     </button> 
     
                 </form>

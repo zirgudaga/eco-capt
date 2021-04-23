@@ -15,7 +15,7 @@ export default class FocusService extends React.Component {
     }
 
     affActive = () => {
-        if(this.props.myClient.isActive){
+        if(this.props.myLegislator.isActive){
             return (<i className="fas fa-toggle-on" key="fa-toggle-on"></i>); 
         }else{       
             return (<i className="fas fa-toggle-off" key="fa-toggle-off"></i>);
@@ -37,12 +37,12 @@ export default class FocusService extends React.Component {
         return (
             <div className="focus-legislator-body">
                             
-                <b>{this.props.myClient.description}</b><span onClick= { () => this.toggleLegislator() }>{this.affActive()}</span>
+                <b>{this.props.myLegislator.description}</b><span onClick= { () => this.toggleLegislator() }>{this.affActive()}</span>
 
-                <InfoLegislator myClient={this.props.myClient}/>
+                <InfoLegislator myLegislator={this.props.myLegislator}/>
 
                 <button type="button" className="focus-legislator-cta" 
-                    onClick= { () => this.props.goContract(this.props.myClient.contractAddress) }>Focus this contract
+                    onClick= { () => {console.log("toto")} }>Update
                 </button> 
 
 

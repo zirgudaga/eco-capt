@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if title %}
+        {{title}}
+    {% else %}
+        eco-capt-bridge
+    {% endif %}
+{% endblock %}
+
+{% block content%}
+    <div class="container">
+        <h1>{{title}}</h1>
+    </div>
+    <br/>
+    <div class="container">
+        <h4>Owner page</h4>
+        <p> Here the owner can register the techMasterAdress</p>
+    </div>
+    <br />
+    <div class="container">
+        <h4>Tech Master page</h4>
+        <p> Here the Tech Master can register the bridgeAddress</p>
+    </div>
+    <br />
+    <div class="container">
+        <h4>Send Data page</h4>
+        <p> You can send alerts & measures to the smart contract in the Send Data Page </p>
+        <p> You can also show examples of alerts & measures sent to the smart contract in the Send Data Page</p>
+    </div>
+{% endblock %}

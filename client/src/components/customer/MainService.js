@@ -12,6 +12,7 @@ export default class MainService extends React.Component {
         super(props);
         this.state = {
             listServices: [],
+            isAddable: false,            
             selectedService: -1,
             currentMainSelect: "Home",
             errorMessage: '',
@@ -19,6 +20,15 @@ export default class MainService extends React.Component {
     }
 
     componentDidMount = () => {
+        let { isAddable } = this.state;
+        const { myTypeUser } = this.props.state;
+
+
+        if ((myTypeUser === '1') || (myTypeUser === '2')){
+            isAddable = true;
+            this.setState({ isAddable });  
+        }
+
         setInterval(()=>{
             this.refresh();
         }, 2000);

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {hexToString} from '../../utilsEco.js';
 import "./MySelect.css";
 
 export default class MySelectEth extends React.Component {
@@ -18,29 +19,70 @@ export default class MySelectEth extends React.Component {
         let myTabOptions = [];
 
         switch (this.props.myName){
-            case "addService" : await this.recoltAllServiceOfContract(); break;
+            case "addService" : await this.recoltAllServicesOfContract(); break;
+            case "addMeasureType" : await this.recoltAllMeasuresAvalable(); break;
+
             default : myTabOptions = []
         }
 
         this.setState({ myTabOptions });       
     }
+  
+    recoltAllMeasuresAvalable = async() => {
+        let { ledgerContract, myTabOptions, accounts, myTypeUser } = this.props.state;
 
-    
-    //TODO ADAPTER CETTE LISTE DEROULANTE A CHAQUE PROFIL
-    recoltAllServiceOfContract = async() => {
-        let { customerContract, myTabOptions, accounts } = this.props.state;
+        console.log("Start Recolt All Measure", myTypeUser);        
 
         myTabOptions = [];
-       
+      
+        if(ledgerContract != null){
+            ledgerContract.getPastEvents('TypeMeasureUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            .then(async (myEvents) => {
+                let index, element;
+                for(let myEvent of myEvents){
+                    if(myEvent.returnValues['_message'] == "New TypeMeasure"){
+                        
+                        index = myEvent.returnValues['_target'];
+        
+                        element = await ledgerContract.methods._typeMeasures(index).call({from:accounts[0]});
+
+                        index = hexToString(index.substr(-16));
+
+                        if(element.isActive){
+                            if ((myTypeUser == 3) && (element.legislatorAddress==accounts[0])){
+                                myTabOptions.push({code: index, aff: element.description});
+                            }else if ((myTypeUser == 1) || (myTypeUser == 2)){
+                                myTabOptions.push({code: index, aff: element.description});
+                            }  
+                        }
+                    }       
+                }
+                this.setState({ myTabOptions });  
+            });
+        }
+    }  
+    
+    recoltAllServicesOfContract = async() => {
+        let { customerContract, myTabOptions, accounts, myTypeUser } = this.props.state;
+
+        myTabOptions = [];
+      
         if(customerContract != null){
             customerContract.getPastEvents('ServiceUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
             .then(async (myEvents) => {
-                let index, serverTemp;
+                let index, element;
                 for(let myEvent of myEvents){
                     if(myEvent.returnValues['_message'] == "New service"){
                         index = myEvent.returnValues['_serviceId'];
-                        serverTemp = await customerContract.methods._services(index).call({from:accounts[0]});
-                        myTabOptions.push({code: index, aff: serverTemp.description});
+                        element = await customerContract.methods._services(index).call({from:accounts[0]});
+
+                        if(element.isActive){
+                            if ((myTypeUser == 3) && (element.legislatorAddress==accounts[0])){
+                                myTabOptions.push({code: index, aff: element.description});
+                            }else if ((myTypeUser == 1) || (myTypeUser == 2)){
+                                myTabOptions.push({code: index, aff: element.description});
+                            }  
+                        }
                     }       
                 }
                 this.setState({ myTabOptions });  

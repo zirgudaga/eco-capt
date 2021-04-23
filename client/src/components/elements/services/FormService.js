@@ -2,6 +2,8 @@ import React from 'react';
 import "./FormService.css";
 import {stringToHex} from '../../../utilsEco.js';
 import MySelect from '../MySelect.js';
+import MySelectEth from '../MySelectEth.js';
+
 import MyNotif from '../MyNotif.js';
 
 export default class FormService extends React.Component {
@@ -10,19 +12,19 @@ export default class FormService extends React.Component {
         super(props);
         this.state = {
             addServiceVersion: '',
-            addServiceMeasureType: '',
+            addMeasureType: '',
             addServiceTimeType: '',
             errorMessage: '',
         };
     }
 
     addService = async () => {
-        let { addServiceVersion, addServiceMeasureType, addServiceTimeType, errorMessage } = this.state;
+        let { addServiceVersion, addMeasureType, addServiceTimeType, errorMessage } = this.state;
 
         let context = this;
 
         if(addServiceVersion === '' || 
-        addServiceMeasureType === '' || 
+        addMeasureType === '' || 
         addServiceTimeType === '' || 
         this.newServiceDescription.value.trim() === '' ||
         this.newServiceNbTime.value <= '0'
@@ -42,7 +44,7 @@ export default class FormService extends React.Component {
         await customerContract.methods.addService(
             '0x'+stringToHex(addServiceVersion), 
             this.newServiceDescription.value.trim(),
-            '0x'+stringToHex(addServiceMeasureType), 
+            '0x'+stringToHex(addMeasureType), 
             '0x'+stringToHex(addServiceTimeType),            
             this.newServiceNbTime.value        
         ).send({ from: accounts[0] },
@@ -64,16 +66,16 @@ export default class FormService extends React.Component {
     };
 
     handleMySelect = async (selectedName, selectedValue) => {
-        let { addServiceVersion, addServiceMeasureType, addServiceTimeType } = this.state;
+        let { addServiceVersion, addMeasureType, addServiceTimeType } = this.state;
 
         switch(selectedName){
             case 'addServiceVersion': addServiceVersion = selectedValue; break;
-            case 'addServiceMeasureType': addServiceMeasureType = selectedValue; break;
+            case 'addMeasureType': addMeasureType = selectedValue; break;
             case 'addServiceTimeType': addServiceTimeType = selectedValue; break;            
             default: console.log('ERR - Select not found'); 
         }      
 
-        this.setState({ addServiceVersion, addServiceMeasureType, addServiceTimeType });         
+        this.setState({ addServiceVersion, addMeasureType, addServiceTimeType });         
     };  
 
     render() {
@@ -113,8 +115,9 @@ export default class FormService extends React.Component {
                         <label>
                             Measure du service
                         </label>
-                        <MySelect 
-                            myName="addServiceMeasureType" 
+                        <MySelectEth 
+                            state={this.props.state}
+                            myName="addMeasureType" 
                             handleMySelect={(selectedName, selectedValue) => this.handleMySelect(selectedName, selectedValue)}              
                         />
                     </div>

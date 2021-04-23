@@ -4,8 +4,21 @@ import "./ListRule.css";
 
 export default class ListRule extends React.Component {
 
-    render() {
+    affAdd = () => {
+        let { isAddable } = this.props.state;
 
+        if (isAddable){
+            return(
+                <button type="button" className="list-rule-cta" 
+                    onClick= { () => this.props.addRule() }>New Rule
+                </button> 
+            );
+        }
+    }
+
+
+    render() {
+      
         return (
             <div className="list-rule-body">
                 <div className="list-rule-ul">
@@ -21,9 +34,7 @@ export default class ListRule extends React.Component {
                         " Aucun Rule"
                     }
                 </div>
-                <button type="button" className="list-rule-cta" 
-                    onClick= { () => this.props.addRule() }>New Rule
-                </button> 
+                {this.affAdd()}
             </div>
         );      
     }

@@ -205,12 +205,13 @@ const getTabSelect = (nameSelector) => {
         ];
 
         case "addServiceMeasureType" : return [
-            {code:'NOIS0001', aff:'Noise v1', info:'Noise measured in decibel dB'},
-            {code:'TEMP0001', aff:'Temperature v1', info:'Actual temperature in Celsius degree'},
-            {code:'HMDT0001', aff:'Humidity v1', info:'Actual humidity in percentage'},   
-            {code:'ACDT0001', aff:'Acidity v1', info:'Acidity measured with pH value'},
-            {code:'AMNM0001', aff:'Ammonium v1', info:'Ammonium concentration measured in mg by L'},
-            {code:'NUCL0001', aff:'Nuclear Exposure v1', info:'Nuclear exposure in Coulomb by Kg'}
+
+            // {code:'NOIS0001', aff:'Noise v1', info:'Noise measured in decibel dB'},
+            // {code:'TEMP0001', aff:'Temperature v1', info:'Actual temperature in Celsius degree'},
+            // {code:'HMDT0001', aff:'Humidity v1', info:'Actual humidity in percentage'},   
+            // {code:'ACDT0001', aff:'Acidity v1', info:'Acidity measured with pH value'},
+            // {code:'AMNM0001', aff:'Ammonium v1', info:'Ammonium concentration measured in mg by L'},
+            // {code:'NUCL0001', aff:'Nuclear Exposure v1', info:'Nuclear exposure in Coulomb by Kg'}
         ];
 
         case "addServiceTimeType" : return [

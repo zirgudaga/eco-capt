@@ -50,7 +50,7 @@ export default class MainNavBar extends React.Component {
                             &&
                                 <li className="main-list">
                                     <a onClick = { () => {this.props.goTo("Customers");} }>
-                                        <i className="fas fa-user-tag" alt="Customers" title="Customers"></i>
+                                        <i className="fas fa-user" alt="Customers" title="Customers"></i>
                                     </a>
                                 </li>  
                             }

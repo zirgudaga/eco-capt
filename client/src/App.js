@@ -79,8 +79,6 @@ class App extends Component {
                 this.goContract(myContract.contractAddress);
             }
 
-            console.log("Status actuel ", myTypeUser);
-
             this.setState({ myTypeUser });
         }
       

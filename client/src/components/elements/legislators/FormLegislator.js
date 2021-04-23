@@ -19,17 +19,14 @@ export default class FormLegislator extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        console.log(elementToUpdate);
-
         if(isNew == false){
-            let { _description, _contractAddress, _siretNumber } = this.props;
+            let { _description, _legislatorAddress, _siretNumber } = this.props;
     
             _description = elementToUpdate.description;
             _legislatorAddress = elementToUpdate.legislatorAddress;
-            _contractAddress = elementToUpdate.contractAddress;
             _siretNumber = elementToUpdate.siretNumber;        
 
-            this.setState({ _description, _contractAddress, _siretNumber });  
+            this.setState({ _description, _legislatorAddress, _siretNumber });  
         }
     }
 
@@ -43,15 +40,14 @@ export default class FormLegislator extends React.Component {
         });
     }
     
-    addElt = async () => {
-        let { errorMessage, _description, _contractAddress, _siretNumber } = this.state;
+    addElement = async () => {
+        let { errorMessage, _description, _legislatorAddress, _siretNumber } = this.state;
 
         let context = this;
 
         if(
             _description.trim() === '' ||
             _legislatorAddress.trim() === '' ||
-            _contractAddress.trim() === '' ||
             _siretNumber <= '0'
         ){
             errorMessage = "Merci de remplir correctement le formulaire !";
@@ -68,8 +64,7 @@ export default class FormLegislator extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         await ledgerContract.methods.setLegislator(
             _description.trim(),
-            _legislatorAddress.trim(),
-            _contractAddress.trim(),            
+            _legislatorAddress.trim(),       
             _siretNumber,
             true       
         ).send({ from: accounts[0] },
@@ -121,19 +116,6 @@ export default class FormLegislator extends React.Component {
 
                     <div className="form-label">
                         <label>
-                        Addresse ETH du contrat
-                        </label>
-                        <input type="text" 
-                            name="_contractAddress" 
-                            className="form-detail" 
-                            placeholder="Addresse ETH du contrat"
-                            value={this.state._contractAddress}
-                            onChange={this.handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-label">
-                        <label>
                             Numéro de siret
                         </label>
                         <input type="text" 
@@ -146,7 +128,7 @@ export default class FormLegislator extends React.Component {
                     </div>
 
                     <button type="button" className="form-cta" 
-                        onClick= { () => this.addElt() }>Save
+                        onClick= { () => this.addElement() }>Save
                     </button> 
     
                 </form>

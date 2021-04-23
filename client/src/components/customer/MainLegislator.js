@@ -1,10 +1,10 @@
 import React from 'react';
 import './MainLegislator.css';
 
-import HomeLegislator from '../elements/legislator/HomeClient.js';
-import FocusLegislator from '../elements/legislator/FocusClient.js';
-import ListLegislator from '../elements/legislator/ListClient.js';
-import FormLegislator from '../elements/legislator/FormClient.js';
+import HomeLegislator from '../elements/legislators/HomeLegislator.js';
+import FocusLegislator from '../elements/legislators/FocusLegislator.js';
+import ListLegislator from '../elements/legislators/ListLegislator.js';
+import FormLegislator from '../elements/legislators/FormLegislator.js';
 
 export default class MainLegislator extends React.Component {
 
@@ -105,7 +105,7 @@ export default class MainLegislator extends React.Component {
             <div className="main-content">
                 <main className="main-content wrap">     
                     {this.selectedMainLauncher()}  
-                    <ListClient 
+                    <ListLegislator 
                         state={this.state}
                         addElement= {() => {this.showFormAddElement(true, true);}}
                         setElementFocus = {(index) => {this.showFocusElement(index);}}

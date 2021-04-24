@@ -6,6 +6,7 @@
   left: 0;
   z-index: 9;
   color: #fff;
+  background: transparent !important;
 }
 
 .welcome-navbar nav li {

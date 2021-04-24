@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default class Welcome extends React.Component {
     render() {
         return (
-            <div className="home">
+            <div className="homepage">
                 <main className="welcome-main">
                     <div className="background-image" id="animate-area" style={{
                         backgroundImage: `url("/clouds.png")`,

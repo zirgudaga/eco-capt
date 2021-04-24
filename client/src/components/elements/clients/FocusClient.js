@@ -22,6 +22,11 @@ export default class FocusClient extends React.Component {
         }
     }
     
+
+    affCurrentAmount = () => {
+        return (this.props.ecpAmount+" - ECP");
+    }
+
     toggleCustomer = async () => {
         const { accounts, ledgerContract } = this.props.state;
         const { myElement } = this.props;
@@ -48,7 +53,10 @@ export default class FocusClient extends React.Component {
         return (
             <div className="focus-body">
                             
-                <b>{this.props.myElement.description}</b><span onClick= { () => this.toggleCustomer() }>{this.affActive()}</span>
+                <div className="focus-header">
+                    <div><b>{this.props.myElement.description}</b><span onClick= { () => this.toggleCustomer() }>{this.affActive()}</span></div>
+                    <div className="focus-token">{this.affCurrentAmount()}</div>
+                </div>
 
                 <InfoClient 
                     myElement={this.props.myElement}

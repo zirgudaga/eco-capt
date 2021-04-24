@@ -7,7 +7,7 @@ export default class HomeLegislator extends React.Component {
         return (
             <div className="home">
                 <div className="home-main">
-                    <h1 className="home-title">Mes clients</h1>
+                    <h1 className="home-title">Mes legislateurs</h1>
                     <p className="home-p">Bienvenue Maître</p>
                     <br />
                     <p>Vous trouverez la liste de nos legislators sur votre droite</p>

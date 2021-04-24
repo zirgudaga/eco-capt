@@ -3,10 +3,10 @@ pragma solidity 0.8.0;
 
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../node_modules/@openZeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract LedgerContract is Ownable {
     using Counters for Counters.Counter;
-
 
     /**
      * @dev Structure of Customer
@@ -80,6 +80,14 @@ contract LedgerContract is Ownable {
     mapping(address => TechMaster) public _techMasters;
     mapping(address => Bridge) public _bridges;
     mapping(bytes8 => TypeMeasure) public _typeMeasures;
+
+    address public ecpTokenAddress;
+    IERC20 private _ECPToken;
+
+    constructor (address _ecpTokenAddress) {
+        ecpTokenAddress = _ecpTokenAddress;
+        _ECPToken = IERC20(_ecpTokenAddress);
+    }    
 
      /**
      * @dev set a Customer

@@ -9,6 +9,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import CustomerContract from "./contracts/CustomerContract.json";
 import LedgerContract from "./contracts/LedgerContract.json";
+import ECPToken from "./contracts/ECPToken.json";
 
 import getWeb3 from "./getWeb3.js";
 
@@ -34,6 +35,10 @@ class App extends Component {
         web3: null, 
         accounts: null, 
         ledgerContract: null, 
+
+        ecpTokenContract : null,
+        ecpTokenAddress : null,
+
         customerContract: null,
         customerContractAddress: null,
 
@@ -55,13 +60,18 @@ class App extends Component {
             const networkId = await web3.eth.net.getId();
 
             const deployedNetwork = LedgerContract.networks[networkId];
-            
             const ledgerContract = new web3.eth.Contract(
                 LedgerContract.abi,
                 deployedNetwork && deployedNetwork.address,
-            );        
+            );      
             
-            this.setState({ web3, accounts, ledgerContract});  
+            const deployedNetwork2 = ECPToken.networks[networkId];
+            const ecpTokenContract = new web3.eth.Contract(
+                ECPToken.abi,
+                deployedNetwork2 && deployedNetwork2.address,
+            );  
+            
+            this.setState({ web3, accounts, ledgerContract, ecpTokenContract});  
 
         } catch (error) {
             // Catch any errors for any of the above operations.
@@ -69,17 +79,18 @@ class App extends Component {
             console.error(error);
         }
 
-        let { ledgerContract, accounts, myTypeUser } = this.state;
+        let { ledgerContract, accounts, myTypeUser, ecpTokenAddress } = this.state;
 
         if(ledgerContract !== null){
             myTypeUser = await ledgerContract.methods.rootingApps().call({from:accounts[0]});
-            
+            ecpTokenAddress = await ledgerContract.methods.ecpTokenAddress().call({from:accounts[0]});          
+
             if(myTypeUser === '2'){
                 let myContract = await ledgerContract.methods._customers(accounts[0]).call({from:accounts[0]});
                 this.goContract(myContract.contractAddress);
             }
 
-            this.setState({ myTypeUser });
+            this.setState({ myTypeUser, ecpTokenAddress });
         }
       
 

@@ -27,6 +27,26 @@
     text-transform: uppercase;
 }
 
+.focus-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.focus-token {
+    height: 60px;
+    line-height: 60px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #2563eb;
+    border-radius: 8px;
+    color: #fff;
+    border: 2px solid #2563eb;
+    display: inline-block;
+    transition: 0.1s all ease-out;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
 .fa-toggle-on {
     margin-left: 4px;
     color: #03A9F4;

@@ -3,6 +3,7 @@ pragma solidity 0.8.0;
 
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../node_modules/@openZeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract CustomerContract is Ownable {
     using Counters for Counters.Counter;
@@ -38,6 +39,7 @@ contract CustomerContract is Ownable {
     struct Config {
         bytes8 version;
         address _ledgerAddress;
+        address _ecpTokenAddress;        
         uint64 prevContractDate;
         uint64 nextContractDate;
         address customerAddress;
@@ -148,10 +150,13 @@ contract CustomerContract is Ownable {
     mapping(uint => Rule) public _serviceRules;
     Counters.Counter public _ruleIdCounter;
 
-    constructor (bytes8 _version, address _ledgerAddress, address _customerAddress, address _prevContract, uint64 _prevContractDate) {
+    IERC20 private _ECPToken;
+
+    constructor (bytes8 _version, address _ledgerAddress, address _ecpTokenAddress, address _customerAddress, address _prevContract, uint64 _prevContractDate) {
         _myConfig = Config(
             _version,
             _ledgerAddress,
+            _ecpTokenAddress,
             _prevContractDate,
             0,
             _customerAddress,
@@ -159,7 +164,8 @@ contract CustomerContract is Ownable {
             address(0),
             true
         );
-        // TODO AJOUTER INSTANCE DU GRAND REGISTRE POUR POUVOIR Y ACCEDER SI NECESSAIRE
+
+        _ECPToken = IERC20(_ecpTokenAddress);
     }
   
     /**

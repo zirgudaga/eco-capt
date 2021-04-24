@@ -1,10 +1,15 @@
 let LedgerContract = artifacts.require("./LedgerContract.sol");
 let CustomerContract = artifacts.require("./CustomerContract.sol");
+let ECPToken = artifacts.require("./ECPToken.sol");
 
 module.exports = async (deployer, _network, accounts) => {
-    
-    await deployer.deploy(LedgerContract);
+
     let customerContract;
+
+    await deployer.deploy(ECPToken);
+    const myToken = await ECPToken.deployed();
+
+    await deployer.deploy(LedgerContract, myToken.address);
     const myLedger = await LedgerContract.deployed();
 
     await myLedger.setTechMaster(
@@ -69,10 +74,12 @@ module.exports = async (deployer, _network, accounts) => {
         true     
     );
    
+    /////////////////////////////////////////////////////////////////////////////////
     // Contrat du client 1    
     await deployer.deploy(CustomerContract,
         "0x30302e30312e3030",
         myLedger.address, 
+        myToken.address,
         accounts[3], // ADRESSE DE VOTRE CLIENT 1 (CF VOTRE GANACHE)
         "0x0000000000000000000000000000000000000000",
         0
@@ -88,10 +95,18 @@ module.exports = async (deployer, _network, accounts) => {
         true     
     );
 
+    await myToken.sendSubscription(
+        customerContract.address,
+        100     
+    );
+
+
+    ///////////////////////////////////////////////////////////////////////////////
     // Contrat du client 2
     await deployer.deploy(CustomerContract,
         "0x30302e30312e3030",
-        myLedger.address, 
+        myLedger.address,
+        myToken.address,         
         accounts[4], // ADRESSE DE VOTRE CLIENT 2 (CF VOTRE GANACHE)
         "0x0000000000000000000000000000000000000000",
         0
@@ -105,6 +120,11 @@ module.exports = async (deployer, _network, accounts) => {
         customerContract.address,
         1,
         true     
+    );
+
+    await myToken.sendSubscription(
+        customerContract.address,
+        100     
     );
 
        

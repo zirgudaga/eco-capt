@@ -13,6 +13,7 @@ export default class MainClient extends React.Component {
         this.state = {
             listElements: [],
             selectedElement: -1,
+            ecpAmount:0,
             elementToUpdate: null,
             isNew: false,
             currentMainSelect: "Home",
@@ -28,6 +29,7 @@ export default class MainClient extends React.Component {
 
     refresh = () => {
         this.getAllElement();
+        this.getECPAmount();
     }
 
     getAllElement = async () => {
@@ -54,6 +56,17 @@ export default class MainClient extends React.Component {
         }        
     };    
 
+    getECPAmount = async () => {
+        let { selectedElement, ecpAmount, listElements } = this.state;
+        const { ecpTokenContract, accounts } = this.props.state;
+
+        if(selectedElement != -1){
+            ecpAmount = await ecpTokenContract.methods.balanceOf(listElements[selectedElement].contractAddress).call({from:accounts[0]});
+        }
+
+        this.setState({ ecpAmount });  
+    }
+
     selectedMainLauncher = () => {
 
         switch(this.state.currentMainSelect){
@@ -61,6 +74,7 @@ export default class MainClient extends React.Component {
             
             case "Focus" : return (<FocusClient 
                 state={this.props.state}
+                ecpAmount={this.state.ecpAmount}
                 myElement={this.state.listElements[this.state.selectedElement]} 
                 goContract = {(addr) => {this.props.goContract(addr);}}
                 addElement= {() => {this.showFormAddElement(true, false);}}

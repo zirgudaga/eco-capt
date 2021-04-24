@@ -90,6 +90,13 @@ export default class MainNavBar extends React.Component {
                                 </li>
                             }
 
+                            { (this.props.state.myTypeUser==='2') 
+                            &&
+                                <li className="main-list">
+                                        TOTO
+                                </li>
+                            }               
+
                             {(this.props.state.customerContractAddress !== null)
                             &&                              
                             <li className="main-list">

@@ -28,7 +28,7 @@ export default class MainHome extends React.Component {
                             {this.props.state.customerContractAddress &&
                             <div>
                                 <p>Pour accéder à vos services, cliquez sur le bouton ci-dessous :</p>
-                                <a className="page-header-cta" type="button" onClick = { () => {this.props.goTo("Service");} }>
+                                <a className="page-header-cta" type="button" onClick = { () => {this.props.goTo("Services");} }>
                                     Services
                                 </a>
                             </div>}

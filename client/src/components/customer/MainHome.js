@@ -30,24 +30,24 @@ export default class MainHome extends React.Component {
                 <main className="main-client">
                     <div className="page-header">
                         <div className="page-header-body">
-                            <h1 className="page-header-title">Bienvenue sur votre espace</h1>
-                            <p className="page-header-address">Vous êtes connecté via l'adresse : <span className="address-color">{this.showAddress()}</span></p>
-                            <p className="page-header-address">L'addresse de l'ERC-20 ECP est : <span className="address-color">{this.showEcpTokenAddress()}</span></p>
+                            <h1 className="page-header-title">Welcome to your Eco-Capt interface</h1>
+                            <p className="page-header-address">You are currently connected with the following address : <span className="address-color">{this.showAddress()}</span></p>
+                            <p className="page-header-address">The address of the ERC-20 ECP is : <span className="address-color">{this.showEcpTokenAddress()}</span></p>
                             
                             
                             
                             {this.props.state.customerContractAddress
-                            ?(<p className="page-header-contract">Votre contract client est : <span className="address-color">{this.props.state.customerContractAddress}</span></p>)
-                            :(<p className="page-header-contract">Pas de contract client selectionné...</p>)}
+                            ?(<p className="page-header-contract">Your smart contract is   : <span className="address-color">{this.props.state.customerContractAddress}</span></p>)
+                            :(<p className="page-header-contract">No customer contract selected...</p>)}
                             
                             {this.props.state.customerContractAddress &&
                             <div>
-                                <p>Pour accéder à vos services, cliquez sur le bouton ci-dessous :</p>
+                                <p>To access your services, click on the button below :</p>
                                 <a className="page-header-cta" type="button" onClick = { () => {this.props.goTo("Services");} }>
                                     Services
                                 </a>
                             </div>}
-                            <p className="page-header-help">Une question ? Contactez-nous !</p>
+                            <p className="page-header-help">A question ? Contact us !</p>
                         </div>
                     </div>
                 </main>

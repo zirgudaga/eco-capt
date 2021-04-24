@@ -44,6 +44,34 @@
     margin-right: 4px;
 }
 
+.fa-user {
+  color: #81C784;
+}
+
+.fa-gavel {
+  color: #64B5F6;
+}
+
+.fa-user-astronaut {
+  color: #F06292;
+}
+
+.fa-sitemap {
+  color: #FFF9C4;
+}
+
+.fa-chart-bar {
+  color: #ef5350;
+}
+
+.fa-exclamation-triangle {
+  color: red;
+}
+
+.fa-crown {
+  color: yellow;
+}
+
 .x-close{
     color: red;
     font-weight: bold;

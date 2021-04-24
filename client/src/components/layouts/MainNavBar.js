@@ -93,7 +93,10 @@ export default class MainNavBar extends React.Component {
                             { (this.props.state.myTypeUser==='2') 
                             &&
                                 <li className="main-list">
-                                        TOTO
+                                    <div className="welcome-navbar-token">
+                                        <img className="welcome-navbar-ecp" src="./ECP.png" alt="ecp-token" />
+                                        <p>0 ECP</p>
+                                    </div>
                                 </li>
                             }               
 

@@ -35,6 +35,7 @@ class App extends Component {
         web3: null, 
         accounts: null, 
         ledgerContract: null, 
+        ledgerSafe:0,
 
         ecpTokenContract : null,
         ecpTokenAddress : null,
@@ -79,18 +80,22 @@ class App extends Component {
             console.error(error);
         }
 
-        let { ledgerContract, accounts, myTypeUser, ecpTokenAddress } = this.state;
+        let { ledgerContract, ledgerSafe, ecpTokenContract, accounts, myTypeUser, ecpTokenAddress } = this.state;
 
         if(ledgerContract !== null){
             myTypeUser = await ledgerContract.methods.rootingApps().call({from:accounts[0]});
             ecpTokenAddress = await ledgerContract.methods.ecpTokenAddress().call({from:accounts[0]});          
+
+            if(myTypeUser === '1'){
+                ledgerSafe = await ecpTokenContract.methods.balanceOf(ledgerContract._address).call({from:accounts[0]});     
+            }            
 
             if(myTypeUser === '2'){
                 let myContract = await ledgerContract.methods._customers(accounts[0]).call({from:accounts[0]});
                 this.goContract(myContract.contractAddress);
             }
 
-            this.setState({ myTypeUser, ecpTokenAddress });
+            this.setState({ myTypeUser, ledgerSafe, ecpTokenAddress });
         }
       
 

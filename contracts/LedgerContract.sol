@@ -241,6 +241,14 @@ contract LedgerContract is Ownable {
         true);
     }    
 
+    // FONCTION POUR MINTER !!
+
+
+    // FONCTION POUR ENVOYER DES TOKENS AUX CLIENTS !
+
+
+
+
      /**
      * @dev allows the dApp to process user's type and display the correct interface
      * @param _myTypeUser uint user's type 

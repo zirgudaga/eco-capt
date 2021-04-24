@@ -24,5 +24,4 @@ contract ECPToken is ERC20 {
         _mint(_customerContract, amount);
     }
 
-
 }

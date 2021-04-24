@@ -19,19 +19,24 @@ export default class MainNavBar extends React.Component {
         }       
     }
 
-    showMyContract = () => {      
+    showMyContract = () => {    
+        
+        if(this.props.state.myTypeUser==='2'){
+            return(   
+                <span className="main-list"><i key="fa-clipboard" className="fas fa-clipboard"></i>{this.props.state.customerContractAddress.substr(0,5)+'...'+this.props.state.customerContractAddress.substr(-4)}           
+                </span>
+            );
+        }   
+
         if(this.props.state.customerContractAddress !== null){
-            if(this.props.state.myTypeUser == 2){
-                return <span><i key="fa-clipboard" className="fas fa-clipboard"></i>{this.props.state.customerContractAddress.substr(0,5)+'...'+this.props.state.customerContractAddress.substr(-4)}
-                </span>;                
-            }else if(this.props.state.myTypeUser != -1){
-                return <span><i key="fa-clipboard" className="fas fa-clipboard"></i>{this.props.state.customerContractAddress.substr(0,5)+'...'+this.props.state.customerContractAddress.substr(-4)}
+            if(this.props.state.myTypeUser != -1){
+                return <span className="main-list"><i key="fa-clipboard" className="fas fa-clipboard"></i>{this.props.state.customerContractAddress.substr(0,5)+'...'+this.props.state.customerContractAddress.substr(-4)}
                 <span className="x-close" onClick={()=>this.props.contractClose()}>X</span>
                 </span>;
             }   
         } 
         else{
-            return <span>No contract selected...</span>;
+            return <span className="main-list">No contract selected...</span>;
         }       
     }    
 
@@ -89,16 +94,7 @@ export default class MainNavBar extends React.Component {
                                     </a>
                                 </li>
                             }
-
-                            { (this.props.state.myTypeUser==='2') 
-                            &&
-                                <li className="main-list">
-                                    <div className="welcome-navbar-token">
-                                        <img className="welcome-navbar-ecp" src="./ECP.png" alt="ecp-token" />
-                                        <p>0 ECP</p>
-                                    </div>
-                                </li>
-                            }               
+              
 
                             {(this.props.state.customerContractAddress !== null)
                             &&                              

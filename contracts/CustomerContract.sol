@@ -301,6 +301,8 @@ contract CustomerContract is Ownable {
         bytes32 _measurebody) 
         isContractActive() isServiceActive(_serviceId) onlyBridge(_serviceId) external {    
         
+        _ECPToken.transfer(_myConfig._ledgerAddress, 1);
+
         _services[_serviceId].measureIdCounter.increment();
 
         emit MeasureReceive(_serviceId, _measureHeader, _measurebody, msg.sender);

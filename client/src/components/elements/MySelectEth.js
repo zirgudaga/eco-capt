@@ -21,6 +21,9 @@ export default class MySelectEth extends React.Component {
         switch (this.props.myName){
             case "addService" : await this.recoltAllServicesOfContract(); break;
             case "addMeasureType" : await this.recoltAllMeasuresAvalable(); break;
+            case "addBridgeAddress" : await this.recoltAllBridgeAvalable(); break;
+            case "addLegislatorAddress" : await this.recoltAllLegislatorAvalable(); break;
+            case "addTechMasterAddress" : await this.recoltAllTechMasterAvalable(); break;
 
             default : myTabOptions = []
         }
@@ -30,8 +33,6 @@ export default class MySelectEth extends React.Component {
   
     recoltAllMeasuresAvalable = async() => {
         let { ledgerContract, myTabOptions, accounts, myTypeUser } = this.props.state;
-
-        console.log("Start Recolt All Measure", myTypeUser);        
 
         myTabOptions = [];
       
@@ -89,6 +90,84 @@ export default class MySelectEth extends React.Component {
             });
         }
     }
+
+    recoltAllBridgeAvalable = async() => {
+        let { ledgerContract, myTabOptions, accounts } = this.props.state;
+
+        myTabOptions = [];
+      
+        if(ledgerContract != null){
+            ledgerContract.getPastEvents('LedgerUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            .then(async (myEvents) => {
+                let index, element;
+                for(let myEvent of myEvents){
+                    if(myEvent.returnValues['_message'] == "New Bridge"){
+                        
+                        index = myEvent.returnValues['_target'];
+        
+                        element = await ledgerContract.methods._bridges(index).call({from:accounts[0]});
+
+                        if(element.isActive){
+                            myTabOptions.push({code: index, aff: element.description});  
+                        }
+                    }       
+                }
+                this.setState({ myTabOptions });  
+            });
+        }
+    }  
+
+    recoltAllLegislatorAvalable = async() => {
+        let { ledgerContract, myTabOptions, accounts } = this.props.state;
+
+        myTabOptions = [];
+      
+        if(ledgerContract != null){
+            ledgerContract.getPastEvents('LedgerUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            .then(async (myEvents) => {
+                let index, element;
+                for(let myEvent of myEvents){
+                    if(myEvent.returnValues['_message'] == "New Legislator"){
+                        
+                        index = myEvent.returnValues['_target'];
+        
+                        element = await ledgerContract.methods._legislators(index).call({from:accounts[0]});
+
+                        if(element.isActive){
+                            myTabOptions.push({code: index, aff: element.description});  
+                        }
+                    }       
+                }
+                this.setState({ myTabOptions });  
+            });
+        }
+    }  
+
+    recoltAllTechMasterAvalable = async() => {
+        let { ledgerContract, myTabOptions, accounts } = this.props.state;
+
+        myTabOptions = [];
+      
+        if(ledgerContract != null){
+            ledgerContract.getPastEvents('LedgerUpdate', { fromBlock: 0,  toBlock: 'latest'}, function(error, events){ })
+            .then(async (myEvents) => {
+                let index, element;
+                for(let myEvent of myEvents){
+                    if(myEvent.returnValues['_message'] == "New TechMaster"){
+                        
+                        index = myEvent.returnValues['_target'];
+        
+                        element = await ledgerContract.methods._techMasters(index).call({from:accounts[0]});
+
+                        if(element.isActive){
+                            myTabOptions.push({code: index, aff: element.description});  
+                        }
+                    }       
+                }
+                this.setState({ myTabOptions });  
+            });
+        }
+    }  
 
     clickSelector() {
         let { classSelector, isOpen } = this.state;

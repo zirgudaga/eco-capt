@@ -40,12 +40,22 @@ export default class Dashboard extends React.Component {
         }
     }
 
+    manageContractClosing = () => {
+        let {currentModuleSelect} = this.state;
+        if(currentModuleSelect=="Services" || currentModuleSelect=="Alerts"){
+            currentModuleSelect = "Customers";
+        }
+        this.setState({currentModuleSelect});
+
+        this.props.contractClose();
+    }
+
     render() {
         return (
             <div className="dashboard-main">
                 <MainNavBar 
                     state={this.props.state} 
-                    contractClose= {()=>this.props.contractClose()}
+                    contractClose= {()=>this.manageContractClosing()}
                     goTo={(currentModuleSelect) => {this.setState({ currentModuleSelect });}}/>
                 {this.selectedDashboardLaucher()}
             </div>

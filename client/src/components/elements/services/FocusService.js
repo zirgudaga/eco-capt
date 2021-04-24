@@ -38,8 +38,8 @@ export default class FocusService extends React.Component {
     }
     
     toggleService = async () => {
-        const { accounts, contract, web3 } = this.props.state;
-        await contract.methods.toggleService(
+        const { accounts, customerContract } = this.props.state;
+        await customerContract.methods.toggleService(
             this.props.myService.serviceId
         ).send({ from: accounts[0] }, async (erreur, tx) => {});              
     }
@@ -108,7 +108,7 @@ export default class FocusService extends React.Component {
                 <b>{this.props.myService.description}</b><span onClick= { () => this.toggleService() }>{this.affActive()}</span>
 
                 <GraphService myService={this.props.myService} myMeasures={this.state.listMeasures}/>
-                <ServiceInfo myService={this.props.myService}/>
+                <ServiceInfo state={this.props.state} myService={this.props.myService}/>
 
                 {(this.props.state.myTypeUser == 1) &&
                 <button type="button" className="focus-service-cta" 

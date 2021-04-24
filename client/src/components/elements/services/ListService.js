@@ -10,7 +10,7 @@ export default class ListService extends React.Component {
         if (isAddable){
             return(
                 <button type="button" className="list-service-cta" 
-                onClick= { () => this.props.addService() }>New service
+                    onClick= { () => this.props.addService() }>New service
                 </button> 
             );
         }

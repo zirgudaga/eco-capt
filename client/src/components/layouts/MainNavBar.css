@@ -83,3 +83,16 @@
     right: 15px;
     cursor: pointer;
 }
+
+.welcome-navbar-token {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 3px 8px 3px 8px;
+  color: #1a202e;
+  border-radius: 8px;
+}
+
+.welcome-navbar-ecp {
+  width: 32px;
+}

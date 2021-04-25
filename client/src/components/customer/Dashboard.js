@@ -11,6 +11,7 @@ import MainBridge from './MainBridge.js';
 import MainMeasure from './MainMeasure.js';
 
 import MainNavBar from '../layouts/MainNavBar.js';
+import Footer from '../layouts/Footer.js';
 
 
 import './Dashboard.css';
@@ -58,6 +59,7 @@ export default class Dashboard extends React.Component {
                     contractClose= {()=>this.manageContractClosing()}
                     goTo={(currentModuleSelect) => {this.setState({ currentModuleSelect });}}/>
                 {this.selectedDashboardLaucher()}
+                <Footer />
             </div>
         )
     }

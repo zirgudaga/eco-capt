@@ -4,7 +4,20 @@
     bottom: 60px;
 }
 
-
 .service-info-details {
   font-weight: 500;
+}
+
+.fa-check {
+  color: green;
+  cursor: pointer;
+}
+
+.fa-times {
+  color: red;
+  cursor: pointer;
+}
+
+.fa-pen {
+  cursor: pointer;
 }

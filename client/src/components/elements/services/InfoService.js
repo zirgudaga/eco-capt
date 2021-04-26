@@ -156,7 +156,7 @@ export default class InfoService extends React.Component {
             );
         }else{
             return(
-                <span className="service-info-details">
+                <div className="service-info-details">
                     <MySelectEth 
                         state={this.props.state}
                         myName={nameSelect} 
@@ -164,7 +164,7 @@ export default class InfoService extends React.Component {
                     />           
                     <i className="fas fa-check" onClick={() => {this.validEditAddress(index)}}></i>
                     <i className="fas fa-times"onClick={() => {this.toggleEditAddress(index)}}></i>
-                </span>
+                </div>
             );
         }
     }
@@ -174,13 +174,13 @@ export default class InfoService extends React.Component {
 
         return (
             <div className="service-info">
-                <p>Nom du service : <span className="service-info-details">{myService.description}</span></p>
-                <p>Nombre de rapports : <span className="service-info-details">{myService.measureIdCounter._value}</span></p>
-                <p>Type de mesure : <span className="service-info-details">{hexToString(myService.measureType)}</span></p>
-                <p>Fréquence des mesures : <span className="service-info-details">Toutes les {myService.nbTime} {hexToString(myService.timeCode)}</span></p>
-                <div>Adresse du bridge : {this.showEditAddress(0)}</div>
-                <div>Adresse du législateur : {this.showEditAddress(1)}</div>
-                <div>Adresse du technicien : {this.showEditAddress(2)}</div>                        
+                <p>Service's name : <span className="service-info-details">{myService.description}</span></p>
+                <p>Number of reports : <span className="service-info-details">{myService.measureIdCounter._value}</span></p>
+                <p>Measure's type : <span className="service-info-details">{hexToString(myService.measureType)}</span></p>
+                <p>Measure's frequency : <span className="service-info-details">Toutes les {myService.nbTime} {hexToString(myService.timeCode)}</span></p>
+                <div>Bridge's address : {this.showEditAddress(0)}</div>
+                <div>Legislator's address : {this.showEditAddress(1)}</div>
+                <div>Technician's address : {this.showEditAddress(2)}</div>                        
             </div>
         );      
     }

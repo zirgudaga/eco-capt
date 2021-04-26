@@ -61,7 +61,7 @@ export default class FocusClient extends React.Component {
                         <div className="focus-token-align">
                             <img className="focus-token-ecp" src="./ECP.png" alt="ecp-token" />
                             <p>{this.state.ecpAmount} ECP</p>
-                            <button className="focus-token-cta">recharge my tokens</button>
+                            <button className="focus-token-cta">add 100 tokens</button>
                         </div>
                     </div>
                 }

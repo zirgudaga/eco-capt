@@ -7,20 +7,20 @@ export default class HomeService extends React.Component {
         return (
             <div className="home-service">
                 <div className="home-service-main">
-                    <h1 className="home-service-title">Mes services</h1>
-                    <p className="home-service-p">Bienvenue sur votre interface</p>
+                    <h1 className="home-service-title">My services</h1>
+                    <p className="home-service-p">Welcome to your service interface</p>
                     <br />
-                    <p>Vous trouverez la liste de vos services sur votre droite</p>
+                    <p>You will find a list of your active services on the right hand side.</p>
                     <br />
-                    <p>Pour voir le détail d'un service, cliquez dessus.</p>
+                    <p>To display details of a specific service, please click on it</p>
                     <br />
-                    <p>Vous pouvez ajouter un service en cliquant sur "NEW SERVICE"</p>
+                    <p>You can also add a new service by clicking on the “New Service” button.</p>
                     <br />
-                    <p>Il vous sera alors demandé : la descritpion, le type de mesure et sa fréquence. 
-                        Une fois cela réalisé, il y sera affecté un intermédiaire technique afin d'y associer votre bridge eco-capt.        
-                        Grace à lui, vos mesures seront traitées, certifiées et affichées dans votre application.</p>
+                    <p>You will then be asked : a description of your service, the type of measure you want to set up and the frequency. Once done, you will be assigned a TechMaster who will link your Eco-Capt Bridge to your service,
+                    Thanks to him, your measures will be processed, certified and displayed in your app.
+                    </p>
                     <br />
-                    <p>Être honnête n'a jamais été aussi simple !</p>
+                    <p>Being honest has never been easier!</p>
                     <div className="home-service-logo">
                         <a href="."><img width="208" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
                     </div>

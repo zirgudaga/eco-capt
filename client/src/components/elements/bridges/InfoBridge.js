@@ -14,8 +14,8 @@ export default class InfoBridge extends React.Component {
                 <p>Name : <span className="info-details">{myElement.description}</span></p>
                 <p>URL : <span className="info-details">{myElement.url}</span></p>
                 <p>Info : <span className="info-details">{myElement.info}</span></p>
-                <p>Adresse du bridge : <span className="info-details">{myElement.bridgeAddress===address0?"En attente":myElement.bridgeAddress}</span></p>
-                <p>Adresse du techmaster : <span className="info-details">{(myElement.techMasterAddress===address0)?"En attente":myElement.techMasterAddress}</span></p>
+                <p>Address of the bridge: <span className="info-details">{myElement.bridgeAddress===address0?"En attente":myElement.bridgeAddress}</span></p>
+                <p>Technician's address: <span className="info-details">{(myElement.techMasterAddress===address0)?"En attente":myElement.techMasterAddress}</span></p>
             </div>
         );      
     }

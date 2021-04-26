@@ -54,7 +54,7 @@ export default class FormMeasure extends React.Component {
             _codeMeasure.trim() === '' ||
             _codeMeasure.length != 8
         ){
-            errorMessage = "Merci de remplir correctement le formulaire !";
+            errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });
 
             setTimeout(()=>{
@@ -95,12 +95,12 @@ export default class FormMeasure extends React.Component {
                 <form>
                     <div className="form-label">
                         <label>
-                            Nom de la measure
+                            Measure's name
                         </label>
                         <input type="text" 
                             name="_description" 
                             className="form-detail" 
-                            placeholder="Nom de la measure"
+                            placeholder="Measure's name"
                             value={this.state._description}
                             onChange={this.handleInputChange}
                         />
@@ -108,12 +108,12 @@ export default class FormMeasure extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Info sur la measure
+                            Measure's info
                         </label>
                         <input type="text" 
                             name="_info" 
                             className="form-detail" 
-                            placeholder="Info sur de la measure"
+                            placeholder="Measure's info"
                             value={this.state._info}
                             onChange={this.handleInputChange}
                         />
@@ -121,12 +121,12 @@ export default class FormMeasure extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Code de la measure
+                            Measure's code
                         </label>
                         <input type="text" 
                             name="_codeMeasure" 
                             className="form-detail" 
-                            placeholder="Code de la measure"
+                            placeholder="Measure's code"
                             value={this.state._codeMeasure}
                             onChange={this.handleInputChange}
                         />

@@ -7,16 +7,16 @@ export default class HomeTechnician extends React.Component {
         return (
             <div className="home">
                 <div className="home-main">
-                    <h1 className="home-title">Mes technicians</h1>
-                    <p className="home-p">Bienvenue Maître</p>
+                    <h1 className="home-title">My technicians</h1>
+                    <p className="home-p">Welcome</p>
                     <br />
-                    <p>Vous trouverez la liste de nos technicians sur votre droite</p>
+                    <p>You will find a list of all our TechMasters on the right hand side.</p>
                     <br />
-                    <p>Pour voir le détail d'un technician, cliquez dessus.</p>
+                    <p>To display details of a specific TechMaster, please click on it.</p>
                     <br />
-                    <p>Vous pouvez ajouter un technician en cliquant sur "NEW TECHNICIAN"</p>
+                    <p>You can also add a new TechMaster by clicking on the “New Technician” button.</p>
                     <br />
-                    <p>Être honnête n'a jamais été aussi simple !</p>
+                    <p>Being honest has never been easier!</p>
                     <div className="home-logo">
                         <a href="."><img width="208" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
                     </div>

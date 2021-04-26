@@ -57,7 +57,7 @@ export default class FormTechnician extends React.Component {
             _technicianAddress.trim() === '' ||
             _siretNumber <= '0'
         ){
-            errorMessage = "Merci de remplir correctement le formulaire !";
+            errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });
 
             setTimeout(()=>{
@@ -97,12 +97,12 @@ export default class FormTechnician extends React.Component {
                 <form>
                     <div className="form-label">
                         <label>
-                            Nom du technician
+                            Technician's name
                         </label>
                         <input type="text" 
                             name="_description" 
                             className="form-detail" 
-                            placeholder="Nom du technician"
+                            placeholder="TechMaster's name"
                             value={this.state._description}
                             onChange={this.handleInputChange}
                         />
@@ -110,12 +110,12 @@ export default class FormTechnician extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Addresse ETH du technician
+                            Technician's ETH address
                         </label>
                         <input type="text" 
                             name="_technicianAddress" 
                             className="form-detail" 
-                            placeholder="Addresse ETH du technician"
+                            placeholder="Technician's ETH address"
                             value={this.state._technicianAddress}
                             onChange={this.handleInputChange}
                         />
@@ -123,7 +123,7 @@ export default class FormTechnician extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Numéro de siret
+                            Siret Number
                         </label>
                         <input type="text" 
                             name="_siretNumber" 

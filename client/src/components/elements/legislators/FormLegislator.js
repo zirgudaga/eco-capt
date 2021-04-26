@@ -50,7 +50,7 @@ export default class FormLegislator extends React.Component {
             _legislatorAddress.trim() === '' ||
             _siretNumber <= '0'
         ){
-            errorMessage = "Merci de remplir correctement le formulaire !";
+            errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });
 
             setTimeout(()=>{
@@ -90,12 +90,12 @@ export default class FormLegislator extends React.Component {
                 <form>
                     <div className="form-label">
                         <label>
-                            Nom du legislator
+                            Legislator's name
                         </label>
                         <input type="text" 
                             name="_description" 
                             className="form-detail" 
-                            placeholder="Nom du legislator"
+                            placeholder="Legislator's name"
                             value={this.state._description}
                             onChange={this.handleInputChange}
                         />
@@ -103,12 +103,12 @@ export default class FormLegislator extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Addresse ETH du legislator
+                            Legislator's ETH address
                         </label>
                         <input type="text" 
                             name="_legislatorAddress" 
                             className="form-detail" 
-                            placeholder="Addresse ETH du legislator"
+                            placeholder="Legislator's ETH address"
                             value={this.state._legislatorAddress}
                             onChange={this.handleInputChange}
                         />
@@ -116,12 +116,12 @@ export default class FormLegislator extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Numéro de siret
+                        Siret Number
                         </label>
                         <input type="text" 
                             name="_siretNumber" 
                             className="form-detail" 
-                            placeholder="Numéro du Siret du legislator"
+                            placeholder="Siret Number"
                             value={this.state._siretNumber}
                             onChange={this.handleInputChange}
                         />

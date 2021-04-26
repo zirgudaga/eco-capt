@@ -28,7 +28,7 @@ export default class FormRule extends React.Component {
         this.newSeuilDescription.value.trim() === '' ||
         this.newSeuilLevel.value <= '0'
         ){
-            errorMessage = "Merci de remplir correctement le formulaire !";
+            errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });
 
             setTimeout(()=>{
@@ -92,7 +92,7 @@ export default class FormRule extends React.Component {
                     <form>                           
                         <div className="form-rule-label">
                             <label>
-                                Description du seuil
+                                Threshold's description
                             </label>
                             <input type="text" id="newSeuilDescription" className="form-rule-input" 
                                 ref={(input) => { 
@@ -103,7 +103,7 @@ export default class FormRule extends React.Component {
                         
                         <div className="form-rule-label">
                             <label>
-                                Version du seuil
+                                Threshold's version
                             </label>
                             <MySelect 
                                 myName="addSeuilVersion" 
@@ -113,7 +113,7 @@ export default class FormRule extends React.Component {
 
                         <div className="form-rule-label">
                             <label>
-                                Service concerné
+                                Affected service
                             </label>
                             <MySelectEth 
                                 myName="addService" 
@@ -124,7 +124,7 @@ export default class FormRule extends React.Component {
 
                         <div className="form-rule-label">
                             <label>
-                                Code du seuil
+                                Threshold's code
                             </label>
                             <MySelect 
                                 myName="addSeuilCode" 
@@ -134,7 +134,7 @@ export default class FormRule extends React.Component {
 
                         <div className="form-rule-label">
                             <label>
-                                Valeur du seuil
+                                Threshold's value
                             </label>
 
                             <input type="number" size="4" className="form-rule-input" id="newSeuilLevel" 

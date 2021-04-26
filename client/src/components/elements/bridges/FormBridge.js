@@ -62,7 +62,7 @@ export default class FormBridge extends React.Component {
             _info.trim() === '' ||
             _bridgeAddress.trim() === '' 
         ){
-            errorMessage = "Merci de remplir correctement le formulaire !";
+            errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });
 
             setTimeout(()=>{
@@ -106,12 +106,12 @@ export default class FormBridge extends React.Component {
                 <form>
                     <div className="form-label">
                         <label>
-                            Name bridge
+                            Bridge's name
                         </label>
                         <input type="text" 
                             name="_description" 
                             className="form-detail" 
-                            placeholder="Nom du bridge"
+                            placeholder="Bridge's name"
                             value={this.state._description}
                             onChange={this.handleInputChange}
                         />
@@ -119,12 +119,12 @@ export default class FormBridge extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            URL bridge
+                            Bridge's URL
                         </label>
                         <input type="text" 
                             name="_url" 
                             className="form-detail" 
-                            placeholder="Url du bridge"
+                            placeholder="Bridge's URL"
                             value={this.state._url}
                             onChange={this.handleInputChange}
                         />
@@ -132,12 +132,12 @@ export default class FormBridge extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Info bridge
+                            Bridge's Infos
                         </label>
                         <input type="text" 
                             name="_info" 
                             className="form-detail" 
-                            placeholder="Info du bridge"
+                            placeholder="Bridge's Infos"
                             value={this.state._info}
                             onChange={this.handleInputChange}
                         />
@@ -145,12 +145,12 @@ export default class FormBridge extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Addresse ETH du bridge
+                            Bridge's ETH address
                         </label>
                         <input type="text" 
                             name="_bridgeAddress" 
                             className="form-detail" 
-                            placeholder="Addresse ETH du bridge"
+                            placeholder="Bridge's ETH address"
                             value={this.state._bridgeAddress}
                             onChange={this.handleInputChange}
                         />

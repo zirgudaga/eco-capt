@@ -29,7 +29,7 @@ export default class FormService extends React.Component {
         this.newServiceDescription.value.trim() === '' ||
         this.newServiceNbTime.value <= '0'
         ){
-            errorMessage = "Merci de remplir correctement le formulaire !";
+            errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });
 
             setTimeout(()=>{
@@ -91,7 +91,7 @@ export default class FormService extends React.Component {
                 <form>
                     <div className="form-newservice-label">
                         <label>
-                            Description du service
+                            Service's description
                         </label>
                         <input type="text" name="newServiceDescription" className="form-newservice-detail" placeholder="Nouveau service"
                             ref={(input) => { 
@@ -102,7 +102,7 @@ export default class FormService extends React.Component {
 
                     <div className="form-newservice-label">
                         <label>
-                            Version du service
+                            Service's version
                         </label>
                         <MySelect 
                             myName="addServiceVersion" 
@@ -113,7 +113,7 @@ export default class FormService extends React.Component {
 
                     <div className="form-newservice-label">
                         <label>
-                            Measure du service
+                            Service's measure
                         </label>
                         <MySelectEth 
                             state={this.props.state}
@@ -124,7 +124,7 @@ export default class FormService extends React.Component {
 
                     <div className="form-newservice-label">
                         <label>
-                            Fréquence
+                            Measure's frequency
                         </label>
 
                         <input type="number" name="frequency" className="frequency" size="4" className="form-service-input-number" placeholder="1"

@@ -13,7 +13,7 @@ export default class MyNotif extends React.Component {
             return (<input type="button" className="tester-button-notice" value={"Status OK - " + this.props.contractAddress}/>);
         }
         else{
-            return (<input type="button" className="tester-button-waiting" value="Status Waiting Contract Connexion"/>);
+            return (<input type="button" className="tester-button-waiting" value="Status Waiting Contract Connection"/>);
         }
     }
 

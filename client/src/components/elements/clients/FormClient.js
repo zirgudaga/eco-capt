@@ -58,7 +58,7 @@ export default class FormClient extends React.Component {
             _contractAddress.trim() === '' ||
             _siretNumber <= '0'
         ){
-            errorMessage = "Merci de remplir correctement le formulaire !";
+            errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });
 
             setTimeout(()=>{
@@ -99,12 +99,12 @@ export default class FormClient extends React.Component {
                 <form>
                     <div className="form-label">
                         <label>
-                            Nom du client
+                            Customer's name
                         </label>
                         <input type="text" 
                             name="_description" 
                             className="form-detail" 
-                            placeholder="Nom du client"
+                            placeholder="Customer's name"
                             value={this.state._description}
                             onChange={this.handleInputChange}
                         />
@@ -112,12 +112,12 @@ export default class FormClient extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Addresse ETH du client
+                            Customer's ETH address
                         </label>
                         <input type="text" 
                             name="_customerAddress" 
                             className="form-detail" 
-                            placeholder="Addresse ETH du client"
+                            placeholder="Customer's ETH address"
                             value={this.state._customerAddress}
                             onChange={this.handleInputChange}
                         />
@@ -125,12 +125,12 @@ export default class FormClient extends React.Component {
 
                     <div className="form-label">
                         <label>
-                        Addresse ETH du contrat
+                        Contract's ETH address
                         </label>
                         <input type="text" 
                             name="_contractAddress" 
                             className="form-detail" 
-                            placeholder="Addresse ETH du contrat"
+                            placeholder="Contract's ETH address"
                             value={this.state._contractAddress}
                             onChange={this.handleInputChange}
                         />
@@ -138,12 +138,12 @@ export default class FormClient extends React.Component {
 
                     <div className="form-label">
                         <label>
-                            Numéro de siret
+                        Siret Number
                         </label>
                         <input type="text" 
                             name="_siretNumber" 
                             className="form-detail" 
-                            placeholder="Numéro du Siret du client"
+                            placeholder="Siret Number"
                             value={this.state._siretNumber}
                             onChange={this.handleInputChange}
                         />

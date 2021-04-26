@@ -1,4 +1,4 @@
-.list-body {
+.list-bridge-body {
     background: #fff;
     border-radius: 8px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
@@ -8,13 +8,13 @@
     padding-bottom: 60px;
 }
 
-.list-ul {
+.list-bridge-ul {
     height: calc(50px * 11);
     overflow-y: auto;
     padding: 10px;
 }
 
-.list-ul p input {
+.list-bridge-ul p input {
     width: 100%;
     height: 50px;
     line-height: 30px;
@@ -42,12 +42,20 @@
     text-transform: uppercase;
 }
 
-.list {
+.list-bridge-btn {
+    margin-bottom: 10px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #2563eb;
     border-radius: 8px;
-    color: white;
     background: #2563eb;
-    padding: 10px;
-    margin: 4px;
-    display: flex;
-    justify-content: space-between;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.1s all ease-out;
+}
+
+.list-bridge-btn:hover {
+    background-color: transparent;
+    color: #2563eb;
 }

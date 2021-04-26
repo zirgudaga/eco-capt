@@ -16,19 +16,44 @@ export default class InfoService extends React.Component {
             addBridgeAddress : '',
             addLegislatorAddress : '',
             addTechMasterAddress : '',
+            isBridgeCheater : false,
+            isLegislatorCheater : false,
+            isTechMasterCheater : false,
         };        
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         let { myService } = this.props;
-        let { addBridgeAddress, addLegislatorAddress, addTechMasterAddress } = this.state;
+        const { accounts, ledgerContract } = this.props.state;
+        let { addBridgeAddress, addLegislatorAddress, addTechMasterAddress, isBridgeCheater, isLegislatorCheater, isTechMasterCheater } = this.state;
         let address0 = "0x0000000000000000000000000000000000000000";
 
         if(myService.bridgeAddress!==address0) addBridgeAddress = myService.bridgeAddress;
         if(myService.legislatorAddress!==address0) addLegislatorAddress = myService.legislatorAddress;
         if(myService.techMasterAddress!==address0) addTechMasterAddress = myService.techMasterAddress;
 
-        this.setState({ addBridgeAddress, addLegislatorAddress, addTechMasterAddress });  
+        let tabAddress = [addBridgeAddress, addLegislatorAddress, addTechMasterAddress];
+        let typeTarget;
+
+        for(let i=0; i<3; i++){
+            if(tabAddress[i]!==''){
+                typeTarget = await ledgerContract.methods.rootingApps(
+                    tabAddress[i]      
+                ).send({ from: accounts[0] },
+                    async (erreur, tx) => {
+    
+                    }
+                ); 
+                
+                switch(i){
+                    case 0 : isBridgeCheater = (typeTarget!=5)?true:false;
+                    case 1 : isLegislatorCheater = (typeTarget!=3)?true:false;
+                    case 2 : isTechMasterCheater = (typeTarget!=4)?true:false;
+                }
+            }
+        }
+
+        this.setState({ addBridgeAddress, addLegislatorAddress, addTechMasterAddress, isBridgeCheater, isLegislatorCheater, isTechMasterCheater });  
     }
 
     handleMySelect = async (selectedName, selectedValue) => {
@@ -104,8 +129,11 @@ export default class InfoService extends React.Component {
     showEditAddress = (index) => {
         let { myService } = this.props;
         let { bridgeAddressEdit, legislatorAddressEdit, techMasterAddressEdit } = this.state;
+
         let address0 = "0x0000000000000000000000000000000000000000";
         let addressValue = "0x0000000000000000000000000000000000000000";
+        let affAlert = "";
+        let isCheater = false;
         let isAff = false;
         let isAccess = false;
         let nameSelect = '';
@@ -171,6 +199,8 @@ export default class InfoService extends React.Component {
 
     render() {
         let { myService } = this.props;
+        let { isBridgeCheater, isLegislatorCheater, isTechMasterCheater } = this.state;
+
 
         return (
             <div className="service-info">
@@ -178,9 +208,9 @@ export default class InfoService extends React.Component {
                 <p>Number of reports : <span className="service-info-details">{myService.measureIdCounter._value}</span></p>
                 <p>Measure's type : <span className="service-info-details">{hexToString(myService.measureType)}</span></p>
                 <p>Measure's frequency : <span className="service-info-details">Toutes les {myService.nbTime} {hexToString(myService.timeCode)}</span></p>
-                <div>Bridge's address : {this.showEditAddress(0)}</div>
-                <div>Legislator's address :<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i> {this.showEditAddress(1)}</div>
-                <div>Technician's address : {this.showEditAddress(2)}</div>                        
+                <div>Bridge's address : {isBridgeCheater&&<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i>}{this.showEditAddress(0)}</div>
+                <div>Legislator's address : {isLegislatorCheater&&<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i>}{this.showEditAddress(1)}</div>
+                <div>Technician's address : {isTechMasterCheater&&<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i>}{this.showEditAddress(2)}</div>                        
             </div>
         );      
     }

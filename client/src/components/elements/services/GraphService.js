@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Chart } from "react-google-charts";
 
-import {measureToObject} from '../../../utilsEco.js';
+import {measureToObject, hexToString} from '../../../utilsEco.js';
 
 import "./GraphService.css";
 
@@ -11,11 +11,11 @@ export default class GraphService extends React.Component {
         let { myMeasures } = this.props;
 
         let myReturn = [];
-        let header, body;
+        let body;
         if ((myMeasures !== undefined) && (myMeasures.length>0)){
             myReturn.push(['x', 'Valeur moyenne'])
             for(let i=0; i<myMeasures.length; i++){
-                [header, body] = measureToObject(myMeasures[i].header, myMeasures[i].body);
+                [, body] = measureToObject(myMeasures[i].header, myMeasures[i].body);
                 myReturn.push([i, body.val2]);
             }
         }
@@ -42,7 +42,7 @@ export default class GraphService extends React.Component {
                             title: 'Time',
                         },
                         vAxis: {
-                            title: myService.measureType,
+                            title: hexToString(myService.measureType),
                         },
                         series: {
                             0: { curveType: 'function' },

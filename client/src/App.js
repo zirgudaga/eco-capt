@@ -84,7 +84,7 @@ class App extends Component {
 
         if(ledgerContract._address !== null){
             try {
-                myTypeUser = await ledgerContract.methods.rootingApps().call({from:accounts[0]});
+                myTypeUser = await ledgerContract.methods.rootingApps("0x0000000000000000000000000000000000000000").call({from:accounts[0]});
                 ecpTokenAddress = await ledgerContract.methods.ecpTokenAddress().call({from:accounts[0]});          
 
                 if(myTypeUser === '1'){

@@ -322,11 +322,12 @@ contract('LedgerContract', function (accounts) {
         const customerTypeUser = new BN(2);
         const lesgislatorTypeUser = new BN(3);
         const technmasterTypeUser = new BN(4);
-        const publicTypeUser = new BN(5);
+        const bridgeTypeUser = new BN(5);
+        const publicTypeUser = new BN(9);
 
         // Check administrator detected
         it('Detect Administrator', async function () { 
-            let returnRootingApps = await this.LedgerContract.rootingApps({from: owner});
+            let returnRootingApps = await this.LedgerContract.rootingApps(address0, {from: owner});
             expect(returnRootingApps).to.be.bignumber.equal(adminTypeUser);
         });
         
@@ -340,7 +341,7 @@ contract('LedgerContract', function (accounts) {
                 true, 
                 {from: owner});
 
-            let returnRootingApps = await this.LedgerContract.rootingApps({from: _customerAddress});
+            let returnRootingApps = await this.LedgerContract.rootingApps(address0, {from: _customerAddress});
             expect(returnRootingApps).to.be.bignumber.equal(customerTypeUser);
         });
 
@@ -353,7 +354,7 @@ contract('LedgerContract', function (accounts) {
                 true, 
                 {from: owner});
 
-            let returnRootingApps = await this.LedgerContract.rootingApps({from: _legislatorAddress});
+            let returnRootingApps = await this.LedgerContract.rootingApps(address0, {from: _legislatorAddress});
             expect(returnRootingApps).to.be.bignumber.equal(lesgislatorTypeUser);
         });
 
@@ -366,12 +367,12 @@ contract('LedgerContract', function (accounts) {
                 true, 
                 {from: owner});
 
-            let returnRootingApps = await this.LedgerContract.rootingApps({from: _techMasterAddress});
+            let returnRootingApps = await this.LedgerContract.rootingApps(address0, {from: _techMasterAddress});
             expect(returnRootingApps).to.be.bignumber.equal(technmasterTypeUser);
         });
 
         it('Detect Public', async function () { 
-            let returnRootingApps = await this.LedgerContract.rootingApps({from: other});
+            let returnRootingApps = await this.LedgerContract.rootingApps(address0, {from: other});
             expect(returnRootingApps).to.be.bignumber.equal(publicTypeUser);
         });        
 

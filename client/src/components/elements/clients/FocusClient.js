@@ -11,7 +11,6 @@ export default class FocusClient extends React.Component {
         this.state = {
             onOff: false,
             elementOnOff: null,
-            ecpAmount :0,
         };        
     }
 
@@ -21,11 +20,6 @@ export default class FocusClient extends React.Component {
         }else{       
             return (<i className="fas fa-toggle-off" key="fa-toggle-off"></i>);
         }
-    }
-    
-
-    affCurrentAmount = () => {
-        return (this.props.ecpAmount+" - ECP");
     }
 
     toggleCustomer = async () => {
@@ -50,6 +44,25 @@ export default class FocusClient extends React.Component {
         );          
     }
 
+    add100Tokens = async () => {
+        const { accounts, ledgerContract } = this.props.state;
+        const { myElement } = this.props;
+
+        if(this.props.state.myTypeUser!=='1')
+            return;
+
+        await ledgerContract.methods.sendClientToken(
+            myElement.customerAddress,
+            100             
+        ).send({ from: accounts[0] },
+            async (erreur, tx) => {             
+                if(tx){
+
+                }
+            }
+        );
+    }
+
     render() {
         return (
             <div className="focus-body">
@@ -62,8 +75,8 @@ export default class FocusClient extends React.Component {
                         <p className="focus-header-address">Your current balance is : </p>
                         <div className="focus-token-align">
                             <img className="focus-token-ecp" src="./ECP.png" alt="ecp-token" />
-                            <p>{this.state.ecpAmount} ECP</p>
-                            <button className="focus-token-cta">add 100 tokens</button>
+                            <p>{this.props.ecpAmount} ECP</p>
+                            <button className="focus-token-cta" onClick= { () => this.add100Tokens() }>add 100 tokens</button>
                         </div>
                     </div>
                     }

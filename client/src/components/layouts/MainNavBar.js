@@ -13,7 +13,7 @@ export default class MainNavBar extends React.Component {
                 return <span><i key="fa-user-astronaut" className="fas fa-user-astronaut"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;   
             else if(this.props.state.myTypeUser == 2)
                 return <span><i key="fa-user" className="fas fa-user"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;
-            else if(this.props.state.myTypeUser == 5)
+            else if(this.props.state.myTypeUser == 9)
                 return <span><i key="fa-user" className="fas fa-search-location"></i>{this.props.state.accounts[0].substr(0,5)+'...'+this.props.state.accounts[0].substr(-4)}<i key="fa-check-circle" className="fas fa-check-circle"></i></span>;
         } 
         else{

@@ -277,27 +277,39 @@ contract LedgerContract is Ownable {
      * @dev allows the dApp to process user's type and display the correct interface
      * @param _myTypeUser uint user's type 
      */  
-    function rootingApps()
+    function rootingApps(
+        address _userAddress)
         external view returns(uint _myTypeUser){
         /*
             1 : Admin
             2 : Client
             3 : Législateur
             4 : Techmaster
-            5 : Public
+            5 : Bridge
+            9 : Public
         */
-        if(msg.sender == owner()){
+
+        address temp = _userAddress;
+
+        if(_userAddress==address(0))
+            temp = msg.sender;
+        
+        if(temp == owner()){
             return 1;
         }
-        if(_customers[msg.sender].exist){
+        if((_customers[temp].exist) && (_customers[temp].isActive)){
             return 2;
         }
-        if(_legislators[msg.sender].exist){
+        if((_legislators[temp].exist) && (_legislators[temp].isActive)){
             return 3;
         }
-        if(_techMasters[msg.sender].exist){
+        if((_techMasters[temp].exist) && (_techMasters[temp].isActive)){
             return 4;
         }
-        return 5;
+        if((_bridges[temp].exist) && (_bridges[temp].isActive)){
+            return 5;
+        }
+
+        return 9;
     }
 }

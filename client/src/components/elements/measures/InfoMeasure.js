@@ -7,7 +7,6 @@ export default class InfoMeasure extends React.Component {
     render() {
 
         let { myElement } = this.props;
-        let address0 = "0x0000000000000000000000000000000000000000";
 
         return (
             <div className="info">

@@ -179,7 +179,7 @@ export default class InfoService extends React.Component {
                 <p>Measure's type : <span className="service-info-details">{hexToString(myService.measureType)}</span></p>
                 <p>Measure's frequency : <span className="service-info-details">Toutes les {myService.nbTime} {hexToString(myService.timeCode)}</span></p>
                 <div>Bridge's address : {this.showEditAddress(0)}</div>
-                <div>Legislator's address : {this.showEditAddress(1)}</div>
+                <div>Legislator's address :<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i> {this.showEditAddress(1)}</div>
                 <div>Technician's address : {this.showEditAddress(2)}</div>                        
             </div>
         );      

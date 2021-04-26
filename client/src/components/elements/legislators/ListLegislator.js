@@ -6,14 +6,14 @@ export default class ListLegislator extends React.Component {
 
     render() {
         return (
-            <div className="list-body">
-                <div className="list-ul">
+            <div className="list-legislator-body">
+                <div className="list-legislator-ul">
                     {this.props.state.listElements.length > 0 
                         ?
                         this.props.state.listElements.map((element, index) => (
-                            <div className="list" key={"elementKey"+index} onClick={ () => this.props.setElementFocus(index) }>
-                                <span>{element.description}</span> 
-                            </div>  
+                            <button className="list-legislator-btn" key={"elementKey"+index} onClick={ () => this.props.setElementFocus(index) }>
+                                {element.description}
+                            </button>  
                         ))
                         :
                         " Aucun legislator"

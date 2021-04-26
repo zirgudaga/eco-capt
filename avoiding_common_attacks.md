@@ -1,5 +1,19 @@
 # avoiding_common_attacks.md
 
+- [x] Re-Entrancy
+- [x] Arithmetic Overflow and Underflow
+- [ ] Self Destruct
+- [ ] Accessing Private Data
+- [ ] Delegatecall
+- [ ] Source of Randomness
+- [ ] Denial of Service
+- [ ] Phishing with tx.origin
+- [ ] Hiding Malicious Code with External Contract
+- [ ] Honeypot
+- [ ] Front Running
+- [ ] Block Timestamp Manipulation
+- [ ] Signature Replay
+
 📌 Pour l'heure, voici l'ensemble des sécurités mises en place :
 
 - Aucun emploi de smart contract extérieur possible hors le **contract Ledger**. L'adresse dudit **Ledger** sera renseignée au déploiement et ne pourra pas être modifiée.

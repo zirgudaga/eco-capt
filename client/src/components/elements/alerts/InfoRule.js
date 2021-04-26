@@ -10,12 +10,12 @@ export default class InfoRule extends React.Component {
 
         return (
             <div className="rule-info">
-                <p>Nom du seuil : <span className="rule-info-details">{myRule.description}</span></p>
+                <p>Threshold's name : <span className="rule-info-details">{myRule.description}</span></p>
                 <p>Version : <span className="rule-info-details">{hexToString(myRule.version)}</span> </p>
-                <p>Code Alerte : <span className="rule-info-details">{hexToString(myRule.codeAlert)}</span> </p>
-                <p>Seuil d'alerte : <span className="rule-info-details">{hexToString(myRule.valueAlert)}</span> </p>
-                <p>Numero de service : <span className="rule-info-details">{myRule.serviceId}</span> </p>
-                <p>Adresse du créateur : <span className="rule-info-details">{myRule.legislatorAddress}</span> </p>
+                <p>Alert code : <span className="rule-info-details">{hexToString(myRule.codeAlert)}</span> </p>
+                <p>Threshold's alert : <span className="rule-info-details">{hexToString(myRule.valueAlert)}</span> </p>
+                <p>Service's number : <span className="rule-info-details">{myRule.serviceId}</span> </p>
+                <p>Creator's address : <span className="rule-info-details">{myRule.legislatorAddress}</span> </p>
             </div>
         );      
     }

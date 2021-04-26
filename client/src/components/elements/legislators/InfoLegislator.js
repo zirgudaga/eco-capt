@@ -11,9 +11,9 @@ export default class InfoLegislator extends React.Component {
 
         return (
             <div className="info">
-                <p>Nom du legislator : <span className="info-details">{myElement.description}</span></p>
-                <p>Adresse du legislator : <span className="info-details">{myElement.legislatorAddress===address0?"En attente":myElement.legislatorAddress}</span></p>
-                <p>Numéro de siret : <span className="info-details">{myElement.siretNumber}</span></p>
+                <p>Legislator's name : <span className="info-details">{myElement.description}</span></p>
+                <p>Legislator's address : <span className="info-details">{myElement.legislatorAddress===address0?"En attente":myElement.legislatorAddress}</span></p>
+                <p>Siret number : <span className="info-details">{myElement.siretNumber}</span></p>
             </div>
         );      
     }

@@ -11,9 +11,9 @@ export default class InfoTechnician extends React.Component {
 
         return (
             <div className="info">
-                <p>Nom du technician : <span className="info-details">{myElement.description}</span></p>
-                <p>Adresse du technician : <span className="info-details">{myElement.technicianAddress===address0?"En attente":myElement.technicianAddress}</span></p>
-                <p>Numéro de siret : <span className="info-details">{myElement.siretNumber}</span></p>
+                <p>Technician's name : <span className="info-details">{myElement.description}</span></p>
+                <p>Technician's address : <span className="info-details">{myElement.technicianAddress===address0?"En attente":myElement.technicianAddress}</span></p>
+                <p>Siret number : <span className="info-details">{myElement.siretNumber}</span></p>
             </div>
         );      
     }

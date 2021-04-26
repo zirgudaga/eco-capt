@@ -1,4 +1,4 @@
-.list-client-body {
+.list-body {
     background: #fff;
     border-radius: 8px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
@@ -8,13 +8,15 @@
     padding-bottom: 60px;
 }
 
-.list-client-ul {
+.list-ul {
+    display: flex;
+    flex-direction: column;
     height: calc(50px * 11);
     overflow-y: auto;
     padding: 10px;
 }
 
-.list-client-ul p input {
+.list-ul p input {
     width: 100%;
     height: 50px;
     line-height: 30px;
@@ -26,7 +28,7 @@
     text-align: left;
 }
 
-.list-client-cta {
+.list-cta {
     height: 60px;
     line-height: 60px;
     background-color: #2563eb;
@@ -42,12 +44,25 @@
     text-transform: uppercase;
 }
 
-.list-client-cta:hover {
+.list-button {
+    margin-bottom: 10px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.1s all ease-out;
+}
+
+.list-button:hover {
     background-color: transparent;
     color: #2563eb;
 }
 
-.list-client {
+.list {
     border-radius: 8px;
     color: white;
     background: #2563eb;

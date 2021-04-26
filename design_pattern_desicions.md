@@ -1,4 +1,28 @@
-# design_pattern_desicions.md
+# Design Pattern Decisions
+
+This section explains why we chose the design patterns we are using in the code. 
+
+
+- Behavioral Patterns
+    - [x] **Guard Check**: Ensure that the behavior of a smart contract and its input parameters are as expected.
+    - [x] State Machine: Enable a contract to go through different stages with different corresponding functionality exposed.
+    - [] **Oracle**: Gain access to data stored outside of the blockchain.
+    - [ ] Randomness: Generate a random number of a predefined interval in the deterministic environment of a blockchain.
+- Security Patterns
+    - [x] **Access Restriction**: Restrict the access to contract functionality according to suitable criteria.
+    - [ ] Checks Effects Interactions: Reduce the attack surface for malicious contracts trying to hijack control flow after an external call.
+    - [ ] Secure Ether Transfer: Secure transfer of ether from a contract to another address.
+    - [ ] **Pull over Push**: Shift the risk associated with transferring ether to the user.
+    - [x] Emergency Stop: Add an option to disable critical contract functionality in case of an emergency.
+- Upgradeability Patterns
+    - [ ] Proxy Delegate: Introduce the possibility to upgrade smart contracts without breaking any dependencies.
+    - [ ] Eternal Storage: Keep contract storage after a smart contract upgrade.
+- Economic Patterns
+    - [ ] String Equality Comparison: Check for the equality of two provided strings in a way that minimizes average gas consumption for a large number of different inputs.
+    - [x] Tight Variable Packing: Optimize gas consumption when storing or loading statically-sized variables.
+    - [ ] Memory Array Building: Aggregate and retrieve data from contract storage in a gas efficient way.
+
+[Reference](https://fravoll.github.io/solidity-patterns/)
 
 Pour nos **smart contracts**, nous avons naturellement mis en place plusieurs bonnes pratiques présentes dans [https://fravoll.github.io/solidity-patterns/](https://fravoll.github.io/solidity-patterns/)
 
@@ -74,6 +98,8 @@ La vérification de ces adresses pour les actions est encadrée par notre **Guar
 
 ## Checks Effects Interactions
 
+-> Les actions sont déjà bridées par utilisateur, par adresse.
+
 L'implémentation d'un **ERC-20** est en cours de réalisation. Le contrôle de l'intéraction s'assurera de la bonne tenue des paiements réalisés par l'**ERC-20** en question.
 
 ## Secure Ether Transfer
@@ -114,11 +140,12 @@ Nous avons prévu que chaque contrat client soit versionné. L'ensemble des donn
 
 ## String Equality Comparison
 
-Les rares strings utilisées dans notre application ne demande pas de comparaison. Par contre, pour la partie **KYC** enregistrée dans le **contrat Ledger**, nous utiliserons la fonction **keccak256** afin de comparer les hashs des élements importants (SIRET, Nom de socièté, etc...)
+--> Pour les **KYC** prévus dans la roadmap, il sera nécessaire de prévoir des comparaisons de chaines de caractères.
+
 
 ## Tight Variable Packing
 
-L'ordre des variables de nos structures est étudiés pour packer dans la mesure du possible les différentes tailles de variable :
+L'ordre des variables de nos structures est étudié pour packer dans la mesure du possible les différentes tailles de variable :
 
     /**
      * @dev Structure of Service
@@ -142,6 +169,17 @@ L'ordre des variables de nos structures est étudiés pour packer dans la mesure
 
 Cette bonne pratique sera totalement effective sur la fin du projet.
 
+Pour finir, les données vouées à être nombreuses sont compactées de manière économique en **bytes32**, même si elles sont composites.
+
+    // struct mesure en-tête (32) { 
+    //   //V0.1     XX.XX.XX    00.01.00
+    //   Version : bytes8;
+    //   Date : YYYYmmddHHii : byte12
+    //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
+    //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
+    //   Nb temporel : bytes3 
+    // }
+
 ## Memory Array Building
 
 Afin d'économier au mieux le gaz, nous utilisons systématiquement l'attribut **view** pour l'ensemble de nos getters :
@@ -162,13 +200,6 @@ D'un autre côté, pour continuer à économiser au mieux le gaz, sans que cela 
     mapping(uint => Iot[]) private _serviceMacIOT;
     Counters.Counter public _serviceIdCounter;
 
-Pour finir, les données vouées à être nombreuses sont compactées de manière économique en **bytes32**, même si elles sont composites.
-
-    // struct mesure en-tête (32) { 
-    //   //V0.1     XX.XX.XX    00.01.00
-    //   Version : bytes8;
-    //   Date : YYYYmmddHHii : byte12
-    //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
-    //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
-    //   Nb temporel : bytes3 
-    // }
+Afin d'optimiser au mieux nos smart contracts, nous passons les mesures par Events.
+En effet, une fois envoyées par le bridge, elles ne sont plus utilisées pour des calculs et ne sont pas modifiées.
+La Dapps peut donc y acceder sans que ces données encombrent le contrat.

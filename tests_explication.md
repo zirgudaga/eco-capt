@@ -1,12 +1,13 @@
 # tests_explication.md 
 
-*Ce document doit expliquer les tests écrits et pourquoi vous les avez écrit.*
+*This file aims at explaining tests and why we wrote them.*
 
-📌 Les tests du **clientContract.sol** ont été réalisés en parallèle des déploiements.
-Nous avons ensuite décidé d'élaborer nos tests en amont afin d'écrire notre contrat **ledgerContrat.sol** en conséquence.
-L'objectif est de tester toutes les fonctions de chaque smart contract afin de s'assurer du bon fonctionnement de ces derniers.
+📌 Tests for the  **CustomerContract.sol** were writen while deploying.
+We then decided to switch our approach, build our testing structure first and write the **ledgerContrat.sol** as a result.
+The goal is to test every key function of each smart contract in order to verify and check if it works properly. 
 
-Concernant le contrat c**lientContract.sol** par exemple, la fonction **addService** se doit d'être testée pour une question de securité.
+
+Regarding the **CustomerContract.sol** contract for instance, the **addService** function needs to be tested during our security check. We need to be sure that only the Customer and ourselves can access the function, and block everyone else attempting to call this paramount set function.
 
     function addService(
         bytes8 _version,   
@@ -38,7 +39,7 @@ Concernant le contrat c**lientContract.sol** par exemple, la fonction **addServi
         _serviceIdCounter.increment();
     }  
 
-Nous testons donc les accès aux fonctions au travers de **modifiers** présents dans **clientContract.sol** :
+We test the access to this function through **modifiers** located in **CustomerContract.sol** :
 
     modifier onlyCustomer() {
         require (_myConfig.customerAddress == msg.sender || owner() ==  msg.sender, "Access denied");
@@ -50,78 +51,67 @@ Nous testons donc les accès aux fonctions au travers de **modifiers** présents
         _;
     }
 
-Si la personne faisant appel à cette fonction n'est pas présente dans le tableau des **customers**, le test **onlyCustomer** de la fonction **addService** renverra l'erreur **"Access denied"**.
+If the customer's address isnt part of the struct **Config**, the **onlyCustomer** test of the **addService** function will revert an **"Access denied"** error.
 
-Le contrat test pour **addService** a donc la structure suivante :
+The **addService** test has the following structure :
 
-    // Contrat de test pour addService
-        contract('addService', function (accounts) {
-            const owner = accounts[0];    
-            const client = accounts[1];
-            const other = accounts[2];    
-            const prevContrat = accounts[3];
-            const bridgeAddress = accounts[4];
-            const techMasterAddress = accounts[5];
-            const legislatorAddress = accounts[6];
-            const address0 = "0x0000000000000000000000000000000000000000";
+    describe('addService', function () {
 
-            let _version = "0x0102030405060708";   
-            let _description = "Description de test";
-            let _measureType = "0x1112131415161718";            
-            let _timeCode = "0x21";
-            let _nbTime = "6"; 
-            let _prevContractDate = "0";
+        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge', 'Other'];
+        let testAccessAddress= [legislator , techmaster, bridge , other ];
 
-            // Avant chaque test unitaire
-            beforeEach(async function () {
-                this.ClientContract = await ClientContract.new(_version, client, prevContrat, _prevContractDate, {from: owner});     
-            });
-
-            it('Revert if other : onlyCustomer', async function () { 
-                // On vérifie bien que l'ajout provoque un revert !
-                await (expectRevert(this.ClientContract.addService(
+        for(let i=0; i<testAccessMessage.length; i++){
+            it('Access denied - '+testAccessMessage[i], async function () {  
+                await (expectRevert(this.CustomerContract.addService(
                     _version,
                     _description,
                     _measureType,
                     _timeCode,
                     _nbTime,
-                    {from: other}), "Access denied"));  
+                    {from: testAccessAddress[i]}), "Access denied"));  
             });
+        }
 
         it('Revert if contract offline', async function () { 
             // On vérifie bien que l'ajout provoque un revert !
-            this.ClientContract.toggleContract({from: owner});        
+            await this.CustomerContract.toggleContract({from: owner});        
             
-            await (expectRevert(this.ClientContract.addService(
+            await (expectRevert(this.CustomerContract.addService(
                 _version,
                 _description,
                 _measureType,
                 _timeCode,
                 _nbTime,
-                {from: client}), "Contract off line"));  
+                {from: customer1}), "Contract off line"));  
         });
 
         it('Service added properly', async function () { 
 
+            let _nbTimeBN = new BN(_nbTime);
+            let _BN0 = new BN(0);
+
             // On procède à l'ajout d'un service
-            let receipt = await this.ClientContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: client});
-            let myService = await this.ClientContract.getOneService(0, {from: client});
+            let receipt = await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: customer1});
+            let myService = await this.CustomerContract._services(0);
             expect(myService.version).to.equal(_version);   
             expect(myService.description).to.equal(_description);
             expect(myService.measureType).to.equal(_measureType);
             expect(myService.timeCode).to.equal(_timeCode);
-            expect(myService.nbTime).to.equal(_nbTime);
+            expect(myService.nbTime).to.be.bignumber.equal(_nbTimeBN);
             expect(myService.isActive).to.equal(true);
             expect(myService.bridgeAddress).to.equal(address0);
             expect(myService.techMasterAddress).to.equal(address0);
             expect(myService.legislatorAddress).to.equal(address0);        
+            expect(myService.measureIdCounter._value).to.be.bignumber.equal(_BN0);
+            expect(myService.iotIdCounter._value).to.be.bignumber.equal(_BN0);
+            
+            // On regarde que service1 est enregistré - Sur le tableau des services      
 
             // L'event est bien envoyé par l'application
-            expectEvent(receipt, "ContractUpdate", { _author: client });
+            expectEvent(receipt, "ServiceUpdate", { _message:"New service", _author: customer1 });
         });
-    
     });
 
-Au travers des tests nous vérifions également le bon déroulement de chaque fonction.
-Nous effectuons également un rapprochement entre le résultat attendu du test et le résultat effectif.
-Nous testons donc le respect des **require** afin que les données passées en paramètre soient correctement enregistrées dans les **structs**.
+Through our tests, we also check if each function operates properly.
+We also reconciliate expected results and effective results.
+We test every **require** to ensure that every data sent as parameters are being saved in the **structs**. 

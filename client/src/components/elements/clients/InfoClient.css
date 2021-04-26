@@ -1,5 +1,6 @@
 .info {
     margin-bottom: 50px;
+    cursor: pointer;
     position: absolute;
     bottom: 60px;
 }

@@ -9,6 +9,8 @@
 }
 
 .list-service-ul {
+    display: flex;
+    flex-direction: column;
     height: calc(50px * 11);
     overflow-y: auto;
     padding: 10px;
@@ -43,11 +45,19 @@
 }
 
 .list-service {
+    margin-bottom: 10px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #2563eb;
     border-radius: 8px;
-    color: white;
     background: #2563eb;
-    padding: 10px;
-    margin: 4px;
-    display: flex;
-    justify-content: space-between;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.1s all ease-out;
+}
+
+.list-service:hover {
+    background-color: transparent;
+    color: #2563eb;
 }

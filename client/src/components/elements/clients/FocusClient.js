@@ -53,19 +53,20 @@ export default class FocusClient extends React.Component {
     render() {
         return (
             <div className="focus-body">
-                            
-                {this.props.state.myTypeUser==1
-                &&
+                 <div className="focus-header">
+                    <div><b>{this.props.myElement.description}</b><span onClick= { () => this.toggleCustomer() }>{this.affActive()}</span></div>
+                </div>
+                    {this.props.state.myTypeUser==1
+                    &&
                     <div className="focus-token">
-                        <p className="page-header-address">Your current balance is : </p>
+                        <p className="focus-header-address">Your current balance is : </p>
                         <div className="focus-token-align">
                             <img className="focus-token-ecp" src="./ECP.png" alt="ecp-token" />
                             <p>{this.state.ecpAmount} ECP</p>
                             <button className="focus-token-cta">add 100 tokens</button>
                         </div>
                     </div>
-                }
-
+                    }
                 <InfoClient 
                     myElement={this.props.myElement}
                     goContract={(addr) => {this.props.goContract(addr)}} 

@@ -27,9 +27,11 @@ contract('LedgerContract', function (accounts) {
     const _infoMeasure2 = 'toutes les heures';
     const _codeMeasure = "0xABCD123400000000";
 
+    const token_0 = new BN(0);
+    const token_100 = new BN(100);
+
     let _tokenAddress;
     let _ledgerAddress;
-
 
     beforeEach(async function () {
         this.ECPToken = await ECPToken.new({from: owner});
@@ -377,9 +379,6 @@ contract('LedgerContract', function (accounts) {
 
     describe('mintECP', function () {
 
-        const token_0 = new BN(0);
-        const token_100 = new BN(100);
-
         it('Revert if other : onlyOwner', async function () { 
             // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.mintECP(
@@ -398,7 +397,6 @@ contract('LedgerContract', function (accounts) {
                 {from: owner});
 
             let balanceOfCustomer = await this.ECPToken.balanceOf(_customerAddress);
-            
             expect(balanceOfCustomer).to.be.bignumber.equal(token_0);
 
             await this.LedgerContract.mintECP(
@@ -412,9 +410,6 @@ contract('LedgerContract', function (accounts) {
     }); 
 
     describe('sendClientToken', function () {
-
-        const token_0 = new BN(0);
-        const token_100 = new BN(100);
 
         it('Revert if other : onlyOwner', async function () { 
             // On vérifie bien que l'ajout provoque un revert !

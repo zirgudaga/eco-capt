@@ -276,17 +276,6 @@ contract CustomerContract is Ownable {
         emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
     }     
 
-    // function _checkValidLegislator(
-    //     address _address) 
-    //     internal view 
-    //     returns(bool _return){
-
-    //     if(_address != msg.sender)
-    //         return true;
-    //     // TODO LINK AU GRAND REGISTRE
-    //     return true;       
-    // }
-
     // MEASURE PART
 
     /**
@@ -332,7 +321,7 @@ contract CustomerContract is Ownable {
 
         require (_services[_serviceId].legislatorAddress == msg.sender 
         || _myConfig.customerAddress == msg.sender 
-        || owner() ==  msg.sender, "Access Denied");
+        || owner() ==  msg.sender, "Access denied");
 
         Counters.Counter memory alertIdCounter;
 
@@ -349,7 +338,7 @@ contract CustomerContract is Ownable {
             alertIdCounter
         );
 
-        emit ServiceRulesUpdate(_serviceId, _ruleIdCounter.current(), "New Rule", msg.sender);
+        emit ServiceRulesUpdate(_serviceId, _ruleIdCounter.current(), "New rule", msg.sender);
 
         _ruleIdCounter.increment();
     }
@@ -361,7 +350,7 @@ contract CustomerContract is Ownable {
     function toggleRule(uint _ruleId) 
         external {
 
-        require ((msg.sender == _serviceRules[_ruleId].legislatorAddress) || (msg.sender == owner()));
+        require ((msg.sender == _serviceRules[_ruleId].legislatorAddress) || (msg.sender == owner()), "Access denied");
 
         emit ServiceRulesUpdate(_serviceRules[_ruleId].serviceId, _ruleId, "Rules on/off", msg.sender);
         
@@ -380,7 +369,9 @@ contract CustomerContract is Ownable {
         uint _ruleId,
         bytes32 _alertBody) 
         isContractActive() isServiceActive(_serviceId) onlyBridge(_serviceId) external {         
-                   
+
+        _ECPToken.transfer(_myConfig._ledgerAddress, 1);
+
         _serviceRules[_ruleId].alertIdCounter.increment();
 
         emit AlertReceive(_serviceId, _ruleId, _alertBody, msg.sender);

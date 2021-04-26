@@ -26,9 +26,10 @@ export default class ListRule extends React.Component {
                         ?
                         this.props.state.listRules.map((rule, index) => (
 
-                            <div className="alert-malibu" key={"RuleKey"+index} onClick={ () => this.props.setRuleFocus(index) }><span>{rule.description}</span> 
-                                <span className="alert-notif">{rule.alertIdCounter['_value']}</span>
-                            </div>  
+                            <button className="alert-malibu" key={"RuleKey"+index} onClick={ () => this.props.setRuleFocus(index) }>
+                                {rule.description}
+                                <span className="alert-malibu-counter">{rule.alertIdCounter['_value']}</span>
+                            </button>  
                         ))
                         :
                         " Aucun Rule"

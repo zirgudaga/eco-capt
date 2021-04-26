@@ -3,7 +3,7 @@ pragma solidity 0.8.0;
 
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../node_modules/@openZeppelin/contracts/token/ERC20/IERC20.sol";
+import "./IECPToken.sol";
 
 contract LedgerContract is Ownable {
     using Counters for Counters.Counter;
@@ -82,11 +82,11 @@ contract LedgerContract is Ownable {
     mapping(bytes8 => TypeMeasure) public _typeMeasures;
 
     address public ecpTokenAddress;
-    IERC20 private _ECPToken;
+    IECPToken private _ECPToken;
 
     constructor (address _ecpTokenAddress) {
         ecpTokenAddress = _ecpTokenAddress;
-        _ECPToken = IERC20(_ecpTokenAddress);
+        _ECPToken = IECPToken(_ecpTokenAddress);
     }    
 
      /**
@@ -241,13 +241,37 @@ contract LedgerContract is Ownable {
         true);
     }    
 
-    // FONCTION POUR MINTER !!
+     /**
+     * @dev allows the dApp to mint ECP if is owner
+     * @param _target address of mint recever
+     * @param _amount uint user's type 
+     */ 
+    function mintECP ( 
+        address _target,             
+        uint _amount) 
+        onlyOwner() external {
 
+        _ECPToken.ownerMint (_target, _amount);
+    }
 
-    // FONCTION POUR ENVOYER DES TOKENS AUX CLIENTS !
+     /**
+     * @dev allows the dApp to mint ECP if is owner
+     * @param _customerAddress address of mint recever
+     * @param _amount uint user's type 
+     */ 
+    function sendClientToken ( 
+        address _customerAddress,             
+        uint _amount) 
+        onlyOwner() external {
 
+        require(_customers[_customerAddress].exist, "Customer not exist"); 
 
-
+        if(_ECPToken.balanceOf(address(this)) < _amount){
+            _ECPToken.ownerMint (_customers[_customerAddress].contractAddress, _amount);
+        }else{
+            _ECPToken.transfer(_customers[_customerAddress].contractAddress, _amount);
+        }
+    }
 
      /**
      * @dev allows the dApp to process user's type and display the correct interface

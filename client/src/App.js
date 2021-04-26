@@ -82,20 +82,26 @@ class App extends Component {
 
         let { ledgerContract, ledgerSafe, ecpTokenContract, accounts, myTypeUser, ecpTokenAddress } = this.state;
 
-        if(ledgerContract !== null){
-            myTypeUser = await ledgerContract.methods.rootingApps().call({from:accounts[0]});
-            ecpTokenAddress = await ledgerContract.methods.ecpTokenAddress().call({from:accounts[0]});          
+        if(ledgerContract._address !== null){
+            try {
+                myTypeUser = await ledgerContract.methods.rootingApps().call({from:accounts[0]});
+                ecpTokenAddress = await ledgerContract.methods.ecpTokenAddress().call({from:accounts[0]});          
 
-            if(myTypeUser === '1'){
-                ledgerSafe = await ecpTokenContract.methods.balanceOf(ledgerContract._address).call({from:accounts[0]});     
-            }            
+                if(myTypeUser === '1'){
+                    ledgerSafe = await ecpTokenContract.methods.balanceOf(ledgerContract._address).call({from:accounts[0]});     
+                }            
 
-            if(myTypeUser === '2'){
-                let myContract = await ledgerContract.methods._customers(accounts[0]).call({from:accounts[0]});
-                this.goContract(myContract.contractAddress);
+                if(myTypeUser === '2'){
+                    let myContract = await ledgerContract.methods._customers(accounts[0]).call({from:accounts[0]});
+                    this.goContract(myContract.contractAddress);
+                }
+
+                this.setState({ myTypeUser, ledgerSafe, ecpTokenAddress });
+            } catch (error) {
+                // Catch any errors for any of the above operations.
+                //alert(`Failed to load web3, accounts, or contract. Check console for details.`);
+                console.error(error);
             }
-
-            this.setState({ myTypeUser, ledgerSafe, ecpTokenAddress });
         }
       
 

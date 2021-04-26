@@ -5,23 +5,36 @@ import "../node_modules/@openZeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract ECPToken is ERC20 {
 
-    address private _owner;
+    address public owner;
+    address public ledger;
 
     modifier onlyOwner() {
-        require(_owner == _msgSender(), "Ownable: caller is not the owner");
+        require(owner == msg.sender, "Acces Token Denied");
+        _;
+    }
+
+    modifier onlyLedger() {
+        require((owner == msg.sender || ledger == msg.sender), "Acces Token Denied");
         _;
     }
 
     constructor() ERC20("Eco-capt", "ECP") {
-        _owner = msg.sender;
+        owner = msg.sender;
+    }
+
+    function setLedgerAddress ( 
+        address _ledger)
+        onlyOwner() external{
+        ledger=_ledger;
     }
     
-    function sendSubscription ( 
+    function ownerMint ( 
         address _customerContract,
         uint amount)
-        onlyOwner() external {
+        onlyLedger() external returns (bool){
   
         _mint(_customerContract, amount);
+        return true;
     }
 
 }

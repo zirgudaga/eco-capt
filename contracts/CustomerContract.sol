@@ -3,7 +3,7 @@ pragma solidity 0.8.0;
 
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../node_modules/@openZeppelin/contracts/token/ERC20/IERC20.sol";
+import "./IECPToken.sol";
 
 contract CustomerContract is Ownable {
     using Counters for Counters.Counter;
@@ -150,7 +150,7 @@ contract CustomerContract is Ownable {
     mapping(uint => Rule) public _serviceRules;
     Counters.Counter public _ruleIdCounter;
 
-    IERC20 private _ECPToken;
+    IECPToken private _ECPToken;
 
     constructor (bytes8 _version, address _ledgerAddress, address _ecpTokenAddress, address _customerAddress, address _prevContract, uint64 _prevContractDate) {
         _myConfig = Config(
@@ -165,7 +165,7 @@ contract CustomerContract is Ownable {
             true
         );
 
-        _ECPToken = IERC20(_ecpTokenAddress);
+        _ECPToken = IECPToken(_ecpTokenAddress);
     }
   
     /**
@@ -245,21 +245,6 @@ contract CustomerContract is Ownable {
     }     
 
     /**
-     * @dev set a BridgeAdress
-     * @param _serviceId index of service
-     * @param _bridgeAddress bridge's address
-     */
-    function setBridgeAddress(
-        uint _serviceId,
-        address _bridgeAddress)
-        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
-        
-        _services[_serviceId].bridgeAddress = _bridgeAddress;
-
-        emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
-    }   
-
-    /**
      * @dev set a LegislatorAddress
      * @param _serviceId index of service 
      * @param _legislatorAddress legislator's address
@@ -274,6 +259,21 @@ contract CustomerContract is Ownable {
         _services[_serviceId].legislatorAddress = _legislatorAddress;
 
         emit ServiceUpdate(_serviceId, "Legislator Address update", msg.sender);
+    }   
+
+    /**
+     * @dev set a BridgeAdress
+     * @param _serviceId index of service
+     * @param _bridgeAddress bridge's address
+     */
+    function setBridgeAddress(
+        uint _serviceId,
+        address _bridgeAddress)
+        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
+        
+        _services[_serviceId].bridgeAddress = _bridgeAddress;
+
+        emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
     }     
 
     // function _checkValidLegislator(
@@ -300,7 +300,7 @@ contract CustomerContract is Ownable {
         bytes32 _measureHeader,
         bytes32 _measurebody) 
         isContractActive() isServiceActive(_serviceId) onlyBridge(_serviceId) external {    
-        
+
         _ECPToken.transfer(_myConfig._ledgerAddress, 1);
 
         _services[_serviceId].measureIdCounter.increment();

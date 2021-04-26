@@ -12,6 +12,8 @@ module.exports = async (deployer, _network, accounts) => {
     await deployer.deploy(LedgerContract, myToken.address);
     const myLedger = await LedgerContract.deployed();
 
+    await myToken.setLedgerAddress(myLedger.address);
+
     await myLedger.setTechMaster(
         "Technician 1",
         accounts[1],
@@ -95,10 +97,10 @@ module.exports = async (deployer, _network, accounts) => {
         true     
     );
 
-    await myToken.sendSubscription(
-        customerContract.address,
-        100     
-    );
+    // await myToken.sendSubscription(
+    //     customerContract.address,
+    //     100     
+    // );
 
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -122,10 +124,10 @@ module.exports = async (deployer, _network, accounts) => {
         true     
     );
 
-    await myToken.sendSubscription(
-        customerContract.address,
-        100     
-    );
+    // await myToken.sendSubscription(
+    //     customerContract.address,
+    //     100     
+    // );
 
        
 };

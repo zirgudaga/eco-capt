@@ -1,7 +1,7 @@
 const { expectRevert, expectEvent, BN } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
-const LedgerContract = artifacts.require('LedgerContract');
-
+const LedgerContract = artifacts.require('LedgerContract.sol');
+const ECPToken = artifacts.require('ECPToken.sol')
 
 contract('LedgerContract', function (accounts) {
 
@@ -27,15 +27,24 @@ contract('LedgerContract', function (accounts) {
     const _infoMeasure2 = 'toutes les heures';
     const _codeMeasure = "0xABCD123400000000";
 
-    // Avant chaque test unitaire
+    let _tokenAddress;
+    let _ledgerAddress;
+
+
     beforeEach(async function () {
-        this.LedgerContract = await LedgerContract.new({from: owner});
+        this.ECPToken = await ECPToken.new({from: owner});
+        _tokenAddress = this.ECPToken.address;
+
+        this.LedgerContract = await LedgerContract.new(_tokenAddress, {from: owner});
+        _ledgerAddress = this.LedgerContract.address;
+
+        await this.ECPToken.setLedgerAddress(_ledgerAddress, {from: owner});
     });
 
     describe("setCustomer", function() {
 
         it('Revert if other : onlyOwner', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
+
             await (expectRevert(this.LedgerContract.setCustomer(
                 _customer,
                 _customerAddress,
@@ -46,7 +55,7 @@ contract('LedgerContract', function (accounts) {
         });
 
         it('New customer properly set', async function () { 
-            // On procède à l'ajout d'un Customer
+
             await this.LedgerContract.setCustomer(
                 _customer,
                 _customerAddress,
@@ -66,7 +75,7 @@ contract('LedgerContract', function (accounts) {
     describe('setLegislator', function () {
 
         it('Revert if other : onlyOwner', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
+
             await (expectRevert(this.LedgerContract.setLegislator(
                 _legislator,
                 _legislatorAddress,         
@@ -76,7 +85,7 @@ contract('LedgerContract', function (accounts) {
         });
 
         it('New legislator properly set', async function () { 
-            // On procède à l'ajout d'un Customer
+
             let receipt = await this.LedgerContract.setLegislator(
                 _legislator,
                 _legislatorAddress,         
@@ -94,7 +103,7 @@ contract('LedgerContract', function (accounts) {
         });  
         
         it('Legislator properly updated', async function () { 
-            // On procède à l'ajout d'un Customer
+
             await this.LedgerContract.setLegislator(
                 _legislator,
                 _legislatorAddress,         
@@ -119,7 +128,7 @@ contract('LedgerContract', function (accounts) {
     describe('setTechMaster', function () {
 
         it('Revert if other : onlyOwner', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
+
             await (expectRevert(this.LedgerContract.setTechMaster(
                 _techMaster,
                 _techMasterAddress,       
@@ -129,7 +138,7 @@ contract('LedgerContract', function (accounts) {
         });
 
         it('New techMaster properly set', async function () { 
-            // On procède à l'ajout d'un Customer
+
             let receipt = await this.LedgerContract.setTechMaster(
                 _techMaster,
                 _techMasterAddress,   
@@ -147,7 +156,7 @@ contract('LedgerContract', function (accounts) {
         });   
 
         it('TechMaster properly updated', async function () { 
-            // On procède à l'ajout d'un Customer
+
             await this.LedgerContract.setTechMaster(
                 _techMaster,
                 _techMasterAddress,         
@@ -172,7 +181,7 @@ contract('LedgerContract', function (accounts) {
     describe('setBridge', function () {
 
         it('Revert if other : onlyTechMaster', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
+
             await (expectRevert(this.LedgerContract.setBridge(
                 _bridgeName1 ,
                 _url,       
@@ -184,7 +193,14 @@ contract('LedgerContract', function (accounts) {
         });
 
         it('New bridge properly set', async function () { 
-            // On procède à l'ajout d'un Customer
+
+            await this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,   
+                _siretNumber1,
+                true, 
+                {from: owner});
+
             let receipt = await this.LedgerContract.setBridge(
                 _bridgeName1,
                 _url,       
@@ -192,9 +208,9 @@ contract('LedgerContract', function (accounts) {
                 _bridgeAddress,
                 _techMasterAddress,                
                 true, 
-                {from: owner});
+                {from: _techMasterAddress});
 
-            expectEvent(receipt, "LedgerUpdate", {_message: 'New Bridge', _author: owner });
+            expectEvent(receipt, "LedgerUpdate", {_message: 'New Bridge', _author: _techMasterAddress });
 
             let myBridge = await this.LedgerContract._bridges(_bridgeAddress);   
             expect(myBridge.description).to.equal(_bridgeName1); 
@@ -206,7 +222,14 @@ contract('LedgerContract', function (accounts) {
         });   
 
         it('Bridge properly updated', async function () { 
-            // On procède à l'ajout d'un Customer
+
+            await this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,   
+                _siretNumber1,
+                true, 
+                {from: owner});
+
             await this.LedgerContract.setBridge(
                 _bridgeName1,
                 _url,       
@@ -223,9 +246,9 @@ contract('LedgerContract', function (accounts) {
                 _bridgeAddress,
                 _techMasterAddress,                
                 true,
-                {from: owner});
+                {from: _techMasterAddress});
 
-            expectEvent(receipt, "LedgerUpdate", {_message: 'Update Bridge', _author: owner });
+            expectEvent(receipt, "LedgerUpdate", {_message: 'Update Bridge', _author: _techMasterAddress });
 
             let myBridge = await this.LedgerContract._bridges(_bridgeAddress);   
             expect(myBridge.description).to.equal(_bridgeName2); 
@@ -352,7 +375,119 @@ contract('LedgerContract', function (accounts) {
 
     });     
 
+    describe('mintECP', function () {
 
+        const token_0 = new BN(0);
+        const token_100 = new BN(100);
 
+        it('Revert if other : onlyOwner', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.mintECP(
+                _customerAddress,      
+                100, 
+                {from: other}), "Ownable: caller is not the owner"));  
+        });        
 
+        it('Mint is correctly success', async function () { 
+            await this.LedgerContract.setCustomer(
+                _customer,
+                _customerAddress,
+                _contractAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let balanceOfCustomer = await this.ECPToken.balanceOf(_customerAddress);
+            
+            expect(balanceOfCustomer).to.be.bignumber.equal(token_0);
+
+            await this.LedgerContract.mintECP(
+                _customerAddress,      
+                100, 
+                {from: owner});  
+
+            balanceOfCustomer = await this.ECPToken.balanceOf(_customerAddress);    
+            expect(balanceOfCustomer).to.be.bignumber.equal(token_100);
+        });
+    }); 
+
+    describe('sendClientToken', function () {
+
+        const token_0 = new BN(0);
+        const token_100 = new BN(100);
+
+        it('Revert if other : onlyOwner', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.sendClientToken(
+                _customerAddress,      
+                100, 
+                {from: other}), "Ownable: caller is not the owner"));  
+        });     
+        
+        it('Revert if other : Customer not exist', async function () { 
+            // On vérifie bien que l'ajout provoque un revert !
+            await (expectRevert(this.LedgerContract.sendClientToken(
+                _customerAddress,      
+                100, 
+                {from: owner}), "Customer not exist"));  
+        });   
+
+        it('SendClientToken is correctly success with Mint', async function () { 
+            await this.LedgerContract.setCustomer(
+                _customer,
+                _customerAddress,
+                _contractAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let balanceOfLedger = await this.ECPToken.balanceOf(_ledgerAddress);
+            expect(balanceOfLedger).to.be.bignumber.equal(token_0);
+
+            let myCustomer = await this.LedgerContract._customers(_customerAddress);  
+            let balanceOfCustomer = await this.ECPToken.balanceOf(myCustomer.contractAddress);
+            expect(balanceOfCustomer).to.be.bignumber.equal(token_0);
+
+            await this.LedgerContract.sendClientToken(
+                _customerAddress,      
+                100, 
+                {from: owner});  
+
+            balanceOfCustomer = await this.ECPToken.balanceOf(myCustomer.contractAddress);    
+            expect(balanceOfCustomer).to.be.bignumber.equal(token_100);
+        });
+
+        it('SendClientToken is correctly success with Transfert', async function () { 
+            await this.LedgerContract.setCustomer(
+                _customer,
+                _customerAddress,
+                _contractAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            await this.LedgerContract.mintECP(
+                _ledgerAddress,      
+                100, 
+                {from: owner});  
+
+            let balanceOfLedger = await this.ECPToken.balanceOf(_ledgerAddress);
+            expect(balanceOfLedger).to.be.bignumber.equal(token_100);
+
+            let myCustomer = await this.LedgerContract._customers(_customerAddress);  
+            let balanceOfCustomer = await this.ECPToken.balanceOf(myCustomer.contractAddress);
+            expect(balanceOfCustomer).to.be.bignumber.equal(token_0);
+
+            await this.LedgerContract.sendClientToken(
+                _customerAddress,      
+                100, 
+                {from: owner});  
+
+            balanceOfCustomer = await this.ECPToken.balanceOf(myCustomer.contractAddress);    
+            expect(balanceOfCustomer).to.be.bignumber.equal(token_100);
+
+            balanceOfLedger = await this.ECPToken.balanceOf(_ledgerAddress);    
+            expect(balanceOfLedger).to.be.bignumber.equal(token_0);
+        });
+    }); 
 });

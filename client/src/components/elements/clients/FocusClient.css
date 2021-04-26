@@ -33,18 +33,36 @@
 }
 
 .focus-token {
-    height: 60px;
-    line-height: 60px;
-    padding-left: 5px;
-    padding-right: 5px;
-    background-color: #2563eb;
-    border-radius: 8px;
-    color: #fff;
-    border: 2px solid #2563eb;
-    display: inline-block;
-    transition: 0.1s all ease-out;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
     text-transform: uppercase;
+}
+
+.focus-token-align {
+    display: flex;
+    align-items: center;
+}
+
+.focus-token-ecp {
+    width: 32px;
+}
+
+.focus-token-cta {
+    margin-left: 20px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.1s all ease-out;
+}
+
+.focus-token-cta:hover {
+    background-color: transparent;
+    color: #2563eb;
 }
 
 .fa-toggle-on {

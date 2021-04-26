@@ -11,6 +11,7 @@ export default class FocusClient extends React.Component {
         this.state = {
             onOff: false,
             elementOnOff: null,
+            ecpAmount :0,
         };        
     }
 
@@ -53,10 +54,17 @@ export default class FocusClient extends React.Component {
         return (
             <div className="focus-body">
                             
-                <div className="focus-header">
-                    <div><b>{this.props.myElement.description}</b><span onClick= { () => this.toggleCustomer() }>{this.affActive()}</span></div>
-                    <div className="focus-token">{this.affCurrentAmount()}</div>
-                </div>
+                {this.props.state.myTypeUser==1
+                &&
+                    <div className="focus-token">
+                        <p className="page-header-address">Your current balance is : </p>
+                        <div className="focus-token-align">
+                            <img className="focus-token-ecp" src="./ECP.png" alt="ecp-token" />
+                            <p>{this.state.ecpAmount} ECP</p>
+                            <button className="focus-token-cta">recharge my tokens</button>
+                        </div>
+                    </div>
+                }
 
                 <InfoClient 
                     myElement={this.props.myElement}

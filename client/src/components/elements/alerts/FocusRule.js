@@ -55,8 +55,10 @@ export default class FocusRule extends React.Component {
 
     showAlert = (hex, index) => {
         let objet = _alertToObject_V_00_01_00(hex);
+        let affDate = objet.date.substr(0,4)+'-'+objet.date.substr(4,2)+'-'+objet.date.substr(6,2)+'   '+objet.date.substr(8,2)+":"+objet.date.substr(10,2);
+
         return (
-            <div className="" key={"alertKey"+index}>{objet.date} - {objet.val}</div>
+            <div className="" key={"alertKey"+index}>{affDate} - Threshold reached : {objet.val}</div>
         );
     };
 

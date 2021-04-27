@@ -1,31 +1,31 @@
-
-from web3.contract import Contract
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, jsonify, redirect, render_template, request, url_for
-import numpy as np
-import time
 import datetime as dt
 import json
 import os
 import sys
+import time
+
+import numpy as np
+from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask_sqlalchemy import SQLAlchemy
+from web3.contract import Contract
 
 sys.path.append('./App')
 
-from scripts.utils import (convertFrequencyToSec, detect_strptime,
-                           readSensorsDatabase, detectEachFrequency, statsSensorsData)
+from scripts.sensors_funct import (generate_alertBody, generate_measureBody,
+                                   generate_measureHeader, generate_one_alert,
+                                   generate_one_measure)
 
 from scripts.smart_contract_funct import (addAlertFunct, addMeasureFunct,
                                           connectWeb3, createBridgeWallet,
                                           generateContract,
+                                          getCodeAlertServiceRuleById,
                                           getFrequencyServiceById,
-                                          getValueAlertServiceRuleById,
-                                          getCodeAlertServiceRuleById)
+                                          getValueAlertServiceRuleById)
 
-from scripts.sensors_funct import (generate_alertBody,
-                                   generate_measureBody,
-                                   generate_measureHeader,
-                                   generate_one_measure,
-                                   generate_one_alert)
+from scripts.utils import (convertFrequencyToSec, detect_strptime,
+                           detectEachFrequency, get_frequency, get_value_alert,
+                           map_serviceId_to_measure, readSensorsDatabase,
+                           statsSensorsData)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///sensors_data.db"
@@ -67,31 +67,9 @@ except:
         print("error need env info")
         assert False
 
-app.config["_serviceId"] = 1
+app.config["_serviceId"] = 1 
 app.config["frequency"] = 3600  # by default 1H = 3600s
 app.config["dateLastQuery"] = "2021-04-01 10:10:00"
-
-
-def get_frequency(current_frequency: int, contract: Contract, _serviceId: int):
-    frequency = getFrequencyServiceById(contract, _serviceId)
-    frequency = convertFrequencyToSec(frequency)
-    if frequency != current_frequency:
-        app.config["frequency"] = frequency
-    return frequency
-
-
-def get_value_alert(contract: Contract, _serviceId: int):
-    return getValueAlertServiceRuleById(contract, _serviceId)
-
-
-def map_serviceId_to_measure(_serviceId: int, humidity, temperature):
-    if _serviceId == 0:
-        dataMeasured = humidity
-    elif _serviceId == 1:
-        dataMeasured = temperature
-
-    return dataMeasured
-
 
 @app.route('/')
 def index():

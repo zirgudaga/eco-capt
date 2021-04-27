@@ -1,6 +1,7 @@
 import datetime as dt
 from sqlalchemy import func
 import numpy as np
+from web3.contract import Contract
 
 ## Text et Hexa ##
 def stringToHex(stringValue):
@@ -71,3 +72,23 @@ def getStatsSensors(db,SensorsDatabase):
     meanValue = db.session.query(func.avg(SensorsDatabase.temperature)).scalar()
     return maxValue, minValue, meanValue
 
+
+def get_frequency(current_frequency: int, contract: Contract, _serviceId: int):
+    frequency = getFrequencyServiceById(contract, _serviceId)
+    frequency = convertFrequencyToSec(frequency)
+    if frequency != current_frequency:
+        app.config["frequency"] = frequency
+    return frequency
+
+
+def get_value_alert(contract: Contract, _serviceId: int):
+    return getValueAlertServiceRuleById(contract, _serviceId)
+
+
+def map_serviceId_to_measure(_serviceId: int, humidity, temperature):
+    if _serviceId == 0:
+        dataMeasured = humidity
+    elif _serviceId == 1:
+        dataMeasured = temperature
+
+    return dataMeasured

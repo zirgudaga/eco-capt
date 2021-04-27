@@ -2,6 +2,7 @@
 /node_modules
 /.vscode
 .env
+.DS_Store
 
 # Coverage directory used by tools like istanbul
 coverage/

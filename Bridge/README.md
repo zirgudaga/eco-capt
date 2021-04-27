@@ -54,3 +54,34 @@ It's the flow that bring security in our project and justify the usage of a bloc
 Regarding of the data measured, treated and compared we send message to the smart-contract with a predefine frequency stored in the blockchain.  
 The Bridge has his own address to sign the transaction.  
 
+The measures are sent through 2 variables : 
+- _measureHeader (bytes32) is a structure :   
+    ```json
+    {
+        // "version": bytes8,
+        // "date": YYYYmmddHHii : byte12,
+        // "measureType":bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version ,
+        // "timeCode": (Horaire, Journalier) Y m d H i : bytes1 
+        // "nbTime": bytes3 
+    }
+    ```
+- _measureBody (bytes32) is a structure :  
+    ```json
+    {
+        // "maxValue": bytes8,
+        // "minValue": bytes8,
+        // "meanValue": bytes8,
+        // "medianValue": bytes8
+    }
+    ```
+
+The alert is sent through the _alertBody variable :  
+- _alertBody (bytes32) is a structure
+    ```json
+    {
+        // "version": bytes8,
+        // "codeAlert": bytes4,
+        // "date": YYYYmmddHHii : byte12,
+        // "valueAlert":bytes8
+    }
+    ```

@@ -144,13 +144,7 @@ cython_debug/
 .DS_Store
 
 # Files
-goal.txt
-abi.json
-data.csv
-*.pdf
+*.db
 
 # Folder
-OLD_DEV
-TEST
-contract
 

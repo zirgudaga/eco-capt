@@ -17,17 +17,28 @@ export default class MainLegislator extends React.Component {
             isNew: false,
             currentMainSelect: "Home",
             errorMessage: '',
+            intervalRefresh: null,
         };
     }
 
     componentDidMount = () => {
-        setInterval(()=>{
+        let {intervalRefresh} = this.state;
+
+        intervalRefresh = setInterval(()=>{
             this.refresh();
         }, 2000);
+
+        this.setState({ intervalRefresh });  
     }
 
     refresh = () => {
         this.getAllElement();
+    }
+
+    componentWillUnmount= () => {
+        let {intervalRefresh} = this.state;
+        clearInterval(intervalRefresh);    
+        this.setState({ intervalRefresh });  
     }
 
     getAllElement = async () => {
@@ -41,7 +52,7 @@ export default class MainLegislator extends React.Component {
                 let index=0;
                 let _legislatorAddress = '';
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Legislator"){     
+                    if(myEvent.returnValues['_message'] === "New Legislator"){     
                         _legislatorAddress = myEvent.returnValues['_target'];
                         listElements[index] = await ledgerContract.methods._legislators(_legislatorAddress).call({from:accounts[0]});
                         listElements[index].legislatorId = index;

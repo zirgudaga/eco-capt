@@ -17,11 +17,12 @@ export default class Alert extends React.Component {
             selectedRule: -1,
             currentMainSelect: "Home",
             errorMessage: '',
+            intervalRefresh: null,
         };
     }
 
     componentDidMount = () => {
-        let { isAddable } = this.state;
+        let { isAddable, intervalRefresh } = this.state;
         const { myTypeUser } = this.props.state;
 
         if ((myTypeUser === '1') || (myTypeUser === '2') || (myTypeUser === '3')){
@@ -29,9 +30,17 @@ export default class Alert extends React.Component {
             this.setState({ isAddable });  
         }
 
-        setInterval(()=>{
+        intervalRefresh = setInterval(()=>{
             this.refresh();
         }, 2000);
+
+        this.setState({ intervalRefresh });  
+    }
+
+    componentWillUnmount= () => {
+        let {intervalRefresh} = this.state;
+        clearInterval(intervalRefresh);    
+        this.setState({ intervalRefresh });  
     }
 
     refresh = () => {
@@ -41,7 +50,7 @@ export default class Alert extends React.Component {
     getAllRules = async () => {
         const { customerContract, accounts } = this.props.state;
 
-        if(customerContract != null){
+        if(customerContract !== null){
             let { listRules } = this.state;
             listRules=[];
 
@@ -49,7 +58,7 @@ export default class Alert extends React.Component {
             .then(async (myEvents) => {
                 let index;
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New rule"){
+                    if(myEvent.returnValues['_message'] === "New rule"){
                         index = myEvent.returnValues['_ruleId'];
                         listRules[index] = await customerContract.methods._serviceRules(index).call({from:accounts[0]});
                         listRules[index].ruleId = index;

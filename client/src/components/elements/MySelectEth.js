@@ -41,7 +41,7 @@ export default class MySelectEth extends React.Component {
             .then(async (myEvents) => {
                 let index, element;
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New TypeMeasure"){
+                    if(myEvent.returnValues['_message'] === "New TypeMeasure"){
                         
                         index = myEvent.returnValues['_target'];
         
@@ -50,9 +50,9 @@ export default class MySelectEth extends React.Component {
                         index = hexToString(index.substr(-16));
 
                         if(element.isActive){
-                            if ((myTypeUser == 3) && (element.legislatorAddress==accounts[0])){
+                            if ((myTypeUser === '3') && (element.legislatorAddress===accounts[0])){
                                 myTabOptions.push({code: index, aff: element.description});
-                            }else if ((myTypeUser == 1) || (myTypeUser == 2)){
+                            }else if ((myTypeUser === '1') || (myTypeUser === '2')){
                                 myTabOptions.push({code: index, aff: element.description});
                             }  
                         }
@@ -73,14 +73,14 @@ export default class MySelectEth extends React.Component {
             .then(async (myEvents) => {
                 let index, element;
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New service"){
+                    if(myEvent.returnValues['_message'] === "New service"){
                         index = myEvent.returnValues['_serviceId'];
                         element = await customerContract.methods._services(index).call({from:accounts[0]});
 
                         if(element.isActive){
-                            if ((myTypeUser == 3) && (element.legislatorAddress==accounts[0])){
+                            if ((myTypeUser === '3') && (element.legislatorAddress===accounts[0])){
                                 myTabOptions.push({code: index, aff: element.description});
-                            }else if ((myTypeUser == 1) || (myTypeUser == 2)){
+                            }else if ((myTypeUser === '1') || (myTypeUser === '2')){
                                 myTabOptions.push({code: index, aff: element.description});
                             }  
                         }
@@ -101,7 +101,7 @@ export default class MySelectEth extends React.Component {
             .then(async (myEvents) => {
                 let index, element;
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Bridge"){
+                    if(myEvent.returnValues['_message'] === "New Bridge"){
                         
                         index = myEvent.returnValues['_target'];
         
@@ -127,7 +127,7 @@ export default class MySelectEth extends React.Component {
             .then(async (myEvents) => {
                 let index, element;
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Legislator"){
+                    if(myEvent.returnValues['_message'] === "New Legislator"){
                         
                         index = myEvent.returnValues['_target'];
         
@@ -153,7 +153,7 @@ export default class MySelectEth extends React.Component {
             .then(async (myEvents) => {
                 let index, element;
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New TechMaster"){
+                    if(myEvent.returnValues['_message'] === "New TechMaster"){
                         
                         index = myEvent.returnValues['_target'];
         

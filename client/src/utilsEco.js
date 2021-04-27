@@ -171,9 +171,9 @@ const fakeAlert = (alertCondigId) => {
 
     let body = 
     '0x'+stringToHex('00.01.00')+
-    stringToHex(('0000'+'2').substr(-4))+
+    stringToHex(('00002').substr(-4))+
     stringToHex(fakeDateWithSeed(0))+
-    stringToHex(('00000000'+'63').substr(-8));
+    stringToHex(('0000000063').substr(-8));
 
     return body;
 };

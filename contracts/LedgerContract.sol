@@ -289,25 +289,40 @@ contract LedgerContract is Ownable {
             9 : Public
         */
 
-        address temp = _userAddress;
-
-        if(_userAddress==address(0))
-            temp = msg.sender;
-        
-        if(temp == owner()){
-            return 1;
+        if(_userAddress==address(0)){
+            if(msg.sender == owner()){
+                return 1;
+            }
+            if((_customers[msg.sender].exist) && (_customers[msg.sender].isActive)){
+                return 2;
+            }
+            if((_legislators[msg.sender].exist) && (_legislators[msg.sender].isActive)){
+                return 3;
+            }
+            if((_techMasters[msg.sender].exist) && (_techMasters[msg.sender].isActive)){
+                return 4;
+            }
+            if((_bridges[msg.sender].exist) && (_bridges[msg.sender].isActive)){
+                return 5;
+            }
         }
-        if((_customers[temp].exist) && (_customers[temp].isActive)){
-            return 2;
-        }
-        if((_legislators[temp].exist) && (_legislators[temp].isActive)){
-            return 3;
-        }
-        if((_techMasters[temp].exist) && (_techMasters[temp].isActive)){
-            return 4;
-        }
-        if((_bridges[temp].exist) && (_bridges[temp].isActive)){
-            return 5;
+        else
+        {
+           if(_userAddress == owner()){
+                return 1;
+            }
+            if((_customers[_userAddress].exist) && (_customers[_userAddress].isActive)){
+                return 2;
+            }
+            if((_legislators[_userAddress].exist) && (_legislators[_userAddress].isActive)){
+                return 3;
+            }
+            if((_techMasters[_userAddress].exist) && (_techMasters[_userAddress].isActive)){
+                return 4;
+            }
+            if((_bridges[_userAddress].exist) && (_bridges[_userAddress].isActive)){
+                return 5;
+            }
         }
 
         return 9;

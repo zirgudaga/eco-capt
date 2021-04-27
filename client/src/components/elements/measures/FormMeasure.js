@@ -22,7 +22,7 @@ export default class FormMeasure extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        if(isNew == false){
+        if(isNew === false){
             let { _description, _info, _codeMeasure } = this.props;
     
             _description = elementToUpdate.description;
@@ -52,7 +52,7 @@ export default class FormMeasure extends React.Component {
             _description.trim() === '' ||
             _info.trim() === '' ||
             _codeMeasure.trim() === '' ||
-            _codeMeasure.length != 8
+            _codeMeasure.length !== 8
         ){
             errorMessage = "Please fill the form properly!";
             this.setState({ errorMessage });

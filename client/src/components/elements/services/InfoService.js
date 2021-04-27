@@ -33,22 +33,23 @@ export default class InfoService extends React.Component {
         if(myService.techMasterAddress!==address0) addTechMasterAddress = myService.techMasterAddress;
 
         let tabAddress = [addBridgeAddress, addLegislatorAddress, addTechMasterAddress];
-        let typeTarget;
+        let typeTarget = -1;
 
         for(let i=0; i<3; i++){
             if(tabAddress[i]!==''){
                 typeTarget = await ledgerContract.methods.rootingApps(
                     tabAddress[i]      
-                ).send({ from: accounts[0] },
+                ).call({ from: accounts[0] },
                     async (erreur, tx) => {
     
                     }
                 ); 
                 
                 switch(i){
-                    case 0 : isBridgeCheater = (typeTarget!=5)?true:false;
-                    case 1 : isLegislatorCheater = (typeTarget!=3)?true:false;
-                    case 2 : isTechMasterCheater = (typeTarget!=4)?true:false;
+                    case 0 : isBridgeCheater = (typeTarget!=='5')?true:false;break;
+                    case 1 : isLegislatorCheater = (typeTarget!=='3')?true:false;break;
+                    case 2 : isTechMasterCheater = (typeTarget!=='4')?true:false;break;
+                    default : break;
                 }
             }
         }
@@ -76,7 +77,8 @@ export default class InfoService extends React.Component {
         switch(index){
             case 0 : bridgeAddressEdit = !bridgeAddressEdit; break;
             case 1 : legislatorAddressEdit = !legislatorAddressEdit; break;
-            case 2 : techMasterAddressEdit = !techMasterAddressEdit; break;            
+            case 2 : techMasterAddressEdit = !techMasterAddressEdit; break;  
+            default: break;          
         }
 
         this.setState( { bridgeAddressEdit, legislatorAddressEdit, techMasterAddressEdit } );
@@ -121,7 +123,9 @@ export default class InfoService extends React.Component {
                     async (erreur, tx) => {
                     }
                 );     
-                break;    
+                break;   
+            default :
+                break;
         }  
         this.toggleEditAddress(index);  
     }
@@ -132,21 +136,19 @@ export default class InfoService extends React.Component {
 
         let address0 = "0x0000000000000000000000000000000000000000";
         let addressValue = "0x0000000000000000000000000000000000000000";
-        let affAlert = "";
-        let isCheater = false;
         let isAff = false;
         let isAccess = false;
         let nameSelect = '';
 
-        if (this.props.state.myTypeUser==1){
+        if (this.props.state.myTypeUser==='1'){
             isAccess = true;
         }
 
-        if ((this.props.state.myTypeUser==2)&&(index==1)){          
+        if ((this.props.state.myTypeUser==='2')&&(index===1)){          
             isAccess = true;
         }
 
-        if ((this.props.state.myTypeUser==4)&&(index==0)&&(this.props.state.accounts[0]==myService.techMasterAddress)){
+        if ((this.props.state.myTypeUser==='4')&&(index===0)&&(this.props.state.accounts[0]===myService.techMasterAddress)){
             isAccess = true;
         }
 
@@ -165,20 +167,22 @@ export default class InfoService extends React.Component {
                 isAff = techMasterAddressEdit?false:true; 
                 nameSelect="addTechMasterAddress"; 
                 addressValue=myService.techMasterAddress;
-                break;            
+                break; 
+            default :
+                break;           
         }  
 
         if(!isAccess)
             return (
                 <span className="service-info-details">
-                    {addressValue===address0?"En attente":addressValue}
+                    {addressValue===address0?"Waiting...":addressValue}
                 </span>
             );
 
         if(isAff){
             return(
                 <span className="service-info-details">
-                    {addressValue===address0?"En attente":addressValue}
+                    {addressValue===address0?"Waiting...":addressValue}
                     <i className="fas fa-pen" onClick={() => {this.toggleEditAddress(index)}}></i>
                 </span>
             );
@@ -197,6 +201,18 @@ export default class InfoService extends React.Component {
         }
     }
 
+    affTimeName = () => {
+        let { myService } = this.props;
+
+        switch(myService.timeCode){
+            case '0x48' : return 'hour(s)';
+            case '0x64' : return 'day(s)';
+            case '0x6d' : return 'month(s)';
+            case '0x59' : return 'year(s)';
+            default: return 'NA';
+        }
+    }
+
     render() {
         let { myService } = this.props;
         let { isBridgeCheater, isLegislatorCheater, isTechMasterCheater } = this.state;
@@ -207,7 +223,7 @@ export default class InfoService extends React.Component {
                 <p>Service's name : <span className="service-info-details">{myService.description}</span></p>
                 <p>Number of reports : <span className="service-info-details">{myService.measureIdCounter._value}</span></p>
                 <p>Measure's type : <span className="service-info-details">{hexToString(myService.measureType)}</span></p>
-                <p>Measure's frequency : <span className="service-info-details">Toutes les {myService.nbTime} {hexToString(myService.timeCode)}</span></p>
+                <p>Measure's frequency : <span className="service-info-details">Every {myService.nbTime} {this.affTimeName()}</span></p>
                 <div>Bridge's address : {isBridgeCheater&&<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i>}{this.showEditAddress(0)}</div>
                 <div>Legislator's address : {isLegislatorCheater&&<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i>}{this.showEditAddress(1)}</div>
                 <div>Technician's address : {isTechMasterCheater&&<i className="fas fa-exclamation-triangle" alt="Alert" title="Fucking cheater!"></i>}{this.showEditAddress(2)}</div>                        

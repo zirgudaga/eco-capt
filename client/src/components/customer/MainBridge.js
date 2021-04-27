@@ -17,18 +17,28 @@ export default class MainBridge extends React.Component {
             isNew: false,
             currentMainSelect: "Home",
             errorMessage: '',
+            intervalRefresh: null,
         };
     }
 
     componentDidMount = () => {
-        setInterval(()=>{
+        let { intervalRefresh } = this.state;
+        intervalRefresh = setInterval(()=>{
             this.refresh();
         }, 2000);
+        this.setState({ intervalRefresh });  
     }
 
     refresh = () => {
         this.getAllElement();
     }
+
+    componentWillUnmount= () => {
+        let {intervalRefresh} = this.state;
+        clearInterval(intervalRefresh);    
+        this.setState({ intervalRefresh });  
+    }
+
 
     getAllElement = async () => {
         const { ledgerContract, accounts } = this.props.state;
@@ -41,7 +51,7 @@ export default class MainBridge extends React.Component {
                 let index=0;
                 let _bridgeAddress = '';
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New Bridge"){    
+                    if(myEvent.returnValues['_message'] === "New Bridge"){    
                         _bridgeAddress = myEvent.returnValues['_target'];
                         listElements[index] = await ledgerContract.methods._bridges(_bridgeAddress).call({from:accounts[0]});
                         listElements[index].bridgeId = index;

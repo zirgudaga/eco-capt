@@ -50,7 +50,7 @@ export default class GraphService extends React.Component {
                     }}
                     rootProps={{ 'data-testid': '1' }}
                 />
-                : "Données en attente"
+                : "Data waiting..."
                 }
             </div>
         );

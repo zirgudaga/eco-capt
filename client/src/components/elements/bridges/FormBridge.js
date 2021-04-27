@@ -29,7 +29,7 @@ export default class FormBridge extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        if(isNew == false){
+        if(isNew === false){
             let { _description, _url, _info, _bridgeAddress, _techMasterAddress } = this.props;
     
             _description = elementToUpdate.description;

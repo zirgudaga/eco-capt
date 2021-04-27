@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import CounterReducer from './reducers/CounterReducer';
 import AddCartReducer from './reducers/AddCartReducer';
 
 const Store = createStore(AddCartReducer);

@@ -43,7 +43,7 @@ export default class Dashboard extends React.Component {
 
     manageContractClosing = () => {
         let {currentModuleSelect} = this.state;
-        if(currentModuleSelect=="Services" || currentModuleSelect=="Alerts"){
+        if(currentModuleSelect==="Services" || currentModuleSelect==="Alerts"){
             currentModuleSelect = "Customers";
         }
         this.setState({currentModuleSelect});

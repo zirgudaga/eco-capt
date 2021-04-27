@@ -54,7 +54,7 @@ export default class FocusService extends React.Component {
         .then(async (myEvents) => {
             let index=0;
             for(let myEvent of myEvents){
-                if(myEvent.returnValues['_serviceId'] == serviceId){
+                if(myEvent.returnValues['_serviceId'] === serviceId){
                     listMeasures[index] = {};
                     listMeasures[index].header = myEvent.returnValues['_header'];
                     listMeasures[index].body = myEvent.returnValues['_body'];
@@ -110,7 +110,7 @@ export default class FocusService extends React.Component {
                 <GraphService myService={this.props.myService} myMeasures={this.state.listMeasures}/>
                 <ServiceInfo state={this.props.state} myService={this.props.myService}/>
 
-                {(this.props.state.myTypeUser == 1) &&
+                {(this.props.state.myTypeUser === 1) &&
                 <button type="button" className="focus-service-cta" 
                     onClick= { () => this.addMeasure() }>New report
                 </button> 

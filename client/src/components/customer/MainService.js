@@ -16,26 +16,34 @@ export default class MainService extends React.Component {
             selectedService: -1,
             currentMainSelect: "Home",
             errorMessage: '',
+            intervalRefresh: null,
         };
     }
 
     componentDidMount = () => {
-        let { isAddable } = this.state;
+        let { isAddable, intervalRefresh } = this.state;
         const { myTypeUser } = this.props.state;
-
 
         if ((myTypeUser === '1') || (myTypeUser === '2')){
             isAddable = true;
             this.setState({ isAddable });  
         }
 
-        setInterval(()=>{
+        intervalRefresh = setInterval(()=>{
             this.refresh();
         }, 2000);
+
+        this.setState({ intervalRefresh });  
     }
 
     refresh = () => {
         this.getAllServices();
+    }
+
+    componentWillUnmount= () => {
+        let {intervalRefresh} = this.state;
+        clearInterval(intervalRefresh);    
+        this.setState({ intervalRefresh });  
     }
 
     getAllServices = async () => {
@@ -48,7 +56,7 @@ export default class MainService extends React.Component {
             .then(async (myEvents) => {
                 let index;
                 for(let myEvent of myEvents){
-                    if(myEvent.returnValues['_message'] == "New service"){
+                    if(myEvent.returnValues['_message'] === "New service"){
                         index = myEvent.returnValues['_serviceId'];
                         listServices[index] = await customerContract.methods._services(index).call({from:accounts[0]});
                         listServices[index].serviceId = index;

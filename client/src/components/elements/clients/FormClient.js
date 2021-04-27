@@ -25,7 +25,7 @@ export default class FormClient extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        if(isNew == false){
+        if(isNew === false){
             let { _description, _customerAddress, _contractAddress, _siretNumber } = this.props;
     
             _description = elementToUpdate.description;

@@ -69,7 +69,7 @@ export default class FocusClient extends React.Component {
                  <div className="focus-header">
                     <div><b>{this.props.myElement.description}</b><span onClick= { () => this.toggleCustomer() }>{this.affActive()}</span></div>
                 </div>
-                    {this.props.state.myTypeUser==1
+                    {this.props.state.myTypeUser===1
                     &&
                     <div className="focus-token">
                         <p className="focus-header-address">Your current balance is : </p>

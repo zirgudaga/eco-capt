@@ -11,6 +11,7 @@ function AddCartReducer(state = INITIAL_STATE, action){
         //count: state.count + 1
       }
     }
+    default: break;
   }
 
   return state;

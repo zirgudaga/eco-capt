@@ -40,7 +40,7 @@ export default class FormService extends React.Component {
             return ;
         }
 
-        const { accounts, customerContract, web3 } = this.props.state;
+        const { accounts, customerContract } = this.props.state;
         await customerContract.methods.addService(
             '0x'+stringToHex(addServiceVersion), 
             this.newServiceDescription.value.trim(),
@@ -127,7 +127,7 @@ export default class FormService extends React.Component {
                             Measure's frequency
                         </label>
 
-                        <input type="number" name="frequency" className="frequency" size="4" className="form-service-input-number" placeholder="1"
+                        <input type="number" name="frequency" size="4" className="frequenc form-service-input-number" placeholder="1"
                             ref={(input) => { 
                                 this.newServiceNbTime = input
                             }}

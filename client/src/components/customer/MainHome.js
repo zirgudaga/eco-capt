@@ -6,20 +6,31 @@ export default class MainHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ecpAmount :0,
+            ecpAmount: 0,
+            intervalRefresh: null,
         };
     }
 
     componentDidMount = () => {
-        setInterval(()=>{
+        let {intervalRefresh} = this.state;
+
+        intervalRefresh = setInterval(()=>{
             this.refresh();
         }, 2000);
+
+        this.setState({ intervalRefresh });  
     }
 
     refresh = () => {
         if(this.props.state.myTypeUser === '2'){
             this.getECPAmount();
         }
+    }
+
+    componentWillUnmount= () => {
+        let {intervalRefresh} = this.state;
+        clearInterval(intervalRefresh);    
+        this.setState({ intervalRefresh });  
     }
 
     getECPAmount = async () => {
@@ -63,7 +74,7 @@ export default class MainHome extends React.Component {
                             ?(<p className="page-header-contract">Your smart contract is   : <span className="address-color">{this.props.state.customerContractAddress}</span></p>)
                             :(<p className="page-header-contract">No customer contract selected...</p>)}
                             
-                            {this.props.state.myTypeUser==1
+                            {this.props.state.myTypeUser===1
                             &&
                             <div>
                                 <img className="welcome-navbar-ecp" src="./ECP.png" alt="ecp-token" />
@@ -72,7 +83,7 @@ export default class MainHome extends React.Component {
                                 <br/>
                             </div>}
 
-                            {this.props.state.myTypeUser==2
+                            {this.props.state.myTypeUser===2
                             &&
                                 <div>
                                     <p className="page-header-address">Your current balance is : </p>
@@ -85,9 +96,9 @@ export default class MainHome extends React.Component {
                             {this.props.state.customerContractAddress &&
                             <div>
                                 <p>To access your services, click on the button below :</p>
-                                <a className="page-header-cta" type="button" onClick = { () => {this.props.goTo("Services");} }>
+                                <div className="page-header-cta" type="button" onClick = { () => {this.props.goTo("Services");} }>
                                     Services
-                                </a>
+                                </div>
                             </div>}
                             <p className="page-header-help">A question ? Contact us !</p>
                         </div>

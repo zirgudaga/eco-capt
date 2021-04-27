@@ -19,7 +19,7 @@ export default class FormLegislator extends React.Component {
     componentDidMount = () => {
         let { isNew, elementToUpdate } = this.props;
 
-        if(isNew == false){
+        if(isNew === false){
             let { _description, _legislatorAddress, _siretNumber } = this.props;
     
             _description = elementToUpdate.description;

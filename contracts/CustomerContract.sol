@@ -8,27 +8,27 @@ import "./IECPToken.sol";
 contract CustomerContract is Ownable {
     using Counters for Counters.Counter;
     
-    // struct mesure en-tête (32) { 
+    // struct MeasureHeader (32) { 
     //   //V0.1     XX.XX.XX    00.01.00
-    //   Version : bytes8;
-    //   Date : YYYYmmddHHii : byte12
-    //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
-    //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
-    //   Nb temporel : bytes3 
+    //   version : bytes8
+    //   date : YYYYmmddHHii : byte12
+    //   measureType : bytes8 - CODE : 4 number/letter for the physical nature - 4 number/letter for the version
+    //   timeCode : bytes1 (hourly, daily) Y m d H i
+    //   nbTime : bytes3 
     // }
     
-    // struct mesure donnée (32) { 
-    //   Valeur 1 Max : bytes8
-    //   Valeur 2 Moyenne : bytes8
-    //   Valeur 3 Médiane : bytes8
-    //   Valeur 4 Min : bytes8
+    // struct MeasureBody (32) { 
+    //   Value 1 Max : bytes8
+    //   Value 2 Mean : bytes8
+    //   Value 3 Mediane : bytes8
+    //   Value 4 Min : bytes8
     // }
 
-    // struct alert donnée (32) { 
-    //   Version : bytes8
-    //   CodeAlert : bytes4    
-    //   Date : YYYYmmddHHii : byte12
-    //   Valeur alert : bytes8
+    // struct AlertBody (32) { 
+    //   version : bytes8
+    //   codeAlert : bytes4    
+    //   date : YYYYmmddHHii : byte12
+    //   valueAlert : bytes8
     // }
 
     /**

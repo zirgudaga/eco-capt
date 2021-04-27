@@ -6,7 +6,7 @@ This section explains why we chose the design patterns we are using in the code.
 - Behavioral Patterns
     - [x] **Guard Check**: Ensure that the behavior of a smart contract and its input parameters are as expected.
     - [x] State Machine: Enable a contract to go through different stages with different corresponding functionality exposed.
-    - [] **Oracle**: Gain access to data stored outside of the blockchain.
+    - [ ] **Oracle**: Gain access to data stored outside of the blockchain.
     - [ ] Randomness: Generate a random number of a predefined interval in the deterministic environment of a blockchain.
 - Security Patterns
     - [x] **Access Restriction**: Restrict the access to contract functionality according to suitable criteria.
@@ -20,15 +20,13 @@ This section explains why we chose the design patterns we are using in the code.
 - Economic Patterns
     - [ ] String Equality Comparison: Check for the equality of two provided strings in a way that minimizes average gas consumption for a large number of different inputs.
     - [x] Tight Variable Packing: Optimize gas consumption when storing or loading statically-sized variables.
-    - [ ] Memory Array Building: Aggregate and retrieve data from contract storage in a gas efficient way.
+    - [x] Memory Array Building: Aggregate and retrieve data from contract storage in a gas efficient way.
 
 [Reference](https://fravoll.github.io/solidity-patterns/)
 
-Pour nos **smart contracts**, nous avons naturellement mis en place plusieurs bonnes pratiques présentes dans [https://fravoll.github.io/solidity-patterns/](https://fravoll.github.io/solidity-patterns/)
-
 ## Guard Check
 
-Par l'intermédiaire de plusieurs **modifiers**, nous vérifions que l'appel aux fonctions se fait correctement. En vérifiant la validation des données. Exemple :
+Through the use of several **modifiers**, we verify that functions are properly called by checking data validation. For example :
 
     modifier isAddressValid(address _addr){
         require(_addr != address(0));
@@ -37,7 +35,9 @@ Par l'intermédiaire de plusieurs **modifiers**, nous vérifions que l'appel aux
 
 ## State Machine
 
-Nos contrats n'ayant pas pour objectif d'ordonner un workflow, le **State Machine** se concentre sur la disponinilité des différentes actions. Est-ce qu'un **service** a un **statut active**, est-ce qu'un **seuil d'alerte** est **actif** ? Ces états sont consultés par le Guard Check et modifié par qui de droit :
+Our contracts do not aim at ordering a workflow, the **State Machine** focuses on actions availabilities.
+Does a **service** has an **active status** ? is the **Rule** **active** ?
+Those states are consulted by the Guard Check and modified only by authorized individuals :
 
     function toggleContract()
         onlyOwner() external {
@@ -47,15 +47,15 @@ Nos contrats n'ayant pas pour objectif d'ordonner un workflow, le **State Machin
 
 ## Oracle
 
-Notre application se base sur la prise d'informations issus des capteurs. Ces informations sont traitées par un serveur de confiance dont l'installateur est certifié par notre solution. À ce titre là, l'emploi d'**Oracle** n'est pas nécessaire.
+Our Dapp is based on collecting data by sensors. Those data are processed by a trusted server which were installed by a  TechMaster we certified. This is why we don't used any **Oracle**.
 
 ## Randomness
 
-Notre application n'a nul besoin de donnée aléatoire. Mais si cela était nécessaire, le bridge serait parfait pour cela.
+Our Dapp doesn't need any random data. But if necessary, our bridge would be a perfect fit.
 
 ## Access Restriction
 
-Comme détaillé dans la partie **Guard Check**, chaque contrat client dispose de services dont certaines adresses possèdent des droit particuliers.
+As define in the **Guard Check** section, each **CustomerContract** grants specific addresses access to certain functions :
 
     /**
      * @dev Structure of Service
@@ -77,7 +77,7 @@ Comme détaillé dans la partie **Guard Check**, chaque contrat client dispose d
         Counters.Counter IotIdCounter;     
     }
 
-Ces adresses ne sont renseignées que par des utilisateurs acceptés :
+Only very specific users can define those addresses as valid :
 
     /**
      * @dev set a TechMasterAddress
@@ -94,33 +94,31 @@ Ces adresses ne sont renseignées que par des utilisateurs acceptés :
         emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
     }
     
-La vérification de ces adresses pour les actions est encadrée par notre **Guard Check**.
+Our **Guard Check** also operates in those functions.
 
 ## Checks Effects Interactions
 
--> Les actions sont déjà bridées par utilisateur, par adresse.
-
-L'implémentation d'un **ERC-20** est en cours de réalisation. Le contrôle de l'intéraction s'assurera de la bonne tenue des paiements réalisés par l'**ERC-20** en question.
+Actions are already restricted by user and by address.
 
 ## Secure Ether Transfer
 
-*L'application ne prévoit pas de dépôt et de transfert d'ETH.*
+*Not treated by our Dapp*
 
 ## Pull over Push
 
-*L'application ne prévoit pas de dépôt et de transfert d'ETH.*
+*Not treated by our Dapp*
 
 ## Emergency Stop
 
-*L'application ne prévoit pas de dépôt et de transfert d'ETH.* Et l'**Owner** peut désactiver le **contract du client** en cas de mauvais paiement ou non respect des consignes d'Eco-capt.
+*Our dapp do not provide any ETH deposit/transfer.* The **Owner** can deactivate the **CustomerContract** if he does not comply to the Eco-Capt guidelines.
 
 ## Proxy Delegate
 
-*Non utilisé dans notre projet*
+*Not used in our projet*
 
 ## Eternal Storage
 
-Nous avons prévu que chaque contrat client soit versionné. L'ensemble des donneés (rapport de mesures, services) est donc conservé et accessible même si à l'avenir le client passe sur un nouveau contrat qui offrirait plus de fonctionnalités. La structure **Config** est en charge d'assurer cette possibilité à l'avenir.
+We anticipated that each **CustomerContract** would be versioned. Every data is stored and accessible even if a customer signed a new contract that offers more functionalities. Our **Config** struct is responsible for insuring this in the future.
 
     /**
     * @dev Structure of Configuration
@@ -140,12 +138,13 @@ Nous avons prévu que chaque contrat client soit versionné. L'ensemble des donn
 
 ## String Equality Comparison
 
---> Pour les **KYC** prévus dans la roadmap, il sera nécessaire de prévoir des comparaisons de chaines de caractères.
+For the **KYC** part scheduled in the roadmap, we will implement String Equality Comparison.
 
 
 ## Tight Variable Packing
 
-L'ordre des variables de nos structures est étudié pour packer dans la mesure du possible les différentes tailles de variable :
+
+Variables order in our structs is build to pack various variables sizes :
 
     /**
      * @dev Structure of Service
@@ -167,22 +166,21 @@ L'ordre des variables de nos structures est étudié pour packer dans la mesure 
         Counters.Counter IotIdCounter;     
     }
 
-Cette bonne pratique sera totalement effective sur la fin du projet.
+This best practice is in effect.
+Data are compiled in **bytes32**, even if they are composite.
 
-Pour finir, les données vouées à être nombreuses sont compactées de manière économique en **bytes32**, même si elles sont composites.
-
-    // struct mesure en-tête (32) { 
+    // struct MeasureHeader (32) { 
     //   //V0.1     XX.XX.XX    00.01.00
-    //   Version : bytes8;
-    //   Date : YYYYmmddHHii : byte12
-    //   Code de mesure : bytes8 - CODE : 4 chiffre/lettre pour la nature physique - 4 chiffre/lettre pour la version
-    //   Code temporel : bytes1 (Horaire, Journalier) Y m d H i
-    //   Nb temporel : bytes3 
+    //   version : bytes8
+    //   date : YYYYmmddHHii : byte12
+    //   measureType : bytes8 - CODE : 4 number/letter for the physical nature - 4 number/letter for the version
+    //   timeCode : bytes1 (hourly, daily) Y m d H i
+    //   nbTime : bytes3 
     // }
 
 ## Memory Array Building
 
-Afin d'économier au mieux le gaz, nous utilisons systématiquement l'attribut **view** pour l'ensemble de nos getters :
+In order to save gaz, we use systematically the **view** attribute for all our getters :
 
     /**
     * @dev get a Config
@@ -192,7 +190,8 @@ Afin d'économier au mieux le gaz, nous utilisons systématiquement l'attribut *
         return _myConfig;
     }
 
-D'un autre côté, pour continuer à économiser au mieux le gaz, sans que cela soit du **Memory Array Building**. Nous favorisons l'emploi de **mapping** astucieux de manière à éviter l'emploi de boucle au maximum. Pour l'heure, aucune boucle n'est utilisée.
+On the other hand, to keep saving gaz, we prefer using **mapping** in order to avoid using loops.
+We do not have any loop in our code.
 
     Service[] private _services;
     mapping(uint => bytes32[]) private _serviceHeaderMeasures;
@@ -200,6 +199,6 @@ D'un autre côté, pour continuer à économiser au mieux le gaz, sans que cela 
     mapping(uint => Iot[]) private _serviceMacIOT;
     Counters.Counter public _serviceIdCounter;
 
-Afin d'optimiser au mieux nos smart contracts, nous passons les mesures par Events.
-En effet, une fois envoyées par le bridge, elles ne sont plus utilisées pour des calculs et ne sont pas modifiées.
-La Dapps peut donc y acceder sans que ces données encombrent le contrat.
+To optimize our smart contracts, we use Events to store our measures.
+Once sent by the bridge, they are not used anymore for any calculation and are left untouched.
+Our Dapp can access those data without cluttering it up.

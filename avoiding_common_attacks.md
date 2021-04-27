@@ -14,20 +14,18 @@
 - [ ] Block Timestamp Manipulation
 - [ ] Signature Replay
 
-📌 Pour l'heure, voici l'ensemble des sécurités mises en place :
+📌 Security checks currently in place :
 
-- Aucun emploi de smart contract extérieur possible hors le **contract Ledger**. L'adresse dudit **Ledger** sera renseignée au déploiement et ne pourra pas être modifiée.
+## Re-Entrancy
 
-- L'usage du **isOwner** pour l'ensemble des actions critiques du contrats.
+- No possible re-entrancy because we do not use any outside smart contract. **LedgerContract** address is displayed when deployed and will not be modified.
 
-- Un ensemble de **modifier** destinés à limiter l'accès des fonctionnalités par **status d'activation** ou par **identité certifiée** :
+- **isOwner** is used everystep of the way as regard to keep contract functions.
 
-   ```modifier isAddressValid(address _addr){
-        require(_addr != address(0));
-        _;
-    }
+- Sets of **modifier** are in place to limit the access to certain functionalities.
+**Toggle Status** and **Id Checks** are in place:
 
-    modifier isContractActive() {
+   ```modifier isContractActive() {
         require(_myConfig.isActive, "Contract off line");
         _;
     }
@@ -35,7 +33,12 @@
     modifier isServiceActive(uint _serviceId) {
         require(_serviceId < _serviceIdCounter.current(), "Service not exist"); 
         require(_services[_serviceId].isActive, "Service off line"); 
-        require(_services[_serviceId].isAllowed, "Service not allowed"); 
+        _;
+    }
+
+    modifier isRulesActive(uint _ruleId) {
+        require(_ruleId < _ruleIdCounter.current(), "Rules not exist"); 
+        require(_serviceRules[_ruleId].isActive, "Rules off line"); 
         _;
     }
 
@@ -59,8 +62,11 @@
         _;
     }```
 
-- La grande majorité des données sont en **private** afin de contrôler par nos **getters** l'information envoyée
+## Arithmetic Overflow and Underflow
 
-- Usage de la librairie compteur d'**OpenZepellin** pour éviter les erreurs d'incrémentation
+The 2 cases where we use arithmetic operations are for index implemntation by mapping via the Counter.sol class from the **OpenZepellin** which protects himself from underflow. We no longer use SaFeMath from @openzeppelin since we have upgraded Solidity to 0.8 which handles this natively.
 
-- L'emploi du **contrat Ledger** indiqué au déployement afin de vérifier  et valider l'identité certifiée des acteurs. *en cours*
+## Accessing Private Data
+
+Our solution is based on Open Data, there are no sensible data, everything is public.
+

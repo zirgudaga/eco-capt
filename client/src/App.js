@@ -48,8 +48,7 @@ class App extends Component {
         myEvents: null,        
     };
 
-    componentDidMount = async () => {
-
+    setNewAccount = async () => {
         try {
             // Get network provider and web3 instance.
             const web3 = await getWeb3();
@@ -103,8 +102,14 @@ class App extends Component {
                 console.error(error);
             }
         }
-      
+    }
 
+    componentDidMount = async () => {
+        // await window.ethereum.on('accountsChanged', () => {
+        //     this.setNewAccount();
+        // });
+
+        await this.setNewAccount();
     };
 
     goContract = (addr) => {

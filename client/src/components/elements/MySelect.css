@@ -1,6 +1,6 @@
 .select {
   position: relative;
-  width: 40%;
+  min-width: 350px;
   color: black;
   display: inline-block;
   vertical-align: middle;

@@ -1,13 +1,15 @@
 # deployed_addresses.md
 
-📌 Au 16/04/2021, nous avons une version test du **smart contract client** déployé sur **0x77D1aE180104A257a6B208Bc04bAae41C0F26bE8**. 
+**Dapps** is deployed on [HEROKU](https://eco-capt-v3.herokuapp.com/)
 
-Les versions définitives pour la soutenance finale seront déployées prochainement.
+This section contains the list of the deployed contract addresses on the Ethereum testnet ropsten.
 
-## L'**Owner** de ce contract est : **0x9F52Fd356973FAA3ECe41e99F37bf4F3bAEBd096**
+## Ropsten TestNet ##
 
-## Le **client** est : **0xC9881C29c6e203d6DFa38fC0e3B426C84cA70056**
+**ECPToken** : 0x806A847F496C761392640fe0eCFC5e6694f2c633
 
-Il est donc pour l'heure peu exploitable de l'extérieur.
+**LedgerContract** : 0x6F2b23690f25EF9c9EdD2AFB3B72A7e2a2D4e46E
 
-Une version de la **Dapps** est déployée sur [HEROKU](https://eco-capt.herokuapp.com/)
+**Customer1 Contract** : 0xC8e0c683D71F4e8C73039e73e5Af65EebCE15E95
+
+**Customer2 Contract** : 0xd2999931B3f84Ab324fF50Ce0669213b79ee07C6

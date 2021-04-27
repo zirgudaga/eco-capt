@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/.vscode
 .env
 
 # Coverage directory used by tools like istanbul

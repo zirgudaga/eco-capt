@@ -4,7 +4,6 @@ const LedgerContract = artifacts.require('LedgerContract.sol');
 const ECPToken = artifacts.require('ECPToken.sol')
 
 contract('LedgerContract', function (accounts) {
-
     const owner = accounts[0];    
     const other = accounts[1];    
     const _customerAddress = accounts[2];

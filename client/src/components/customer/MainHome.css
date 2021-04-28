@@ -16,7 +16,7 @@
   text-align: center;
   background: #fff;
   padding: 50px;
-  border-radius: 30px;
+  border-radius: 8px;
 }
 
 
@@ -27,11 +27,11 @@
 }
 
 .page-header-address {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .page-header-contract {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .page-header-cta {

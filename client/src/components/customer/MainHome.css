@@ -17,8 +17,12 @@
   background: #fff;
   padding: 50px;
   border-radius: 8px;
+  height: 500px;
+  overflow: auto;
+  -webkit-scrollbar {
+    display: none;
+  }
 }
-
 
 .page-header-title {
   font-size: 32px;
@@ -45,4 +49,9 @@
   cursor: pointer;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.page-header-body {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;
 }

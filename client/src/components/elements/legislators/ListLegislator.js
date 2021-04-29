@@ -16,7 +16,7 @@ export default class ListLegislator extends React.Component {
                             </button>  
                         ))
                         :
-                        " Aucun legislator"
+                        " No legislators "
                     }
                 </div>
                 <button type="button" className="list-cta" 

@@ -16,7 +16,7 @@ export default class ListMeasure extends React.Component {
                             </button>  
                         ))
                         :
-                        " Aucun measure"
+                        " No measures "
                     }
                 </div>
                 <button type="button" className="list-cta" 

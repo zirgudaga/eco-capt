@@ -16,7 +16,7 @@ export default class ListBridge extends React.Component {
                             </button>  
                         ))
                         :
-                        " Aucun bridge"
+                        " No bridges "
                     }
                 </div>
                 <button type="button" className="list-cta" 

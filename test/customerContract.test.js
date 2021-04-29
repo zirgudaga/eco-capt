@@ -19,8 +19,6 @@ contract('CustomerClient', function (accounts) {
     const legislator = accounts[1];
     const techmaster = accounts[2];
     const customer1 = accounts[3];      
-    const customer2 = accounts[4];
-    const other = accounts[5];
     const prevContrat = accounts[6];
     const bridge = accounts[7];
 
@@ -100,8 +98,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('toogleContract', function () {
 
-        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [customer1 , legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [customer1 , legislator , techmaster, bridge];
             
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () {      
@@ -130,8 +128,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('addService', function () {
 
-        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [legislator , techmaster, bridge];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () {  
@@ -193,8 +191,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('toggleService', function () {
     
-        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [legislator , techmaster, bridge];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
@@ -230,8 +228,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('setTechMasterAddress', function () {
         
-        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [customer1 , legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [customer1 , legislator , techmaster, bridge];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
@@ -283,8 +281,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('setLegislatorAddress', function () {
         
-        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [legislator , techmaster, bridge];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
@@ -346,8 +344,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('setBridgeAddress', function () {
         
-        let testAccessMessage= ['Client', 'Legislator', 'Bridge', 'Other'];
-        let testAccessAddress= [customer1 , legislator , bridge , other ];
+        let testAccessMessage= ['Client', 'Legislator', 'Bridge'];
+        let testAccessAddress= [customer1 , legislator , bridge];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
@@ -414,8 +412,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('addMeasure', function () {
 
-        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Other'];
-        let testAccessAddress= [customer1 , legislator , techmaster, other ];
+        let testAccessMessage= ['Client', 'Legislator', 'TechMaster'];
+        let testAccessAddress= [customer1 , legislator , techmaster];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
@@ -535,8 +533,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('addRule', function () {
 
-        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [legislator , techmaster, bridge];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () {  
@@ -701,8 +699,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('toggleRule', function () {
     
-        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [legislator , techmaster, bridge];
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
@@ -774,8 +772,8 @@ contract('CustomerClient', function (accounts) {
 
     describe('addAlert', function () {
 
-        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Other'];
-        let testAccessAddress= [customer1 , legislator , techmaster, other ];
+        let testAccessMessage= ['Client', 'Legislator', 'TechMaster'];
+        let testAccessAddress= [customer1 , legislator , techmaster];
     
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 

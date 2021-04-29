@@ -28,7 +28,7 @@ export default class ListService extends React.Component {
                             </button>  
                         ))
                         :
-                        " Aucun service"
+                        " No services "
                     }
                 </div>
                 {this.affAdd()}

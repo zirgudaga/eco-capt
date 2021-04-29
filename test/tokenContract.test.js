@@ -11,26 +11,10 @@ contract('ECPToken', function (accounts) {
     const legislator = accounts[1];
     const techmaster = accounts[2];
     const customer1 = accounts[3];      
-    const customer2 = accounts[4];
-    const other = accounts[5];
     const prevContrat = accounts[6];
     const bridge = accounts[7];
 
-    const address0 = "0x0000000000000000000000000000000000000000";
-    const _serviceId = '0';
     const _version = "0x0102030405060708";   
-    const _description = "Description de test";
-    const _measureType = "0x1112131415161718";            
-    const _timeCode = "0x21";
-    const _nbTime = "6";   
-    const _measureHeader = "0x0102030405060708091011121314151601020304050607080910111213141516";
-    const _measurebody = "0x0102030405060708091011121314151601020304050607080910111213141516";
-
-    const _ruleId = '0';
-
-    const _codeAlert = "0x11223344";
-    const _valueAlert = "0x1112131415161718";     
-    const _alertBody = "0x0102030405060708091011121314151601020304050607080910111213141516";
 
     let BN0 = new BN(0);
     let BN1 = new BN(1);
@@ -40,7 +24,6 @@ contract('ECPToken', function (accounts) {
     let _contractAddress = "0x0000000000000000000000000000000000000000";    
 
     const token_0 = new BN(0);
-    const token_99 = new BN(99);
     const token_100 = new BN(100);
 
     beforeEach(async function () {
@@ -76,8 +59,8 @@ contract('ECPToken', function (accounts) {
 
     describe('setLedgerAddress', function () {
 
-        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [customer1 , legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [customer1 , legislator , techmaster, bridge ];
             
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () {      
@@ -96,8 +79,8 @@ contract('ECPToken', function (accounts) {
 
     describe('ownerMint', function () {      
 
-        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge', 'Other'];
-        let testAccessAddress= [customer1 , legislator , techmaster, bridge , other ];
+        let testAccessMessage= ['Client', 'Legislator', 'TechMaster', 'Bridge'];
+        let testAccessAddress= [customer1 , legislator , techmaster, bridge];
             
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () {      

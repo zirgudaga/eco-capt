@@ -16,7 +16,7 @@ export default class ListClient extends React.Component {
                             </button>  
                         ))
                         :
-                        " Aucun client"
+                        " No customer "
                     }
                 </div>
                 {(this.props.state.myTypeUser==='1') &&

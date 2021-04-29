@@ -16,7 +16,7 @@ export default class ListTechnician extends React.Component {
                             </button>  
                         ))
                         :
-                        " Aucun technician"
+                        " No technicians "
                     }
                 </div>
                 <button type="button" className="list-cta" 

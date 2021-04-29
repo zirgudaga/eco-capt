@@ -32,7 +32,7 @@ export default class ListRule extends React.Component {
                             </button>  
                         ))
                         :
-                        " Aucun Rule"
+                        " No Rules "
                     }
                 </div>
                 {this.affAdd()}

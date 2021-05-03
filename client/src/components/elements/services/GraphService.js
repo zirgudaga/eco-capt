@@ -13,10 +13,10 @@ export default class GraphService extends React.Component {
         let myReturn = [];
         let body;
         if ((myMeasures !== undefined) && (myMeasures.length>0)){
-            myReturn.push(['x', 'Valeur moyenne'])
+            myReturn.push(['x', 'Valeur maximale'])
             for(let i=0; i<myMeasures.length; i++){
                 [, body] = measureToObject(myMeasures[i].header, myMeasures[i].body);
-                myReturn.push([i, body.val2]);
+                myReturn.push([i, body.val1]);
             }
         }
 

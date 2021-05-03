@@ -97,9 +97,11 @@ export default class FocusRule extends React.Component {
 
                 <InfoRule myRule={this.props.myRule}/>
 
-                <button type="button" className="focus-rule-cta" 
-                    onClick= { () => this.addAlert() }>New alert
-                </button> 
+                {(this.props.state.myTypeUser === '1') &&
+                    <button type="button" className="focus-rule-cta" 
+                        onClick= { () => this.addAlert() }>New alert
+                    </button> 
+                }
 
             </div>
         );      

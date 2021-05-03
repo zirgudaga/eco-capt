@@ -110,10 +110,10 @@ export default class FocusService extends React.Component {
                 <GraphService myService={this.props.myService} myMeasures={this.state.listMeasures}/>
                 <ServiceInfo state={this.props.state} myService={this.props.myService}/>
 
-                {(this.props.state.myTypeUser === 1) &&
-                <button type="button" className="focus-service-cta" 
-                    onClick= { () => this.addMeasure() }>New report
-                </button> 
+                {(this.props.state.myTypeUser === '1') &&
+                    <button type="button" className="focus-service-cta" 
+                        onClick= { () => this.addMeasure() }>New report
+                    </button> 
                 }
 
             </div>

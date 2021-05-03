@@ -74,7 +74,7 @@ export default class MainHome extends React.Component {
                             ?(<p className="page-header-contract">Your smart contract is   : <span className="address-color">{this.props.state.customerContractAddress}</span></p>)
                             :(<p className="page-header-contract">No customer contract selected...</p>)}
                             
-                            {this.props.state.myTypeUser===1
+                            {this.props.state.myTypeUser==='1'
                             &&
                             <div>
                                 <img className="welcome-navbar-ecp" src="./ECP.png" alt="ecp-token" />
@@ -83,7 +83,7 @@ export default class MainHome extends React.Component {
                                 <br/>
                             </div>}
 
-                            {this.props.state.myTypeUser===2
+                            {this.props.state.myTypeUser==='2'
                             &&
                                 <div>
                                     <p className="page-header-address">Your current balance is : </p>

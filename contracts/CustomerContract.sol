@@ -254,8 +254,6 @@ contract CustomerContract is Ownable {
         address _legislatorAddress)
         isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
         
-        //require(_checkValidLegislator(_legislatorAddress) == true, "Legistator not valid");
-
         _services[_serviceId].legislatorAddress = _legislatorAddress;
 
         emit ServiceUpdate(_serviceId, "Legislator Address update", msg.sender);
@@ -385,35 +383,35 @@ contract CustomerContract is Ownable {
      * @param _macAddress sensor's mac address
      * @param _description sensor's description
      */      
-    function addIot(
-        uint _serviceId,
-        bytes6 _macAddress,
-        string memory _description) 
-        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
+    // function addIot(
+    //     uint _serviceId,
+    //     bytes6 _macAddress,
+    //     string memory _description) 
+    //     isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
 
-        _serviceIots[_serviceId][_macAddress] = Iot(
-            _description,      
-            true
-        );
+    //     _serviceIots[_serviceId][_macAddress] = Iot(
+    //         _description,      
+    //         true
+    //     );
 
-        emit ServiceIotUpdate(_serviceId, _macAddress, "Iot added", msg.sender); 
+    //     emit ServiceIotUpdate(_serviceId, _macAddress, "Iot added", msg.sender); 
 
-        _services[_serviceId].iotIdCounter.increment();   
-    }
+    //     _services[_serviceId].iotIdCounter.increment();   
+    // }
 
     /**
      * @dev toggle a sensor activation or deactivation
      * @param _serviceId index of service
      * @param _macAddress index of sensor
      */     
-    function toggleIOT(
-        uint _serviceId,
-        bytes6 _macAddress) 
-        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external { 
+    // function toggleIOT(
+    //     uint _serviceId,
+    //     bytes6 _macAddress) 
+    //     isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external { 
 
-        emit ServiceIotUpdate(_serviceId, _macAddress, "Iot on/off", msg.sender);
+    //     emit ServiceIotUpdate(_serviceId, _macAddress, "Iot on/off", msg.sender);
 
-        _serviceIots[_serviceId][_macAddress].isActive = !_serviceIots[_serviceId][_macAddress].isActive;
-    }
+    //     _serviceIots[_serviceId][_macAddress].isActive = !_serviceIots[_serviceId][_macAddress].isActive;
+    // }
 
 }

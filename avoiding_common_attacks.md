@@ -2,17 +2,7 @@
 
 - [x] Re-Entrancy
 - [x] Arithmetic Overflow and Underflow
-- [ ] Self Destruct
-- [ ] Accessing Private Data
-- [ ] Delegatecall
-- [ ] Source of Randomness
-- [ ] Denial of Service
-- [ ] Phishing with tx.origin
-- [ ] Hiding Malicious Code with External Contract
-- [ ] Honeypot
-- [ ] Front Running
-- [ ] Block Timestamp Manipulation
-- [ ] Signature Replay
+- [x] Accessing Private Data
 
 📌 Security checks currently in place :
 
@@ -70,3 +60,15 @@ The 2 cases where we use arithmetic operations are for index implemntation by ma
 
 Our solution is based on Open Data, there are no sensible data, everything is public.
 
+# Unnecessary security measures
+
+- [ ] Self Destruct
+- [ ] Delegatecall
+- [ ] Source of Randomness
+- [ ] Denial of Service
+- [ ] Phishing with tx.origin
+- [ ] Hiding Malicious Code with External Contract
+- [ ] Honeypot
+- [ ] Front Running
+- [ ] Block Timestamp Manipulation
+- [ ] Signature Replay

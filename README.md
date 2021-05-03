@@ -73,7 +73,7 @@ npm truffle deploy --network ganache
 
 ### Deploy the contracts on the ropsten test network
 ```
-npm truffle deploy --network ropsten
+npm truffle deploy --reset --network ropsten
 ```
 
 Update the contract addresses in the file doc/deployed_addresses.md.

@@ -80,8 +80,8 @@ class App extends Component {
         }
 
         let { ledgerContract, ledgerSafe, ecpTokenContract, accounts, myTypeUser, ecpTokenAddress } = this.state;
-
-        if(ledgerContract._address !== null){
+    
+        if ((ledgerContract !== null) && (ledgerContract._address !== null)){
             try {
                 myTypeUser = await ledgerContract.methods.rootingApps("0x0000000000000000000000000000000000000000").call({from:accounts[0]});
                 ecpTokenAddress = await ledgerContract.methods.ecpTokenAddress().call({from:accounts[0]});          

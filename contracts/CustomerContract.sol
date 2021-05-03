@@ -4,6 +4,7 @@ pragma solidity 0.8.0;
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 import "./IECPToken.sol";
+import "./ILedgerContract.sol";
 
 contract CustomerContract is Ownable {
     using Counters for Counters.Counter;
@@ -131,6 +132,11 @@ contract CustomerContract is Ownable {
         _;
     }
 
+    modifier checkLedger(address _address, uint _role) {
+        require (_ILedgerContract.rootingApps(_address) == _role, "Ledger check fail");
+        _;
+    }
+
     event ContractUpdate(string _message, address _author);      
     
     event ServiceUpdate(uint _serviceId, string _message, address _author);  
@@ -151,6 +157,7 @@ contract CustomerContract is Ownable {
     Counters.Counter public _ruleIdCounter;
 
     IECPToken private _ECPToken;
+    ILedgerContract private _ILedgerContract;
 
     constructor (bytes8 _version, address _ledgerAddress, address _ecpTokenAddress, address _customerAddress, address _prevContract, uint64 _prevContractDate) {
         _myConfig = Config(
@@ -166,6 +173,7 @@ contract CustomerContract is Ownable {
         );
 
         _ECPToken = IECPToken(_ecpTokenAddress);
+        _ILedgerContract = ILedgerContract(_ledgerAddress);
     }
   
     /**
@@ -237,7 +245,7 @@ contract CustomerContract is Ownable {
     function setTechMasterAddress(
         uint _serviceId,
         address _techMasterAddress)
-        isContractActive() isServiceActive(_serviceId) onlyOwner() external {  
+        isContractActive() isServiceActive(_serviceId) checkLedger(_techMasterAddress, 4) onlyOwner() external {  
         
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
@@ -252,7 +260,7 @@ contract CustomerContract is Ownable {
     function setLegislatorAddress(
         uint _serviceId,
         address _legislatorAddress)
-        isContractActive() isServiceActive(_serviceId) onlyCustomer() external {  
+        isContractActive() isServiceActive(_serviceId) onlyCustomer() checkLedger(_legislatorAddress, 3) external {  
         
         _services[_serviceId].legislatorAddress = _legislatorAddress;
 
@@ -267,7 +275,7 @@ contract CustomerContract is Ownable {
     function setBridgeAddress(
         uint _serviceId,
         address _bridgeAddress)
-        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) external {  
+        isContractActive() isServiceActive(_serviceId) onlyTechMaster(_serviceId) checkLedger(_bridgeAddress, 5) external {  
         
         _services[_serviceId].bridgeAddress = _bridgeAddress;
 

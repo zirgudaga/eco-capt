@@ -116,7 +116,8 @@ export default class MainMeasure extends React.Component {
             <div className="main-content">
                 <main className="main-content wrap">     
                     {this.selectedMainLauncher()}  
-                    <ListMeasure  
+                    <ListMeasure 
+                        propsState={this.props.state}  
                         state={this.state}
                         addElement= {() => {this.showFormAddElement(true, true);}}
                         setElementFocus = {(index) => {this.showFocusElement(index);}}

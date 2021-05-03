@@ -19,9 +19,11 @@ export default class ListMeasure extends React.Component {
                         " No measures "
                     }
                 </div>
-                <button type="button" className="list-cta" 
-                    onClick= { () => this.props.addElement() }>New measure
-                </button> 
+                { this.props.propsState.myTypeUser==='1' &&
+                    <button type="button" className="list-cta" 
+                        onClick= { () => this.props.addElement() }>New measure
+                    </button>
+                } 
             </div>
         );      
     }

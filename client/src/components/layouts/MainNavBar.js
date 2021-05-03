@@ -79,7 +79,8 @@ export default class MainNavBar extends React.Component {
                                 </li>            
                             }
 
-                            { (this.props.state.myTypeUser==='1') 
+                            { (this.props.state.myTypeUser==='1' 
+                            || this.props.state.myTypeUser==='4')    
                             &&
                                 <li className="main-list" onClick = { () => {this.props.goTo("Measures");} }>
                                     <i className="fas fa-chart-bar" alt="Measure" title="Measure"></i>

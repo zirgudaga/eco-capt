@@ -39,6 +39,10 @@ export default class FocusService extends React.Component {
     
     toggleService = async () => {
         const { accounts, customerContract } = this.props.state;
+
+        if(this.props.state.myTypeUser !== '1')
+            return;
+
         await customerContract.methods.toggleService(
             this.props.myService.serviceId
         ).send({ from: accounts[0] }, async (erreur, tx) => {});              

@@ -331,7 +331,7 @@ contract('LedgerContract', function (accounts) {
         });
         
         // Check administrator detected
-        it('Detect Customer', async function () { 
+        it('Detect Customer directly', async function () { 
             await this.LedgerContract.setCustomer(
                 _customer,
                 _customerAddress,
@@ -345,7 +345,21 @@ contract('LedgerContract', function (accounts) {
         });
 
         // Check administrator detected
-        it('Detect Legislator', async function () { 
+        it('Detect Customer by address', async function () { 
+            await this.LedgerContract.setCustomer(
+                _customer,
+                _customerAddress,
+                _contractAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let returnRootingApps = await this.LedgerContract.rootingApps(_customerAddress, {from: _customerAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(customerTypeUser);
+        });
+
+        // Check administrator detected
+        it('Detect Legislator directly', async function () { 
             await this.LedgerContract.setLegislator(
                 _legislator,
                 _legislatorAddress,         
@@ -357,8 +371,21 @@ contract('LedgerContract', function (accounts) {
             expect(returnRootingApps).to.be.bignumber.equal(lesgislatorTypeUser);
         });
 
+        // Check administrator detected
+        it('Detect Legislator by address', async function () { 
+            await this.LedgerContract.setLegislator(
+                _legislator,
+                _legislatorAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let returnRootingApps = await this.LedgerContract.rootingApps(_legislatorAddress, {from: _legislatorAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(lesgislatorTypeUser);
+        });        
+
         // Check Techmaster detected
-        it('Detect Techmaster', async function () { 
+        it('Detect Techmaster directly', async function () { 
             await this.LedgerContract.setTechMaster(
                 _techMaster,
                 _techMasterAddress,         
@@ -370,10 +397,58 @@ contract('LedgerContract', function (accounts) {
             expect(returnRootingApps).to.be.bignumber.equal(technmasterTypeUser);
         });
 
-        it('Detect Public', async function () { 
+        // Check Techmaster detected
+        it('Detect Techmaster by address', async function () { 
+            await this.LedgerContract.setTechMaster(
+                _techMaster,
+                _techMasterAddress,         
+                _siretNumber1,
+                true, 
+                {from: owner});
+
+            let returnRootingApps = await this.LedgerContract.rootingApps(_techMasterAddress, {from: _techMasterAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(technmasterTypeUser);
+        });
+
+        // Check Techmaster detected
+        it('Detect Bridge directly', async function () { 
+            await this.LedgerContract.setBridge(
+                _bridgeName1 ,
+                _url,       
+                _infoBridge,
+                _bridgeAddress,
+                _techMasterAddress,
+                true, 
+                {from: owner});  
+
+            let returnRootingApps = await this.LedgerContract.rootingApps(address0, {from: _bridgeAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(bridgeTypeUser);
+        });
+
+        // Check Techmaster detected
+        it('Detect Bridge by address', async function () { 
+            await this.LedgerContract.setBridge(
+                _bridgeName1 ,
+                _url,       
+                _infoBridge,
+                _bridgeAddress,
+                _techMasterAddress,
+                true, 
+                {from: owner});  
+
+            let returnRootingApps = await this.LedgerContract.rootingApps(_bridgeAddress, {from: _bridgeAddress});
+            expect(returnRootingApps).to.be.bignumber.equal(bridgeTypeUser);
+        });
+
+        it('Detect Public directly', async function () { 
             let returnRootingApps = await this.LedgerContract.rootingApps(address0, {from: other});
             expect(returnRootingApps).to.be.bignumber.equal(publicTypeUser);
-        });        
+        });    
+        
+        it('Detect Public by address', async function () { 
+            let returnRootingApps = await this.LedgerContract.rootingApps(other, {from: other});
+            expect(returnRootingApps).to.be.bignumber.equal(publicTypeUser);
+        });  
 
     });     
 

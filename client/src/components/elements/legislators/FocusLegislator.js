@@ -26,6 +26,9 @@ export default class FocusLegislator extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         const { myElement } = this.props;
 
+        if(this.props.state.myTypeUser!=='1')
+            return;
+
         await ledgerContract.methods.setLegislator(
             myElement.description.trim(),
             myElement.legislatorAddress.trim(),

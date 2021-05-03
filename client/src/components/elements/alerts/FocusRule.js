@@ -53,6 +53,26 @@ export default class FocusRule extends React.Component {
         }
     };
 
+
+    affActive = () => {
+        if(this.props.myRule.isActive){
+            return (<i className="fas fa-toggle-on" key="fa-toggle-on"></i>); 
+        }else{       
+            return (<i className="fas fa-toggle-off" key="fa-toggle-off"></i>);
+        }
+    }
+
+    toggleAlert = async () => {
+        const { accounts, customerContract } = this.props.state;
+
+        if ((this.props.state.myTypeUser !== '1') && (this.props.state.myTypeUser !== '2') && (this.props.state.myTypeUser !== '3'))
+            return;
+
+        await customerContract.methods.toggleRule(
+            this.props.myRule.ruleId
+        ).send({ from: accounts[0] }, async (erreur, tx) => {});              
+    }
+
     showAlert = (hex, index) => {
         let objet = _alertToObject_V_00_01_00(hex);
         let affDate = objet.date.substr(0,4)+'-'+objet.date.substr(4,2)+'-'+objet.date.substr(6,2)+'   '+objet.date.substr(8,2)+":"+objet.date.substr(10,2);
@@ -91,7 +111,7 @@ export default class FocusRule extends React.Component {
     render() {
         return (
             <div className="focus-rule-body">
-                <b>{this.props.myRule.description}</b>
+                <b>{this.props.myRule.description}</b><span onClick= { () => this.toggleAlert() }>{this.affActive()}</span>
 
                 {this.showAllAlert()}
 

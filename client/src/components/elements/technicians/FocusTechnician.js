@@ -26,6 +26,9 @@ export default class FocusTechnician extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         const { myElement } = this.props;
 
+        if(this.props.state.myTypeUser!=='1')
+            return;
+
         await ledgerContract.methods.setTechMaster(
             myElement.description.trim(),
             myElement.technicianAddress.trim(),

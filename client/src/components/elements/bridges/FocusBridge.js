@@ -26,6 +26,9 @@ export default class FocusBridge extends React.Component {
         const { accounts, ledgerContract } = this.props.state;
         const { myElement } = this.props;
 
+        if((this.props.state.myTypeUser!=='1') && (this.props.state.myTypeUser!=='4'))
+            return;
+
         await ledgerContract.methods.setBridge(
             myElement.description,
             myElement.url,

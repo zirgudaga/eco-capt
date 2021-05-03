@@ -28,10 +28,18 @@ This section explains why we chose the design patterns we are using in the code.
 
 Through the use of several **modifiers**, we verify that functions are properly called by checking data validation. For example :
 
-    modifier isAddressValid(address _addr){
-        require(_addr != address(0));
+```
+    modifier isServiceActive(uint _serviceId) {
+        require(_serviceId < _serviceIdCounter.current(), "Service not exist"); 
+        require(_services[_serviceId].isActive, "Service off line"); 
         _;
     }
+
+    modifier onlyCustomer() {
+        require (_myConfig.customerAddress == msg.sender || owner() ==  msg.sender, "Access denied");
+        _;
+    }
+```
 
 ## State Machine
 
@@ -39,11 +47,13 @@ Our contracts do not aim at ordering a workflow, the **State Machine** focuses o
 Does a **service** has an **active status** ? is the **Rule** **active** ?
 Those states are consulted by the Guard Check and modified only by authorized individuals :
 
+```
     function toggleContract()
         onlyOwner() external {
         emit ContractUpdate("Contract on/off", msg.sender);
         _myConfig.isActive = !_myConfig.isActive;
     }
+```    
 
 ## Oracle
 
@@ -57,7 +67,8 @@ Our Dapp doesn't need any random data. But if necessary, our bridge would be a p
 
 As define in the **Guard Check** section, each **CustomerContract** grants specific addresses access to certain functions :
 
-    /**
+```
+     /**
      * @dev Structure of Service
      * @notice Feature_V2 
      */
@@ -67,18 +78,18 @@ As define in the **Guard Check** section, each **CustomerContract** grants speci
         bytes1 timeCode;
         uint8 nbTime;
         bool isActive;
-        bool isAllowed;
         string description;
         address bridgeAddress;
         address techMasterAddress;
         address legislatorAddress;
 
         Counters.Counter measureIdCounter;
-        Counters.Counter IotIdCounter;     
+        Counters.Counter iotIdCounter;     
     }
+```    
 
 Only very specific users can define those addresses as valid :
-
+```
     /**
      * @dev set a TechMasterAddress
      * @param _serviceId index of service 
@@ -91,9 +102,10 @@ Only very specific users can define those addresses as valid :
         
         _services[_serviceId].techMasterAddress = _techMasterAddress;
 
-        emit ServiceUpdate(_serviceId, "Bridge Address update", msg.sender);
-    }
-    
+        emit ServiceUpdate(_serviceId, "TechMaster Address update", msg.sender);
+    }    
+```   
+
 Our **Guard Check** also operates in those functions.
 
 ## Checks Effects Interactions
@@ -120,6 +132,7 @@ Actions are already restricted by user and by address.
 
 We anticipated that each **CustomerContract** would be versioned. Every data is stored and accessible even if a customer signed a new contract that offers more functionalities. Our **Config** struct is responsible for insuring this in the future.
 
+```
     /**
     * @dev Structure of Configuration
     * @notice Version and status of activation
@@ -127,7 +140,8 @@ We anticipated that each **CustomerContract** would be versioned. Every data is 
     */
     struct Config {
         bytes8 version;
-        uint32 clientId;
+        address _ledgerAddress;
+        address _ecpTokenAddress;        
         uint64 prevContractDate;
         uint64 nextContractDate;
         address customerAddress;
@@ -135,6 +149,7 @@ We anticipated that each **CustomerContract** would be versioned. Every data is 
         address nextContract;
         bool isActive;
     }
+```
 
 ## String Equality Comparison
 
@@ -146,7 +161,8 @@ For the **KYC** part scheduled in the roadmap, we will implement String Equality
 
 Variables order in our structs is build to pack various variables sizes :
 
-    /**
+```
+     /**
      * @dev Structure of Service
      * @notice Feature_V2 
      */
@@ -156,19 +172,20 @@ Variables order in our structs is build to pack various variables sizes :
         bytes1 timeCode;
         uint8 nbTime;
         bool isActive;
-        bool isAllowed;
         string description;
         address bridgeAddress;
         address techMasterAddress;
         address legislatorAddress;
 
         Counters.Counter measureIdCounter;
-        Counters.Counter IotIdCounter;     
+        Counters.Counter iotIdCounter;     
     }
+```
 
 This best practice is in effect.
 Data are compiled in **bytes32**, even if they are composite.
 
+```
     // struct MeasureHeader (32) { 
     //   //V0.1     XX.XX.XX    00.01.00
     //   version : bytes8
@@ -177,27 +194,45 @@ Data are compiled in **bytes32**, even if they are composite.
     //   timeCode : bytes1 (hourly, daily) Y m d H i
     //   nbTime : bytes3 
     // }
+```
 
 ## Memory Array Building
 
 In order to save gaz, we use systematically the **view** attribute for all our getters :
 
-    /**
-    * @dev get a Config
-    * @return config in memory
-    */
-    function getConfig() external view returns (Config memory) {
-        return _myConfig;
+```
+ /**
+     * @dev allows the dApp to process user's type and display the correct interface
+     * @param _myTypeUser uint user's type 
+     */  
+    function rootingApps(
+        address _userAddress)
+        external view returns(uint _myTypeUser){
+        /*
+            1 : Admin
+            2 : Client
+            3 : Législateur
+            4 : Techmaster
+            5 : Bridge
+            9 : Public
+        */
+
+        [...]
     }
+```    
 
 On the other hand, to keep saving gaz, we prefer using **mapping** in order to avoid using loops.
 We do not have any loop in our code.
 
-    Service[] private _services;
-    mapping(uint => bytes32[]) private _serviceHeaderMeasures;
-    mapping(uint => bytes32[]) private _serviceBodyMeasures;
-    mapping(uint => Iot[]) private _serviceMacIOT;
+```
+    Config public _myConfig;
+    mapping(uint => Service) public _services;
     Counters.Counter public _serviceIdCounter;
+    mapping(uint => mapping(bytes6 => Iot)) public _serviceIots;
+    mapping(uint => Rule) public _serviceRules;
+    Counters.Counter public _ruleIdCounter;
+    IECPToken private _ECPToken;
+```    
 
 To optimize our smart contracts, we use Events to store our measures.
 Once sent by the bridge, they are not used anymore for any calculation and are left untouched.

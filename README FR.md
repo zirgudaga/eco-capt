@@ -27,6 +27,7 @@ Les instructions suivantes vous permettrons d'installer le projet :
 - Effectuez ensuite la commande suivante dans le dossier client : 
 ```npm run start```
 - Rendez-vous sur votre http://localhost:3000/ pour interagir avec votre contrat
+- Visitez la Dapps déployée sur Heroku : https://eco-capt-v4.herokuapp.com
 
 ## Guide d'utilisation
 

@@ -99,7 +99,7 @@ npm start
 ## Open the App
 
 Open the local DApp: https://localhost:3000/
-Open the DApp deployed on Heroku (remote): https://eco-capt.herokuapp.com/appClient/ (to interact with the contracts deployed on a TestNet)
+Open the DApp deployed on Heroku (remote): https://eco-capt-v4.herokuapp.com (to interact with the contracts deployed on a TestNet)
 
 ## Test
 

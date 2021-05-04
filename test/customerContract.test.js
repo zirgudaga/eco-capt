@@ -10,7 +10,7 @@ const ECPToken = artifacts.require('ECPToken.sol');
 // On créé le contract, on toogle le contract, vérifier onlyowner, essayer avec le client ca marche pas, verifier que le emit a envoyé, verifier que quand j'ai désactivé le contrat, on ne peut pas ajouter de service 
 // Faire un addService -> done le onlyCustomer
 // tester le getService -> done
-// 
+
 
 // Contrat de test pour addConfig
 contract('CustomerClient', function (accounts) {
@@ -48,6 +48,8 @@ contract('CustomerClient', function (accounts) {
     const token_0 = new BN(0);
     const token_99 = new BN(99);
     const token_100 = new BN(100);
+
+    const _siretNumber1 = new BN(12345678910111);
 
     beforeEach(async function () {
 
@@ -233,7 +235,9 @@ contract('CustomerClient', function (accounts) {
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
+                await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
                 await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
+
                 await (expectRevert(this.CustomerContract.setTechMasterAddress(
                     _serviceId, 
                     techmaster,
@@ -241,7 +245,17 @@ contract('CustomerClient', function (accounts) {
             });
         }   
 
+        it('Techmaster not registred', async function () { 
+            await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
+
+            await (expectRevert(this.CustomerContract.setTechMasterAddress(
+                _serviceId, 
+                techmaster,
+                {from: owner}), "Ledger check fail"));  
+        });
+
         it('Contract off line', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.toggleContract({from: owner});  
 
@@ -252,6 +266,7 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('Service not exist', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
             await (expectRevert(this.CustomerContract.setTechMasterAddress(
                 _serviceId, 
                 techmaster,
@@ -259,6 +274,7 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('Service off line', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.toggleService(_serviceId, {from: owner});
 
@@ -268,7 +284,8 @@ contract('CustomerClient', function (accounts) {
                 {from: owner}), "Service off line"));  
         });
 
-        it('TechMasterAddress added properly', async function () {     
+        it('TechMasterAddress added properly', async function () {    
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner});  
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             let receipt = await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
 
@@ -286,6 +303,7 @@ contract('CustomerClient', function (accounts) {
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
+                await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner}); 
                 await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
                 await (expectRevert(this.CustomerContract.setLegislatorAddress(
                     _serviceId, 
@@ -294,7 +312,17 @@ contract('CustomerClient', function (accounts) {
             });
         }   
 
+        it('Legislator not registred', async function () { 
+            await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
+
+            await (expectRevert(this.CustomerContract.setLegislatorAddress(
+                _serviceId, 
+                legislator,
+                {from: owner}), "Ledger check fail"));  
+        });
+
         it('Contract off line', async function () { 
+            await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.toggleContract({from: owner});  
 
@@ -305,6 +333,7 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('Service not exist', async function () { 
+            await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner}); 
             await (expectRevert(this.CustomerContract.setLegislatorAddress(
                 _serviceId, 
                 legislator,
@@ -312,6 +341,7 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('Service off line', async function () { 
+            await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.toggleService(_serviceId, {from: owner});
 
@@ -321,7 +351,8 @@ contract('CustomerClient', function (accounts) {
                 {from: owner}), "Service off line"));  
         });
 
-        it('LegislatorAddress added properly - Owner', async function () {     
+        it('LegislatorAddress added properly - Owner', async function () {   
+            await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner});   
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             let receipt = await this.CustomerContract.setLegislatorAddress(_serviceId, legislator, {from: owner});
 
@@ -332,6 +363,7 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('LegislatorAddress added properly - Customer', async function () {     
+            await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: customer1});
             let receipt = await this.CustomerContract.setLegislatorAddress(_serviceId, legislator, {from: customer1});
 
@@ -349,6 +381,8 @@ contract('CustomerClient', function (accounts) {
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
+                await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+                await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
                 await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
                 await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
                 await (expectRevert(this.CustomerContract.setBridgeAddress(
@@ -359,6 +393,8 @@ contract('CustomerClient', function (accounts) {
         }   
 
         it('Contract off line', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.toggleContract({from: owner});  
@@ -369,7 +405,18 @@ contract('CustomerClient', function (accounts) {
                 {from: owner}), "Contract off line"));  
         });
 
+
+        it('Bridge not registred', async function () { 
+            await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
+            await (expectRevert(this.CustomerContract.setBridgeAddress(
+                _serviceId, 
+                bridge,
+                {from: owner}), "Ledger check fail"));  
+        });
+
         it('Service not exist', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
             await (expectRevert(this.CustomerContract.setBridgeAddress(
                 _serviceId, 
                 bridge,
@@ -377,6 +424,8 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('Service off line', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.toggleService(_serviceId, {from: owner});
@@ -388,6 +437,8 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('BridgeAddress added properly - Owner', async function () {
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             let receipt = await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: owner});
@@ -399,6 +450,8 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('BridgeAddress added properly - TechMaster', async function () {
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             let receipt = await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -417,6 +470,8 @@ contract('CustomerClient', function (accounts) {
 
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
+                await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+                await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
                 await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
                 await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
                 await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -460,6 +515,8 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('No more ECP token', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});        
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -471,7 +528,9 @@ contract('CustomerClient', function (accounts) {
                 {from: bridge}), "ERC20: transfer amount exceeds balance"));  
         });
 
-        it('Measure added properly - Owner', async function () {            
+        it('Measure added properly - Owner', async function () {      
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner});       
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: customer1});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -499,7 +558,9 @@ contract('CustomerClient', function (accounts) {
             });                            
         });
 
-        it('Measure added properly - Techmaster', async function () {            
+        it('Measure added properly - Techmaster', async function () {  
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner});           
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: customer1});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -658,6 +719,7 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('Rule added properly - Legislator', async function () { 
+            await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner}); 
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner}); 
             await this.CustomerContract.setLegislatorAddress(_serviceId, legislator, {from: owner});
 
@@ -749,7 +811,8 @@ contract('CustomerClient', function (accounts) {
             expect(myRule.isActive).to.equal(true);   
         });
 
-        it('Toggle service - On to Off to On - Legislateor', async function () {     
+        it('Toggle service - On to Off to On - Legislateor', async function () {  
+            await this.LedgerContract.setLegislator("Legislator test", legislator, _siretNumber1, true, {from: owner});    
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: customer1});
             await this.CustomerContract.setLegislatorAddress(_serviceId, legislator, {from: customer1}); 
             await this.CustomerContract.addRule(_version, _serviceId, "Rule Test", 0, 0, _codeAlert, _valueAlert, {from: legislator});
@@ -777,6 +840,8 @@ contract('CustomerClient', function (accounts) {
     
         for(let i=0; i<testAccessMessage.length; i++){
             it('Access denied - '+testAccessMessage[i], async function () { 
+                await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+                await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner});     
                 await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});
                 await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
                 await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -791,6 +856,8 @@ contract('CustomerClient', function (accounts) {
         }   
 
         it('Contract off line', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner});     
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});  
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -824,6 +891,8 @@ contract('CustomerClient', function (accounts) {
         });
 
         it('No more ECP token', async function () { 
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner});     
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: owner});        
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -836,7 +905,9 @@ contract('CustomerClient', function (accounts) {
                 {from: bridge}), "ERC20: transfer amount exceeds balance"));  
         });
 
-        it('Alert added properly - Owner', async function () {            
+        it('Alert added properly - Owner', async function () {     
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner});            
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: customer1});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});
@@ -872,7 +943,9 @@ contract('CustomerClient', function (accounts) {
             });                            
         });
 
-        it('Alert added properly - Bridge', async function () {            
+        it('Alert added properly - Bridge', async function () {  
+            await this.LedgerContract.setTechMaster("Techmaster test", techmaster, _siretNumber1, true, {from: owner}); 
+            await this.LedgerContract.setBridge("Bridge test", "Url test", "Info test", bridge, techmaster, true, {from: owner});               
             await this.CustomerContract.addService(_version, _description, _measureType, _timeCode, _nbTime, {from: customer1});
             await this.CustomerContract.setTechMasterAddress(_serviceId, techmaster, {from: owner});
             await this.CustomerContract.setBridgeAddress(_serviceId, bridge, {from: techmaster});

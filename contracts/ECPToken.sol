@@ -22,12 +22,21 @@ contract ECPToken is ERC20 {
         owner = msg.sender;
     }
 
+    /**
+     * @dev set a LedgerAddress
+     * @param _ledger ledger's address 
+     */
     function setLedgerAddress ( 
         address _ledger)
         onlyOwner() external{
         ledger=_ledger;
     }
-    
+
+    /**
+     * @dev define the mint function
+     * @param _customerContract address of the customerContract 
+     * @param amount amount ECPToken to mint
+     */    
     function ownerMint ( 
         address _customerContract,
         uint amount)

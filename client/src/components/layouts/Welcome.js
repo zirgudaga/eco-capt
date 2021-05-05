@@ -16,9 +16,7 @@ export default class Welcome extends React.Component {
                         <div className="slogan">
                             <h1>Fully capture the real world</h1>
                             <p>Being honest has never been easier</p>
-                            <button className="welcome-cta">
-                            <Link to="/app">Start using</Link>
-                            </button>
+                            <Link className="welcome-cta" to="/app">Start using</Link>
                         </div>
                     </div>
                 </main>  

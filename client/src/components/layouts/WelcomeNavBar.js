@@ -9,7 +9,7 @@ export default class WelcomeNavBar extends React.Component {
         return (
             <header className="welcome-navbar">
                 <div className="wrap">
-                    <a href="."><img width="250" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
+                    <a href="."><img width="250" src="ecocapt-logo.png" alt="ecocap-logo"/></a>
                     <nav>
                         <ul>
                             <li className="welcome-list"><Link to="/app">App</Link></li>

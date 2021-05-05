@@ -53,6 +53,5 @@
 }
 
 .page-header-body {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;
+  -ms-overflow-style: none;
 }

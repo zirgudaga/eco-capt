@@ -46,7 +46,7 @@ export default class MainNavBar extends React.Component {
         return ( 
             <header className="welcome-navbar">
                 <div className="wrap">
-                    <a href="."><img width="250" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
+                    <a href="."><img width="250" src="ecocapt-logo.png" alt="ecocap-logo"/></a>
                     <nav>
                         <ul>
 
@@ -91,13 +91,13 @@ export default class MainNavBar extends React.Component {
                             {(this.props.state.customerContractAddress !== null)
                             &&                              
                             <li className="main-list" onClick = { () => {this.props.goTo("Services");} }>
-                                <i className="fas fa-concierge-bell"  alt="Service" title="Service"></i>
+                                <i className="fas fa-concierge-bell" title="Service"></i>
                             </li>}
 
                             {(this.props.state.customerContractAddress !== null)
                             &&                             
                             <li className="main-list" onClick = { () => {this.props.goTo("Alerts");} }>
-                                <i className="fas fa-exclamation-triangle" alt="Alert" title="Alert"></i>
+                                <i className="fas fa-exclamation-triangle" title="Alert"></i>
                             </li>
                             }
 

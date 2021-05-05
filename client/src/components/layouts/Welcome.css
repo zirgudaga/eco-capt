@@ -57,17 +57,14 @@ margin-top: 50px;
 background-color: #2563eb;
 border: 2px solid #2563eb;
 border-radius: 50px;
+color: #fff;
+text-transform: uppercase;
+font-family: 'Poppins', sans-serif;
+font-weight: bold;
+font-size: 16px;
+letter-spacing: 1px;
 display: inline-block;
 transition: 0.1s all ease-out;
-}
-
-.welcome-cta a {
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  font-size: 16px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 }
 
 .welcome-cta:hover {

@@ -18,7 +18,7 @@ export default class HomeBridge extends React.Component {
                     <br />
                     <p>Being honest has never been easier !</p>
                     <div className="home-logo">
-                        <a href="."><img width="208" src="ecocapt-logo.png" href="." alt="ecocap-logo"/></a>
+                        <a href="."><img width="208" src="ecocapt-logo.png" alt="ecocap-logo"/></a>
                     </div>
                 </div>
             </div>

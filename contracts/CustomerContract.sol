@@ -138,11 +138,9 @@ contract CustomerContract is Ownable {
     }
 
     event ContractUpdate(string _message, address _author);      
-    
     event ServiceUpdate(uint _serviceId, string _message, address _author);  
     event ServiceRulesUpdate(uint _serviceId, uint _ruleId, string _message, address _author); 
     event ServiceIotUpdate(uint _serviceId, bytes6 _iotId, string _message, address _author); 
-
     event MeasureReceive(uint _serviceId, bytes32 _header, bytes32 _body, address _author); 
     event AlertReceive(uint _serviceId, uint _ruleId, bytes32 _alert, address _author);        
 

@@ -260,7 +260,6 @@ contract('LedgerContract', function (accounts) {
     describe('setTypeMeasure', function () {
 
         it('Revert if other : onlyOwner', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.setTypeMeasure(
                 _typeMeasure,      
                 _infoMeasure1,
@@ -271,7 +270,6 @@ contract('LedgerContract', function (accounts) {
         });
 
         it('New measure properly set', async function () { 
-            // On procède à l'ajout d'un Customer
             let receipt = await this.LedgerContract.setTypeMeasure(
                 _typeMeasure, 
                 _infoMeasure1,
@@ -291,7 +289,6 @@ contract('LedgerContract', function (accounts) {
         });   
 
         it('TypeMeasure properly updated', async function () { 
-            // On procède à l'ajout d'un Customer
             await this.LedgerContract.setTypeMeasure(
                 _typeMeasure, 
                 _infoMeasure1,
@@ -455,7 +452,6 @@ contract('LedgerContract', function (accounts) {
     describe('mintECP', function () {
 
         it('Revert if other : onlyOwner', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.mintECP(
                 _customerAddress,      
                 100, 
@@ -487,7 +483,6 @@ contract('LedgerContract', function (accounts) {
     describe('sendClientToken', function () {
 
         it('Revert if other : onlyOwner', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.sendClientToken(
                 _customerAddress,      
                 100, 
@@ -495,7 +490,6 @@ contract('LedgerContract', function (accounts) {
         });     
         
         it('Revert if other : Customer not exist', async function () { 
-            // On vérifie bien que l'ajout provoque un revert !
             await (expectRevert(this.LedgerContract.sendClientToken(
                 _customerAddress,      
                 100, 

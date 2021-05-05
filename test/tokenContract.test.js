@@ -5,7 +5,6 @@ const CustomerContract = artifacts.require('CustomerContract.sol');
 const LedgerContract = artifacts.require('LedgerContract.sol');
 const ECPToken = artifacts.require('ECPToken.sol')
 
-
 contract('ECPToken', function (accounts) {
     const owner = accounts[0]; 
     const legislator = accounts[1];
@@ -100,10 +99,5 @@ contract('ECPToken', function (accounts) {
         });
    
     });
-
-
-
-    
-
     
 });

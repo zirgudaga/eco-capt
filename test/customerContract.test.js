@@ -1,18 +1,10 @@
 const { expectRevert, expectEvent, BN } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
+
 const CustomerContract = artifacts.require('CustomerContract.sol');
 const LedgerContract = artifacts.require('LedgerContract.sol');
 const ECPToken = artifacts.require('ECPToken.sol');
 
-// Faire un addConfig, tester que c'est bien fait avec getConfig
-// Faire un constructeur et vérifier que les variables de service sont testées
-// On créé un contract, on vérifie que le constructeur s'est bien fait
-// On créé le contract, on toogle le contract, vérifier onlyowner, essayer avec le client ca marche pas, verifier que le emit a envoyé, verifier que quand j'ai désactivé le contrat, on ne peut pas ajouter de service 
-// Faire un addService -> done le onlyCustomer
-// tester le getService -> done
-
-
-// Contrat de test pour addConfig
 contract('CustomerClient', function (accounts) {
 
     const owner = accounts[0]; 
@@ -189,7 +181,6 @@ contract('CustomerClient', function (accounts) {
             expectEvent(receipt, "ServiceUpdate", { _message:"New service", _author: customer1 });
         });
     });
-
 
     describe('toggleService', function () {
     
@@ -758,7 +749,6 @@ contract('CustomerClient', function (accounts) {
 
     });
 
-
     describe('toggleRule', function () {
     
         let testAccessMessage= ['Legislator', 'TechMaster', 'Bridge'];
@@ -831,7 +821,6 @@ contract('CustomerClient', function (accounts) {
         });
  
     });
-
 
     describe('addAlert', function () {
 
@@ -980,7 +969,6 @@ contract('CustomerClient', function (accounts) {
                 _author: bridge 
             });                            
         });        
-
 
     });
 

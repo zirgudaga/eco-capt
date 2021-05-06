@@ -10,7 +10,6 @@ contract LedgerContract is Ownable {
 
     /**
      * @dev Structure of Customer
-     * @notice Feature_V2 
      */
     struct Customer {
         string description;
@@ -21,8 +20,7 @@ contract LedgerContract is Ownable {
     }
 
     /**
-     * @dev Structure of Legislator
-     * @notice Feature_V2 
+     * @dev Structure of Legislator 
      */
     struct Legislator {
         string description;
@@ -33,7 +31,6 @@ contract LedgerContract is Ownable {
 
     /**
      * @dev Structure of TechMaster
-     * @notice Feature_V2 
      */
     struct TechMaster {
         string description;
@@ -44,7 +41,6 @@ contract LedgerContract is Ownable {
 
     /**
      * @dev Structure of Bridge
-     * @notice Feature_V2 
      */
     struct Bridge {
         string description;
@@ -57,7 +53,6 @@ contract LedgerContract is Ownable {
 
     /**
      * @dev Structure of TypeMeasure
-     * @notice Feature_V2 
      */
     struct TypeMeasure{
 	    string description;

@@ -39,20 +39,18 @@ contract CustomerContract is Ownable {
     */
     struct Config {
         bytes8 version;
-        bool isActive;        
+        bool isActive;    
+        uint64 prevContractDate;
+        uint64 nextContractDate;            
         address _ledgerAddress;
         address _ecpTokenAddress;        
-        uint64 prevContractDate;
-        uint64 nextContractDate;
         address customerAddress;
         address prevContract;
         address nextContract;
-
     }
     
     /**
      * @dev Structure of Service
-     * @notice Feature_V2 
      */
     struct Service {
         bytes8 version;
@@ -71,25 +69,23 @@ contract CustomerContract is Ownable {
 
     /**
      * @dev Structure of Rule
-     * @notice Feature_V2 
      */
     struct Rule {
         bytes8 version;    
         bytes4 codeAlert;
         bytes8 valueAlert;    
         uint16 serviceId;
-        bool isActive;        
-        string description;   
-        address legislatorAddress;
+        bool isActive;     
         uint64 dateOn;
         uint64 dateOff;
+        string description;   
+        address legislatorAddress;
 
         Counters.Counter alertIdCounter;         
     }
 
     /**
      * @dev Structure of Iot
-     * @notice Feature_V2 
      */
     struct Iot {   
         string description;
@@ -162,12 +158,12 @@ contract CustomerContract is Ownable {
         _myConfig = Config(
             _version,
             true,
-            _ledgerAddress,
-            _ecpTokenAddress,
             _prevContractDate,
-            0,
+            0,    
+            _ledgerAddress,
+            _ecpTokenAddress,                    
             _customerAddress,
-            _prevContract,
+            _prevContract,            
             address(0)
         );
 
@@ -336,10 +332,10 @@ contract CustomerContract is Ownable {
             _valueAlert,            
             _serviceId,  
             true,
+            _dateOn,
+            _dateOff,            
             _description,      
             msg.sender,
-            _dateOn,
-            _dateOff,
             alertIdCounter
         );
 

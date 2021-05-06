@@ -170,15 +170,6 @@ contract CustomerContract is Ownable {
         _ECPToken = IECPToken(_ecpTokenAddress);
         _ILedgerContract = ILedgerContract(_ledgerAddress);
     }
-  
-    /**
-     * @dev toggle a Contract activation or deactivation
-     */
-    function toggleContract()
-        onlyOwner() external {
-        emit ContractUpdate("Contract on/off", msg.sender);
-        _myConfig.isActive = !_myConfig.isActive;
-    }    
 
     // SERVICE PART
 
@@ -217,6 +208,15 @@ contract CustomerContract is Ownable {
         emit ServiceUpdate(_serviceIdCounter.current(), "New service", msg.sender); 
 
         _serviceIdCounter.increment();
+    }  
+
+    /**
+     * @dev toggle a Contract activation or deactivation
+     */
+    function toggleContract()
+        onlyOwner() external {
+        emit ContractUpdate("Contract on/off", msg.sender);
+        _myConfig.isActive = !_myConfig.isActive;
     }  
 
     /**

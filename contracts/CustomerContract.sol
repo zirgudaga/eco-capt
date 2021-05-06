@@ -9,20 +9,22 @@ import "./ILedgerContract.sol";
 contract CustomerContract is Ownable {
     using Counters for Counters.Counter;
     
-    // MeasureHeader (32) 
+    // BMP : Bridge message protocol
+
+    // MeasureHeader (32 bytes) 
     //   version : bytes8
     //   date : YYYYmmddHHii : byte12
     //   measureType : bytes8 - CODE : 4 number/letter for the physical nature - 4 number/letter for the version
     //   timeCode : bytes1 (hourly, daily) Y m d H i
     //   nbTime : bytes3 
     
-    // MeasureBody (32)  
+    // MeasureBody (32 bytes)  
     //   Value 1 Max : bytes8
     //   Value 2 Mean : bytes8
     //   Value 3 Mediane : bytes8
     //   Value 4 Min : bytes8
 
-    // AlertBody (32) 
+    // AlertBody (32 bytes) 
     //   version : bytes8
     //   codeAlert : bytes4    
     //   date : YYYYmmddHHii : byte12

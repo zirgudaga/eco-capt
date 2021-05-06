@@ -39,6 +39,7 @@ contract CustomerContract is Ownable {
     */
     struct Config {
         bytes8 version;
+        bool isActive;        
         address _ledgerAddress;
         address _ecpTokenAddress;        
         uint64 prevContractDate;
@@ -46,7 +47,7 @@ contract CustomerContract is Ownable {
         address customerAddress;
         address prevContract;
         address nextContract;
-        bool isActive;
+
     }
     
     /**
@@ -69,19 +70,19 @@ contract CustomerContract is Ownable {
     }
 
     /**
-     * @dev Structure of AlertConfig
+     * @dev Structure of Rule
      * @notice Feature_V2 
      */
     struct Rule {
-        bytes8 version;        
+        bytes8 version;    
+        bytes4 codeAlert;
+        bytes8 valueAlert;    
         uint16 serviceId;
+        bool isActive;        
         string description;   
         address legislatorAddress;
         uint64 dateOn;
         uint64 dateOff;
-        bytes4 codeAlert;
-        bytes8 valueAlert;
-        bool isActive;
 
         Counters.Counter alertIdCounter;         
     }
@@ -160,14 +161,14 @@ contract CustomerContract is Ownable {
     constructor (bytes8 _version, address _ledgerAddress, address _ecpTokenAddress, address _customerAddress, address _prevContract, uint64 _prevContractDate) {
         _myConfig = Config(
             _version,
+            true,
             _ledgerAddress,
             _ecpTokenAddress,
             _prevContractDate,
             0,
             _customerAddress,
             _prevContract,
-            address(0),
-            true
+            address(0)
         );
 
         _ECPToken = IECPToken(_ecpTokenAddress);
@@ -331,14 +332,14 @@ contract CustomerContract is Ownable {
 
         _serviceRules[_ruleIdCounter.current()] = Rule(
             _version,  
+            _codeAlert,
+            _valueAlert,            
             _serviceId,  
+            true,
             _description,      
             msg.sender,
             _dateOn,
             _dateOff,
-            _codeAlert,
-            _valueAlert,
-            true,
             alertIdCounter
         );
 

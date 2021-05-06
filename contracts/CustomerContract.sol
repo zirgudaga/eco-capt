@@ -9,28 +9,27 @@ import "./ILedgerContract.sol";
 contract CustomerContract is Ownable {
     using Counters for Counters.Counter;
     
-    // struct MeasureHeader (32) { 
-    //   //V0.1     XX.XX.XX    00.01.00
+    // MeasureHeader (32) 
     //   version : bytes8
     //   date : YYYYmmddHHii : byte12
     //   measureType : bytes8 - CODE : 4 number/letter for the physical nature - 4 number/letter for the version
     //   timeCode : bytes1 (hourly, daily) Y m d H i
     //   nbTime : bytes3 
-    // }
+    // 
     
-    // struct MeasureBody (32) { 
+    // MeasureBody (32)  
     //   Value 1 Max : bytes8
     //   Value 2 Mean : bytes8
     //   Value 3 Mediane : bytes8
     //   Value 4 Min : bytes8
-    // }
+    // 
 
-    // struct AlertBody (32) { 
+    // AlertBody (32) 
     //   version : bytes8
     //   codeAlert : bytes4    
     //   date : YYYYmmddHHii : byte12
     //   valueAlert : bytes8
-    // }
+    // 
 
     /**
     * @dev Structure of Configuration

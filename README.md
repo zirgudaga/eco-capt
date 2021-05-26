@@ -4,7 +4,7 @@
 
 ## Contributors
 
-- [Hélène Bunel](https://github.com/Helene-mb)
+- [Hélène Bunel](https://github.com/Helene-85)
 - [Édouard Vahanian](https://github.com/edvahn)
 - [Daniel Villa Monteiro](https://github.com/zirgudaga)
 - [Jérémy Karsenty](https://github.com/jkarsenty)
